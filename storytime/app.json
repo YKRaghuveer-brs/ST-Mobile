@@ -4,10 +4,10 @@
     "slug": "storytime",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/storytime_logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/storytime_logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
