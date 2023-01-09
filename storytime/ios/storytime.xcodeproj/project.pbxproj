@@ -7,25 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* jwtAuthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* jwtAuthTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-jwtAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-jwtAuth.a */; };
+		00E356F31AD99517003FC87E /* storytimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* storytimeTests.m */; };
+		0C80B921A6F3F58F76C31292 /* libPods-storytime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-storytime.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7699B88040F8A987B510C191 /* libPods-jwtAuth-jwtAuthTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-jwtAuth-jwtAuthTests.a */; };
+		7699B88040F8A987B510C191 /* libPods-storytime-storytimeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-storytime-storytimeTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D9EF52CD78164CFC9EE11154 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 918F4324113D41B58162B333 /* Roboto-Black.ttf */; };
-		71E997F39C1B41E5AFFAF06E /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C01FE5113CD843B9B87C4580 /* Roboto-BlackItalic.ttf */; };
-		25C39C4B61F44F8091F34EBC /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 144D82E5E7A1412B80EE1571 /* Roboto-Bold.ttf */; };
-		4C7C1E6D512A4959BDC257CC /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3ADEE22E2A9F4A09B13A6A53 /* Roboto-BoldItalic.ttf */; };
-		E29B7A5A1C514428A843E388 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACF42F73352C46E59D375280 /* Roboto-Italic.ttf */; };
-		62B93A38D6D5450F8D0CEADA /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 232DBC8F71574CBC9204CBF6 /* Roboto-Light.ttf */; };
-		30E25F1552014E3E8F3F7823 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8EE56B1B62845678C1547D3 /* Roboto-LightItalic.ttf */; };
-		F973A93B10344528AF4BBBDA /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 288D0105419B4164B56B681D /* Roboto-Medium.ttf */; };
-		78773DE0AA19421AA7F98E36 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B509B747106443D29F295A44 /* Roboto-MediumItalic.ttf */; };
-		93480B4296194F7B916B4134 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7AA9D2435674DDA8546C778 /* Roboto-Regular.ttf */; };
-		6240B0D11BAD4FE2B0238733 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB21C996A458450699CC499C /* Roboto-Thin.ttf */; };
-		0C75613F59F14D6B83BB6EC8 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC9D4CC100004A55A6AE4279 /* Roboto-ThinItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,40 +22,28 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = jwtAuth;
+			remoteInfo = storytime;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* jwtAuthTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jwtAuthTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* storytimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = storytimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* jwtAuthTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jwtAuthTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* jwtAuth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jwtAuth.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = jwtAuth/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = jwtAuth/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = jwtAuth/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = jwtAuth/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = jwtAuth/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-jwtAuth-jwtAuthTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jwtAuth-jwtAuthTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B4392A12AC88292D35C810B /* Pods-jwtAuth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwtAuth.debug.xcconfig"; path = "Target Support Files/Pods-jwtAuth/Pods-jwtAuth.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-jwtAuth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwtAuth.release.xcconfig"; path = "Target Support Files/Pods-jwtAuth/Pods-jwtAuth.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-jwtAuth-jwtAuthTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwtAuth-jwtAuthTests.debug.xcconfig"; path = "Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-jwtAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jwtAuth.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = jwtAuth/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-jwtAuth-jwtAuthTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwtAuth-jwtAuthTests.release.xcconfig"; path = "Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests.release.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* storytimeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = storytimeTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* storytime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = storytime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = storytime/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = storytime/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = storytime/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = storytime/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = storytime/main.m; sourceTree = "<group>"; };
+		19F6CBCC0A4E27FBF8BF4A61 /* libPods-storytime-storytimeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-storytime-storytimeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B4392A12AC88292D35C810B /* Pods-storytime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-storytime.debug.xcconfig"; path = "Target Support Files/Pods-storytime/Pods-storytime.debug.xcconfig"; sourceTree = "<group>"; };
+		5709B34CF0A7D63546082F79 /* Pods-storytime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-storytime.release.xcconfig"; path = "Target Support Files/Pods-storytime/Pods-storytime.release.xcconfig"; sourceTree = "<group>"; };
+		5B7EB9410499542E8C5724F5 /* Pods-storytime-storytimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-storytime-storytimeTests.debug.xcconfig"; path = "Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5DCACB8F33CDC322A6C60F78 /* libPods-storytime.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-storytime.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = storytime/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		89C6BE57DB24E9ADA2F236DE /* Pods-storytime-storytimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-storytime-storytimeTests.release.xcconfig"; path = "Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		918F4324113D41B58162B333 /* Roboto-Black.ttf */ = {isa = PBXFileReference; name = "Roboto-Black.ttf"; path = "../assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C01FE5113CD843B9B87C4580 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		144D82E5E7A1412B80EE1571 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3ADEE22E2A9F4A09B13A6A53 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-BoldItalic.ttf"; path = "../assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		ACF42F73352C46E59D375280 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; name = "Roboto-Italic.ttf"; path = "../assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		232DBC8F71574CBC9204CBF6 /* Roboto-Light.ttf */ = {isa = PBXFileReference; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B8EE56B1B62845678C1547D3 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		288D0105419B4164B56B681D /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B509B747106443D29F295A44 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-MediumItalic.ttf"; path = "../assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A7AA9D2435674DDA8546C778 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		AB21C996A458450699CC499C /* Roboto-Thin.ttf */ = {isa = PBXFileReference; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DC9D4CC100004A55A6AE4279 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-jwtAuth-jwtAuthTests.a in Frameworks */,
+				7699B88040F8A987B510C191 /* libPods-storytime-storytimeTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,20 +59,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-jwtAuth.a in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* libPods-storytime.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* jwtAuthTests */ = {
+		00E356EF1AD99517003FC87E /* storytimeTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* jwtAuthTests.m */,
+				00E356F21AD99517003FC87E /* storytimeTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = jwtAuthTests;
+			path = storytimeTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -107,7 +83,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* jwtAuth */ = {
+		13B07FAE1A68108700A75B9A /* storytime */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -117,15 +93,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = jwtAuth;
+			name = storytime;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-jwtAuth.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-jwtAuth-jwtAuthTests.a */,
+				5DCACB8F33CDC322A6C60F78 /* libPods-storytime.a */,
+				19F6CBCC0A4E27FBF8BF4A61 /* libPods-storytime-storytimeTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,13 +116,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* jwtAuth */,
+				13B07FAE1A68108700A75B9A /* storytime */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* jwtAuthTests */,
+				00E356EF1AD99517003FC87E /* storytimeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
-				F048673F1B8640B3934BF4DE /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -156,8 +131,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* jwtAuth.app */,
-				00E356EE1AD99517003FC87E /* jwtAuthTests.xctest */,
+				13B07F961A680F5B00A75B9A /* storytime.app */,
+				00E356EE1AD99517003FC87E /* storytimeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,40 +140,20 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-jwtAuth.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-jwtAuth.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-jwtAuth-jwtAuthTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-jwtAuth-jwtAuthTests.release.xcconfig */,
+				3B4392A12AC88292D35C810B /* Pods-storytime.debug.xcconfig */,
+				5709B34CF0A7D63546082F79 /* Pods-storytime.release.xcconfig */,
+				5B7EB9410499542E8C5724F5 /* Pods-storytime-storytimeTests.debug.xcconfig */,
+				89C6BE57DB24E9ADA2F236DE /* Pods-storytime-storytimeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		F048673F1B8640B3934BF4DE /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				918F4324113D41B58162B333 /* Roboto-Black.ttf */,
-				C01FE5113CD843B9B87C4580 /* Roboto-BlackItalic.ttf */,
-				144D82E5E7A1412B80EE1571 /* Roboto-Bold.ttf */,
-				3ADEE22E2A9F4A09B13A6A53 /* Roboto-BoldItalic.ttf */,
-				ACF42F73352C46E59D375280 /* Roboto-Italic.ttf */,
-				232DBC8F71574CBC9204CBF6 /* Roboto-Light.ttf */,
-				B8EE56B1B62845678C1547D3 /* Roboto-LightItalic.ttf */,
-				288D0105419B4164B56B681D /* Roboto-Medium.ttf */,
-				B509B747106443D29F295A44 /* Roboto-MediumItalic.ttf */,
-				A7AA9D2435674DDA8546C778 /* Roboto-Regular.ttf */,
-				AB21C996A458450699CC499C /* Roboto-Thin.ttf */,
-				DC9D4CC100004A55A6AE4279 /* Roboto-ThinItalic.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* jwtAuthTests */ = {
+		00E356ED1AD99517003FC87E /* storytimeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "jwtAuthTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "storytimeTests" */;
 			buildPhases = (
 				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -212,14 +167,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = jwtAuthTests;
-			productName = jwtAuthTests;
-			productReference = 00E356EE1AD99517003FC87E /* jwtAuthTests.xctest */;
+			name = storytimeTests;
+			productName = storytimeTests;
+			productReference = 00E356EE1AD99517003FC87E /* storytimeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* jwtAuth */ = {
+		13B07F861A680F5B00A75B9A /* storytime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "jwtAuth" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "storytime" */;
 			buildPhases = (
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -234,9 +189,9 @@
 			);
 			dependencies = (
 			);
-			name = jwtAuth;
-			productName = jwtAuth;
-			productReference = 13B07F961A680F5B00A75B9A /* jwtAuth.app */;
+			name = storytime;
+			productName = storytime;
+			productReference = 13B07F961A680F5B00A75B9A /* storytime.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -256,7 +211,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "jwtAuth" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "storytime" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -269,8 +224,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* jwtAuth */,
-				00E356ED1AD99517003FC87E /* jwtAuthTests */,
+				13B07F861A680F5B00A75B9A /* storytime */,
+				00E356ED1AD99517003FC87E /* storytimeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -289,18 +244,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				D9EF52CD78164CFC9EE11154 /* Roboto-Black.ttf in Resources */,
-				71E997F39C1B41E5AFFAF06E /* Roboto-BlackItalic.ttf in Resources */,
-				25C39C4B61F44F8091F34EBC /* Roboto-Bold.ttf in Resources */,
-				4C7C1E6D512A4959BDC257CC /* Roboto-BoldItalic.ttf in Resources */,
-				E29B7A5A1C514428A843E388 /* Roboto-Italic.ttf in Resources */,
-				62B93A38D6D5450F8D0CEADA /* Roboto-Light.ttf in Resources */,
-				30E25F1552014E3E8F3F7823 /* Roboto-LightItalic.ttf in Resources */,
-				F973A93B10344528AF4BBBDA /* Roboto-Medium.ttf in Resources */,
-				78773DE0AA19421AA7F98E36 /* Roboto-MediumItalic.ttf in Resources */,
-				93480B4296194F7B916B4134 /* Roboto-Regular.ttf in Resources */,
-				6240B0D11BAD4FE2B0238733 /* Roboto-Thin.ttf in Resources */,
-				0C75613F59F14D6B83BB6EC8 /* Roboto-ThinItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,15 +272,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth/Pods-jwtAuth-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime/Pods-storytime-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth/Pods-jwtAuth-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime/Pods-storytime-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-jwtAuth/Pods-jwtAuth-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-storytime/Pods-storytime-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
@@ -355,7 +298,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-jwtAuth-jwtAuthTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-storytime-storytimeTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -377,7 +320,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-jwtAuth-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-storytime-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -390,15 +333,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -407,15 +350,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth/Pods-jwtAuth-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime/Pods-storytime-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth/Pods-jwtAuth-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime/Pods-storytime-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-jwtAuth/Pods-jwtAuth-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-storytime/Pods-storytime-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
@@ -424,15 +367,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-jwtAuth-jwtAuthTests/Pods-jwtAuth-jwtAuthTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-storytime-storytimeTests/Pods-storytime-storytimeTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -461,7 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* jwtAuthTests.m in Sources */,
+				00E356F31AD99517003FC87E /* storytimeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,7 +422,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* jwtAuth */;
+			target = 13B07F861A680F5B00A75B9A /* storytime */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -487,14 +430,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-jwtAuth-jwtAuthTests.debug.xcconfig */;
+			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-storytime-storytimeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = jwtAuthTests/Info.plist;
+				INFOPLIST_FILE = storytimeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -508,17 +451,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jwtAuth.app/jwtAuth";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/storytime.app/storytime";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-jwtAuth-jwtAuthTests.release.xcconfig */;
+			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-storytime-storytimeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = jwtAuthTests/Info.plist;
+				INFOPLIST_FILE = storytimeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -532,19 +475,19 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jwtAuth.app/jwtAuth";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/storytime.app/storytime";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-jwtAuth.debug.xcconfig */;
+			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-storytime.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = jwtAuth/Info.plist;
+				INFOPLIST_FILE = storytime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -555,7 +498,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = jwtAuth;
+				PRODUCT_NAME = storytime;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -564,12 +507,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-jwtAuth.release.xcconfig */;
+			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-storytime.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = jwtAuth/Info.plist;
+				INFOPLIST_FILE = storytime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -580,7 +523,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = jwtAuth;
+				PRODUCT_NAME = storytime;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -724,7 +667,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "jwtAuthTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "storytimeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -733,7 +676,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "jwtAuth" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "storytime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -742,7 +685,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "jwtAuth" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "storytime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
