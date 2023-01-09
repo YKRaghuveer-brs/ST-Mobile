@@ -64,8 +64,8 @@ export const AuthProvider = ({children}) => {
 
   const login = async (email, password) => {
     const payload = {
-      email,
-      password,
+      email : "gopinathkrm@gmail.com",
+      password : "123456",
     };
     console.log(payload);
     try {

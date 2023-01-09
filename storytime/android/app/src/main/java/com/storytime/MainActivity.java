@@ -1,10 +1,8 @@
-package com.jwtauth;
-
+package com.storytime;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
-
 
 public class MainActivity extends ReactActivity {
 
@@ -14,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "jwtAuth";
+    return "storytime";
   }
 
   /**
@@ -48,8 +46,8 @@ public class MainActivity extends ReactActivity {
     }
 
     @Override
-protected void onCreate(Bundle savedInstanceState) {
-  super.onCreate(null);
-}
+    protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(null);
+    }
   }
 }

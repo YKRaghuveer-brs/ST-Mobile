@@ -1,4 +1,4 @@
-package com.jwtauth.newarchitecture;
+package com.storytime.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.jwtauth.BuildConfig;
-import com.jwtauth.newarchitecture.components.MainComponentsRegistry;
-import com.jwtauth.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.storytime.BuildConfig;
+import com.storytime.newarchitecture.components.MainComponentsRegistry;
+import com.storytime.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
