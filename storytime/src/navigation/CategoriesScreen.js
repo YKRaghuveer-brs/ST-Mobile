@@ -31,6 +31,7 @@ const CategoriesScreen = ({navigation}) => {
   const getCategories = async () => {
     setLoading(true);
     const response = await HttpGet('categories');
+    console.log("response",response)
     setCategories(response);
     setLoading(false);
   };
@@ -57,7 +58,7 @@ const CategoriesScreen = ({navigation}) => {
               fontFamily: 'Roboto-Medium',
               marginBottom: 10,
             }}>
-            Categories
+            Categories1
           </Text>
           <FlatList
             horizontal={false}

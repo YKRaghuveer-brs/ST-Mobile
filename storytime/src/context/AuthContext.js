@@ -4,11 +4,13 @@ import axios from 'axios';
 import {BASE_URL} from '../config';
 import {Alert} from 'react-native';
 import queryString from 'query-string';
+import ToastManager, { Toast } from "toastify-react-native";
+
 
 export const AuthContext = createContext();
 
 const spotifyURL = 'https://api.spotify.com/v1/';
-const backendURL = 'http://192.168.225.155:6969/';
+const backendURL = 'http://203.193.173.125:6969/';
 
 export const AuthProvider = ({children}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +53,32 @@ export const AuthProvider = ({children}) => {
     return URL;
   };
 
+  // static #MakeSpotifySearchUrl(search, params) {
+  //   let URL = baseURL;
+
+  //   if (search.q && search.keywords) {
+  //     URL += `search?q=${search.q}%20${search.keywords}&`;
+  //   } else {
+  //     URL += `search?q=${search.q}&`;
+  //   }
+  //   if (params) {
+  //     params = queryString.stringify(params);
+  //     URL += params;
+  //   }
+  //   return URL;
+  // }
+
+  const makeSpotifyUrl = async (path, params) => {
+    let URL = spotifyURL;
+    if (path) {
+      URL += path;
+    }
+    if (params) {
+      URL += "?" + queryString.stringify(params);
+    }
+    return URL;
+  }
+
   const makeURL = async (path, params) => {
     let URL = backendURL;
     if (path) {
@@ -64,19 +92,21 @@ export const AuthProvider = ({children}) => {
 
   const login = async (email, password) => {
     const payload = {
-      email : "gopinathkrm@gmail.com",
-      password : "123456",
+      email,
+      password,
     };
     console.log(payload);
     try {
       const response = await axios.post(
-        'http://192.168.225.155:6969/login',
+        'http://203.193.173.125:6969/login',
         payload,
       );
+      console.log("response",response)
       if (response.status === 200) {
-        console.log(response);
         // console.log(response.status);
         // console.log(response.data.token);
+                          Toast.success("Logged in successfully !");
+        navigation.navigate("Home")
         setUserInfo(response.data);
         setUserToken(response.data.token);
         AsyncStorage.setItem('userToken', response.data.token);
@@ -87,8 +117,8 @@ export const AuthProvider = ({children}) => {
         AsyncStorage.setItem('userInfo', JSON.stringify(response.data));
       }
     } catch (error) {
-      alert(error.response.data);
-      console.log(error.response.data);
+      Toast.error(error.response.data);
+      console.log("eroor",error.response.data);
     }
   };
 
@@ -99,6 +129,40 @@ export const AuthProvider = ({children}) => {
     AsyncStorage.removeItem('userToken');
     setIsLoading(false);
   };
+
+  // SPOTIFY HTTP METHOD
+  const spotifyGet = async (path, params) => {
+        const URL = await makeSpotifyUrl(path, params);
+        console.log("URLlllllllllllllllllllllllllllllllllllllllllllllllllllllll",URL)
+    // setLoading(true);
+    try {
+      // return await HttpHelper.SpotifyHttpGet(path, params);
+       const response = await axios.get(URL, {
+        headers: await makeSpotifyHeaders(),
+      });
+      return response.data;
+    } catch (error) {
+            console.log(error.response.data);
+
+    } 
+  };
+
+
+
+
+  // static SpotifyHttpGet = async (aFunction, aParams) => {
+  //   const URL = HttpHelper.#MakeSpotifyUrl(aFunction, aParams);
+  //   const header = await HttpHelper.#MakeSpotifyHeader();
+  //   const oResult = await HttpHelper.#HttpCall(HttpMethods.Get, URL, header);
+  //   return oResult;
+  // };
+
+  // static SpotifySearch = async (search, params) => {
+  //   const URL = HttpHelper.#MakeSpotifySearchUrl(search, params);
+  //   const header = await HttpHelper.#MakeSpotifyHeader();
+  //   const oResult = await HttpHelper.#HttpCall(HttpMethods.Get, URL, header);
+  //   return oResult;
+  // };
 
   const spotifySearch = async (search, params) => {
     const URL = await makeSpotifySearchURL(search, params);
@@ -151,7 +215,7 @@ export const AuthProvider = ({children}) => {
 
   return (
     <AuthContext.Provider
-      value={{login, logout, spotifySearch, HttpGet, isLoading, userToken}}>
+      value={{login, logout, spotifySearch,spotifyGet, HttpGet, isLoading, userToken}}>
       {children}
     </AuthContext.Provider>
   );

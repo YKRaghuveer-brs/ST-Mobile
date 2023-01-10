@@ -15,8 +15,8 @@ import {AuthContext} from '../context/AuthContext';
 
 const LoginScreen = ({navigation}) => {
   const {login, logout} = useContext(AuthContext);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState("nraju.nyros@gmail.com");
+  const [password, setPassword] = useState("123456");
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <View style={{paddingHorizontal: 25}}>
