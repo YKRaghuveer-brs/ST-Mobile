@@ -106,7 +106,7 @@ export const AuthProvider = ({children}) => {
         // console.log(response.status);
         // console.log(response.data.token);
                           Toast.success("Logged in successfully !");
-        navigation.navigate("Home")
+        // navigation.navigate("Home")
         setUserInfo(response.data);
         setUserToken(response.data.token);
         AsyncStorage.setItem('userToken', response.data.token);
