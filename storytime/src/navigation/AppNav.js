@@ -24,8 +24,8 @@ const AppNav = () => {
 
   return (
     <NavigationContainer>
-      {/*{userToken !== null ? <AppStack2 /> : <AppStack2 />}*/}
-    <AppStack2 />
+      {userToken !== null ? <AppStack2 /> : <AuthStack />}
+    {/*<AppStack2 />*/}
     </NavigationContainer>
   );
 };
