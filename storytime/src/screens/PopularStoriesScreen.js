@@ -44,18 +44,13 @@ const PopularStoriesScreen = () => {
   };
 
   const loadMoreStories = () => {
-    if (hasMoreItem) {
-      setLoading(true);
-      setOffset(offset + 16);
-    } else {
-      setLoading(false);
-    }
-  };
-
-  window.onscroll = function () {
-    if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
-      loadMoreStories();
-    }
+    // if (hasMoreItem) {
+    //   setLoading(true);
+    //   setOffset(offset + 16);
+    // } else {
+    //   setLoading(false);
+    // }
+    alert("reached end...")
   };
 
   useEffect(() => {
@@ -74,6 +69,7 @@ const PopularStoriesScreen = () => {
             keyExtractor={item => item.id}
             data={popularStories}
             showsHorizontalScrollIndicator={false}
+            onEndReached={loadMoreStories}
             showsVerticalScrollIndicator={false}
             renderItem={({item}) => (
               <View>

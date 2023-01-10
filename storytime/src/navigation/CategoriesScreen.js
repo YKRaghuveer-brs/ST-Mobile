@@ -1,6 +1,7 @@
 import {
   ImageBackground,
   SafeAreaView,
+  StyleSheet,
   ScrollView,
   Text,
   TextInput,
@@ -12,6 +13,7 @@ import {
   Button,
 } from 'react-native';
 import React, {useContext, useState, useEffect} from 'react';
+
 import {truncateText} from '../utils/common';
 import {AuthContext} from '../context/AuthContext';
 
@@ -23,6 +25,8 @@ const fruitsArr = [
   {name: 'Grapes', key: 'F5'},
 ];
 
+const categoriesBg = [ "green", "red", "blue", "magenta",  "violet","coral"]
+
 const CategoriesScreen = ({navigation}) => {
   const {getPopularStories, HttpGet} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -31,7 +35,10 @@ const CategoriesScreen = ({navigation}) => {
   const getCategories = async () => {
     setLoading(true);
     const response = await HttpGet('categories');
-    setCategories(response);
+    const uddatedResponse = response.map((item, index) => {
+      return { ...item, background: categoriesBg[index] };
+    });
+    setCategories(uddatedResponse);
     setLoading(false);
   };
 
@@ -64,21 +71,23 @@ const CategoriesScreen = ({navigation}) => {
             numColumns={2}
             data={categories}
             keyExtractor={item => item.categoryid}
-            renderItem={({item}) => (
+            renderItem={({item, index}) => (
               <View
                 style={{
                   width: 180,
                   height: 180,
-                  backgroundColor: '#CB1C8D',
+                  backgroundColor: item.background,
                   marginBottom: 10,
                   marginRight: 10,
                 }}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Category', {item: item})}>
-                  <Text style={{fontSize: 18, color: '#fff', padding: 10}}>
-                    {item.category}
-                  </Text>
-                </TouchableOpacity>
+                   <ImageBackground source={require('../assets/images/spiral-edge.png')} style={{width: 180, height: 180}} resizeMode="cover">
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('Category', {item: item})}>
+                      <Text style={{fontSize: 18, color: '#fff', padding: 10}}>
+                        {item.category}
+                      </Text>
+                    </TouchableOpacity>
+                  </ImageBackground>
               </View>
             )}
           />
@@ -87,5 +96,44 @@ const CategoriesScreen = ({navigation}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginLeft: 60,
+    marginTop: 80,
+  },
+  header: {
+    fontWeight: "bold",
+    paddingBottom: 15,
+  },
+  heading: {
+    fontWeight: "bold",
+    fontSize: 25,
+    paddingBottom: 35,
+  },
+  category: {
+    width: "70%",
+    marginBottom: 10,
+    marginLeft: 50,
+  },
+  category1: {
+    backgroundColor: "yellow"
+  },
+  category2: {
+    backgroundColor: "red"
+  },
+  category3: {
+    backgroundColor: "green"
+  },
+  category4: {
+    backgroundColor: "cyan"
+  },
+  category5: {
+    backgroundColor: "violet"
+  },
+  category6: {
+    backgroundColor: "grey"
+  }
+});
 
 export default CategoriesScreen;
