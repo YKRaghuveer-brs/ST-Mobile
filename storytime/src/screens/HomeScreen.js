@@ -77,7 +77,7 @@ const renderItem = ({ item, index }) => {
     return (
       // <View style={{ marginBottom: 15 }}>
       <View style={{ flex: 1, marginBottom: 15 }}>
-        <Pressable onPress={() => navigation.navigate("PlayerScreen", { story: item })}>
+        <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
           <Image
             source={{
               uri: item.images[1].url,
