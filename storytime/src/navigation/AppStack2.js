@@ -13,6 +13,9 @@ import ProfileScreen1 from "../screens/ProfileScreen1";
 import PlayerScreen from "../screens/PlayerScreen";
 import TabNavigator from './TabNavigator';
 import HomeScreen from '../screens/HomeScreen';
+import PopularStoriesScreen from '../screens/PopularStoriesScreen';
+import CategoryScreen from '../screens/CategoryScreen';
+
 
 
 
@@ -22,7 +25,9 @@ const AuthStack = () => {
   return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="Home" component={TabNavigator} />
-    
+              <Stack.Screen name="Popular" component={PopularStoriesScreen} />
+              <Stack.Screen name="Player" component={PlayerScreen} />
+                                                                                <Stack.Screen name="Category" component={CategoryScreen} />
 
     </Stack.Navigator>
   );
