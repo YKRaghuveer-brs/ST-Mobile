@@ -10,97 +10,123 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import LibraryScreen from './LibraryScreen';
 import PopularStoriesScreen from '../screens/PopularStoriesScreen';
 import CategoryScreen from '../screens/CategoryScreen';
+import PlayerScreen from "../screens/PlayerScreen";
+import { Image } from "react-native";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        component={GameDetailsScreen}
-        name="GameDetails"
-        options={({route}) => ({
-          title: route.params?.title,
-        })}
-      />
-      <Stack.Screen
-        component={PopularStoriesScreen}
-        name="Popular"
-        // options={({route}) => ({
-        //   title: route.params?.title,
-        // })}
-      />
-      <Stack.Screen
-        component={CategoryScreen}
-        name="Category"
-        options={({route}) => ({
-          item: route.params?.item,
-        })}
-      />
-    </Stack.Navigator>
-  );
-};
 
 const TabNavigator = () => {
   return (
+    // <Tab.Navigator
+    //   screenOptions={{
+    //     tabBarShowLabel: false,
+    //     headerShown: false,
+    //     tabBarStyle: {backgroundColor: '#AD40AF'},
+    //     tabBarInactiveTintColor: 'black',
+    //     tabBarActiveTintColor: '#fff',
+    //   }}>
+    //   <Tab.Screen
+    //     name="Home2"
+    //     component={HomeStack}
+    //     options={({route}) => ({
+    //       tabBarStyle: {
+    //         display: getTabBarVisibility(route),
+    //         backgroundColor: '#AD40AF',
+    //       },
+    //       tabBarIcon: ({color, size}) => (
+    //         <Ionicons name="home-outline" color={color} size={size} />
+    //       ),
+    //     })}
+    //   />
+    //   <Tab.Screen
+    //     name="Categories"
+    //     component={CategoriesScreen}
+    //     options={{
+    //       tabBarIcon: ({color, size}) => (
+    //         <Ionicons name="layers-outline" color={color} size={size} />
+    //       ),
+    //     }}
+    //   />
+
+    //   <Tab.Screen
+    //     name="Authors"
+    //     component={AuthorsScreen}
+    //     options={{
+    //       tabBarIcon: ({color, size}) => (
+    //         <Ionicons name="person-outline" color={color} size={size} />
+    //       ),
+    //     }}
+    //   />
+    //   <Tab.Screen
+    //     name="Library"
+    //     component={LibraryScreen}
+    //     options={({route}) => ({
+    //       tabBarStyle: {
+    //         display: getTabBarVisibility(route),
+    //         backgroundColor: '#AD40AF',
+    //       },
+    //       tabBarIcon: ({color, size}) => (
+    //         <Ionicons name="library-outline" color={color} size={size} />
+    //       ),
+    //     })}
+    //   />
+    // </Tab.Navigator>
     <Tab.Navigator
-      screenOptions={{
-        tabBarShowLabel: false,
+        screenOptions={{
+        
         headerShown: false,
-        tabBarStyle: {backgroundColor: '#AD40AF'},
-        tabBarInactiveTintColor: 'black',
+        tabBarStyle: {backgroundColor: '#2A0D62'},
+        tabBarInactiveTintColor: '#fff',
         tabBarActiveTintColor: '#fff',
-      }}>
+       }}
+    >
       <Tab.Screen
-        name="Home2"
-        component={HomeStack}
-        options={({route}) => ({
-          tabBarStyle: {
-            display: getTabBarVisibility(route),
-            backgroundColor: '#AD40AF',
+        name="HomeTab"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Explore",
+          tabBarIcon: ({ focused }) => {
+            const image = focused ? require("../../assets/Images/storytime.png") : require("../../assets/Images/storytime.png");
+            return <Image source={image} style={{ height: 23, width: 23, resizeMode: "contain" }} />;
           },
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="home-outline" color={color} size={size} />
-          ),
-        })}
+        }}
       />
       <Tab.Screen
         name="Categories"
         component={CategoriesScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="layers-outline" color={color} size={size} />
-          ),
+          tabBarLabel: "Categories",
+          tabBarIcon: ({ focused }) => {
+            const image = focused ? require("../../assets/Images/category.png") : require("../../assets/Images/category.png");
+            return <Image source={image} style={{ height: 23, width: 23 }} />;
+          },
         }}
       />
-
       <Tab.Screen
         name="Authors"
         component={AuthorsScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="person-outline" color={color} size={size} />
-          ),
+          tabBarLabel: "Authors",
+          tabBarIcon: ({ focused }) => {
+            const image = focused ? require("../../assets/Images/Author1.png") : require("../../assets/Images/Author1.png");
+            return <Image source={image} style={{ height: 23, width: 23 }} />;
+          },
         }}
       />
+
       <Tab.Screen
         name="Library"
         component={LibraryScreen}
-        options={({route}) => ({
-          tabBarStyle: {
-            display: getTabBarVisibility(route),
-            backgroundColor: '#AD40AF',
+        options={{
+          tabBarLabel: "Library",
+          tabBarIcon: ({ focused }) => {
+            const image = focused ? require("../../assets/Images/Library1.png") : require("../../assets/Images/Library1.png");
+            return <Image source={image} style={{ height: 23, width: 23 }} />;
           },
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="library-outline" color={color} size={size} />
-          ),
-        })}
+        }}
       />
     </Tab.Navigator>
   );

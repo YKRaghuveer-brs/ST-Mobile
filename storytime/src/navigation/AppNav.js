@@ -3,10 +3,12 @@ import {View, Text, ActivityIndicator} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AddGifImage  from '../components/AddGifImage';
+
 
 import AuthStack from './AuthStack';
 
-import AppStack from './AppStack';
+import AppStack2 from './AppStack2';
 import {AuthContext} from '../context/AuthContext';
 const Stack = createNativeStackNavigator();
 const AppNav = () => {
@@ -22,7 +24,8 @@ const AppNav = () => {
 
   return (
     <NavigationContainer>
-      {userToken !== null ? <AppStack /> : <AuthStack />}
+      {/*{userToken !== null ? <AppStack2 /> : <AppStack2 />}*/}
+    <AppStack2 />
     </NavigationContainer>
   );
 };

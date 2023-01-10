@@ -12,6 +12,7 @@ import CustomDrawer from '../screens/CustomDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TabNavigator from './TabNavigator';
 
+
 const Drawer = createDrawerNavigator();
 
 // const Stack = createNativeStackNavigator();

@@ -64,7 +64,7 @@ const CategoriesScreen = ({navigation}) => {
               fontFamily: 'Roboto-Medium',
               marginBottom: 10,
             }}>
-            Categories
+            Categories1
           </Text>
           <FlatList
             horizontal={false}
