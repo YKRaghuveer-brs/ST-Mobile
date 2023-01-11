@@ -1,20 +1,11 @@
-import {View, Text} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import OnboardingScreen from '../screens/OnboardingScreen';
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import LoginScreen1 from "../screens/LoginScreen1";
-import RegisterScreen1 from "../screens/RegisterScreen1";
-import EmailVerification from "../screens/EmailVerification";
-import ForgotPassword from "../screens/ForgotPassword";
-import ResetPasswordVerification from "../screens/ResetPasswordVerification";
-import ResetPasswordScreen from "../screens/ResetPasswordScreen";
-import ProfileScreen1 from "../screens/ProfileScreen1";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TabNavigator from "./TabNavigator";
 import PlayerScreen from "../screens/PlayerScreen";
-import TabNavigator from './TabNavigator';
-import HomeScreen from '../screens/HomeScreen';
-import PopularStoriesScreen from '../screens/PopularStoriesScreen';
-import CategoryScreen from '../screens/CategoryScreen';
+import PopularStoriesScreen from "../screens/PopularStoriesScreen";
+import CategoryScreen from "../screens/CategoryScreen";
+import ProfileScreen1 from "../screens/ProfileScreen1";
+import Search from "../screens/Search";
+import AuthorStories from "../screens/AuthorStories";
 
 
 
@@ -23,11 +14,16 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   return (
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="Home" component={TabNavigator} />
-              <Stack.Screen name="Popular" component={PopularStoriesScreen} />
-              <Stack.Screen name="Player" component={PlayerScreen} />
-                                                                                <Stack.Screen name="Category" component={CategoryScreen} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={TabNavigator} />
+      <Stack.Screen name="Popular" component={PopularStoriesScreen} />
+      <Stack.Screen name="Player" component={PlayerScreen} />
+      <Stack.Screen name="Category" component={CategoryScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen1} />
+                        <Stack.Screen name="Search" component={Search} />
+                                                <Stack.Screen name="AuthorStories" component={AuthorStories} />
+
+
 
     </Stack.Navigator>
   );

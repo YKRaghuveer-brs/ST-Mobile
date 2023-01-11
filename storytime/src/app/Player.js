@@ -18,16 +18,19 @@ import { ViewPropTypes } from "deprecated-react-native-prop-types";
 import { ActionSheetCustom as ActionSheet } from "react-native-actionsheet";
 // import AuthContext from "../store/app-context";
 // import { baseURL, backendURL } from "@env";
+import {AuthContext} from '../context/AuthContext';
+
 import ToastManager, { Toast } from "toastify-react-native";
 import { save } from '../../assets/Images/save.png';
 import { saved } from '../../assets/Images/saved.png';
+import {BASE_URL} from '../config'
 
 
 
 const options = ["Cancel"];
 
 const Player = ({ tracks,story}) => {
-    // const authCtx = useContext(AuthContext);
+  const {user,HttpGet} = useContext(AuthContext);
 
   const [paused, setPaused] = useState(true);
   const [totalLength, setTotalLength] = useState(1);
@@ -56,17 +59,17 @@ const Player = ({ tracks,story}) => {
     }).start();
   }
 
-  // // get Library (Saved Stories)
-  // const getLibrary = async () => {
-  //   console.log("authCtx.user",authCtx.user)
-  //   const res = await authCtx.HttpGet("library");
-  //   console.log("res",res)
-  //   setUserStories(res.saved_stories)
-  // };
+  // get Library (Saved Stories)
+  const getLibrary = async () => {
+   
+    const res = await HttpGet("library");
+    console.log("res",res)
+    setUserStories(res.saved_stories)
+  };
 
   
   useEffect(() => {
-    // getLibrary();
+    getLibrary();
   }, []);
 
 
@@ -209,7 +212,7 @@ const Player = ({ tracks,story}) => {
     const obj = {};
     obj.saved_stories = user_stories;
     console.log("Updated_Stories----------------",user_stories)
-    axios.put(backendURL + "saveStory/" + authCtx.user._id, obj)
+    axios.put(BASE_URL + "saveStory/" + user._id, obj)
 
       .then((res) => {
         if (res) {

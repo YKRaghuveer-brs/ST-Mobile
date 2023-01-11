@@ -1,19 +1,288 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+// import {View, Text, TouchableOpacity} from 'react-native';
 
-const LibraryScreen = ({navigation}) => {
+// const LibraryScreen = ({navigation}) => {
+//   return (
+//     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+//       <Text style={{marginTop: 15, fontSize: 18, marginBottom: 10}}>
+//         The Library is currently empty
+//       </Text>
+//       <Text>Find more of the stories amoung our popular stories</Text>
+//       <TouchableOpacity onPress={() => navigation.navigate('Popular')}>
+//         <Text style={{marginTop: 15, fontSize: 18, color: '#0aada8'}}>
+//           Go To Popular Stories
+//         </Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
+
+// export default LibraryScreen;
+import React, { useState, useEffect, createRef, useContext } from "react";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  Pressable,
+  Dimensions,
+  FlatList,
+} from "react-native";
+import Spinner from "react-native-loading-spinner-overlay";
+import { AuthContext } from "../context/AuthContext";
+import tw from "twrnc";
+import * as Yup from "yup";
+
+// import { FlashList } from "@shopify/flash-list";
+
+const LibraryScreen = ({ navigation }) => {
+  const { HttpGet, spotifyGet } = useContext(AuthContext);
+  const [libraryList, setLibraryList] = useState([]);
+  const [libraryIdList, setLibraryIdList] = useState([]);
+  const [updatedLibraryList, setUpdatedLibraryList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [offset, setOffset] = useState(13);
+
+  // get Library (Saved Stories)
+  const getLibrary = async () => {
+    const res = await HttpGet("library");
+    console.log("res", res.saved_stories.length != 0);
+    if (res.saved_stories.length != 0) {
+      const { saved_stories } = res;
+      setLibraryIdList(saved_stories); //we get list of ID's from API
+    } else {
+      setLoading(false);
+    }
+  };
+
+  // Get shows based on ID
+  const getShowsByID = async (Ids) => {
+    const queryParams = { market: "IN", ids: Ids };
+    const response = await spotifyGet("shows", queryParams);
+    setLibraryList(response.shows);
+    setLoading(false);
+  };
+
+  // to apply pagination on scrolling
+  const getUpdatedList = () => {
+    const newList = libraryList.slice([0], [offset]).map((item) => item);
+    setUpdatedLibraryList(newList);
+  };
+
+  const loadMoreStories = () => {
+    setOffset(offset + 13);
+  };
+
+  window.onscroll = function () {
+    if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
+      loadMoreStories();
+    }
+  };
+
+  useEffect(() => {
+    getLibrary();
+  }, []);
+
+  useEffect(() => {
+    if (libraryIdList && libraryIdList.length) {
+      const newList = libraryIdList.toString();
+      getShowsByID(newList);
+    }
+  }, [libraryIdList]);
+
+  useEffect(() => {
+    getUpdatedList();
+  }, [offset, libraryList]);
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={{ marginBottom: 15, paddingLeft: 13 }}>
+        <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+          <Image
+            source={{
+              uri: item.images[1].url,
+            }}
+            style={{
+              width: 170,
+              height: 170,
+              borderRadius: 5,
+            }}
+          />
+
+          <Text
+            numberOfLines={1}
+            style={{
+              width: 100,
+              color: "#fff",
+              paddingTop: 5,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {item.name}
+          </Text>
+          <Text style={{ color: "#fff", paddingTop: 2, fontSize: 12 }}>{item.publisher}</Text>
+        </Pressable>
+      </View>
+    );
+  };
+
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{marginTop: 15, fontSize: 18, marginBottom: 10}}>
-        The Library is currently empty
-      </Text>
-      <Text>Find more of the stories amoung our popular stories</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Popular')}>
-        <Text style={{marginTop: 15, fontSize: 18, color: '#0aada8'}}>
-          Go To Popular Stories
-        </Text>
-      </TouchableOpacity>
+    <View style={tw`flex-1 bg-[#291F4E] text-white`}>
+      {loading ? (
+        <View style={styles.loader}>
+          <Image
+            style={{ width: 100, height: 100 }}
+            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
+            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+          />
+        </View>
+      ) : (
+        ""
+      )}
+      <SafeAreaView
+      // keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.navBar}>
+          <View style={styles.leftContainer}>
+            <Pressable onPress={() => navigation.navigate("Home")}>
+              <Text style={tw`text-xl text-white font-bold ml-4 mt-6 mb-3`}>Saved Stories</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.rightContainer}></View>
+        </View>
+
+        {libraryIdList && libraryIdList.length > 0 && !loading && (
+          <View
+            style={{
+              marginTop: 10,
+              height: "100%",
+              marginTop: 10,
+              width: Dimensions.get("screen").width,
+            }}
+          >
+            <FlatList
+              numColumns={2}
+              data={updatedLibraryList}
+              // renderItem={list_stories(story)}
+              renderItem={(item) => renderItem(item)}
+              estimatedItemSize={100}
+            />
+          </View>
+        )}
+
+        {libraryIdList && libraryIdList.length > 0 && !loading && (
+          <View
+            style={{
+              marginTop: 10,
+              height: "100%",
+              marginTop: 10,
+              width: Dimensions.get("screen").width,
+            }}
+          >
+            <FlatList
+              numColumns={2}
+              data={updatedLibraryList}
+              // renderItem={list_stories(story)}
+              renderItem={(item) => renderItem(item)}
+              estimatedItemSize={100}
+            />
+          </View>
+        )}
+
+        {libraryIdList.length === 0 && !loading && (
+          <View
+            style={{
+              marginTop: 250,
+              justifyContent: "center",
+              alignItems: "center",
+              
+            }}
+          >
+            <Text style={{color:"#fff", marginTop: 15, fontSize: 18, marginBottom: 10 }}>
+              The Library is currently empty
+            </Text>
+            <Text style={{color:"#fff"}}>Find more of the stories amoung our popular stories</Text>
+            <Pressable onPress={() => navigation.navigate("Popular")}>
+              <Text style={{ marginTop: 15, fontSize: 18, color: "#0aada8" }}>
+                Go To Popular Stories
+              </Text>
+            </Pressable>
+          </View>
+        )}
+
+        {/*<View style={styles.half_circle}></View>*/}
+      </SafeAreaView>
     </View>
   );
 };
-
 export default LibraryScreen;
+
+const styles = StyleSheet.create({
+  mainBody: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    alignContent: "center",
+  },
+  SectionStyle: {
+    flexDirection: "row",
+    height: 40,
+    marginTop: 20,
+    marginLeft: 35,
+    marginRight: 35,
+    margin: 10,
+  },
+  buttonStyle: {
+    backgroundColor: "#2A0D62",
+    borderWidth: 0,
+    color: "#FFFFFF",
+    borderColor: "#fcc630",
+    height: 40,
+    alignItems: "center",
+    borderRadius: 10,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 20,
+    marginBottom: 25,
+  },
+  buttonTextStyle: {
+    color: "#FFFFFF",
+    paddingVertical: 10,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  navBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  leftContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+  rightContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  rightIcon: {
+    height: 10,
+    width: 10,
+    resizeMode: "contain",
+    backgroundColor: "white",
+  },
+  loader: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 20,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

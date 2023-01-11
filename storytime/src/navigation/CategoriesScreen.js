@@ -16,14 +16,7 @@ import React, {useContext, useState, useEffect} from 'react';
 
 import {truncateText} from '../utils/common';
 import {AuthContext} from '../context/AuthContext';
-
-const fruitsArr = [
-  {name: 'Apple', key: 'F1'},
-  {name: 'Orange', key: 'F2'},
-  {name: 'Jackfruit', key: 'F3'},
-  {name: 'Pomegranate', key: 'F4'},
-  {name: 'Grapes', key: 'F5'},
-];
+import tw from 'twrnc';
 
 const categoriesBg = [ "green", "red", "blue", "magenta",  "violet","coral"]
 
@@ -109,14 +102,32 @@ const CategoriesScreen = ({navigation}) => {
 
 
       {loading ? (
-        <ActivityIndicator />
+          <View
+            style={{
+              position: "absolute",
+              zIndex: 2,
+              left: 0,
+              right: 0,
+              top: 40,
+              bottom: 0,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              style={{ width: 100, height: 100 }}
+              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
+              source={require("../../assets/Images/Spiral_logo_loader.gif")}
+            />
+          </View>
       ) : (
-        <View>
+        <View style={tw`ml-2`}>
           <Text
             style={{
               fontSize: 18,
               fontFamily: 'Roboto-Medium',
               marginBottom: 10,
+              color:"#fff"
             }}>
             Categories
           </Text>
