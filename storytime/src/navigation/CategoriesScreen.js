@@ -28,7 +28,8 @@ const fruitsArr = [
 const categoriesBg = [ "green", "red", "blue", "magenta",  "violet","coral"]
 
 const CategoriesScreen = ({navigation}) => {
-  const {getPopularStories, HttpGet} = useContext(AuthContext);
+  const {getPopularStories, HttpGet, languages, selectLanguages, selectedLanguages} = useContext(AuthContext);
+  console.log(languages);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -45,15 +46,68 @@ const CategoriesScreen = ({navigation}) => {
   useEffect(() => {
     getCategories();
   }, []);
+  
+
+
+  const getSelected = () => {
+    console.log(selectedLanguages);
+  }
 
   return (
+    <View >
+
+    <Text style={{ marginTop: 15, marginLeft: 10, fontSize: 18, fontFamily: 'Roboto-Medium', marginBottom: 10 }}> Languages </Text>
+    <View style={{
+      flexDirection: "row",
+      justifyContent: 'center',
+    }}>
+      {/* <Button  title='Get Selected' onPress={getSelected}></Button> */}
+                    {languages.map((language, index) => {
+                      return (
+                        <View key={language.id}>
+                          {language.isActive ? (
+                            <View style={{marginRight: 12, padding: 5}} >
+                            <Button
+                            color="green"
+                            title={language.name}
+                            onPress={() => {
+                              language.isActive = false;
+                              selectLanguages((prevState) =>
+                              prevState.filter((item) => {
+                                return item.id !== language.id;
+                              })
+                              );
+                            }}
+                            >
+                            </Button>
+                              </View>
+                          ) : (
+                            <View style={{marginRight: 12, padding: 5}} >
+                            <Button
+                            color="grey"
+                            title={language.name}
+                            onPress={() =>
+                              selectLanguages((prevState) => {
+                                language.isActive = true;
+                                return [...prevState, language];
+                              })
+                            }
+                            >
+                            </Button>
+                          </View>
+                          )}
+                        </View>
+                      );
+                    })}
+                  </View>
     <View
       style={{
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 25,
       }}>
+
+
       {loading ? (
         <ActivityIndicator />
       ) : (
@@ -64,7 +118,7 @@ const CategoriesScreen = ({navigation}) => {
               fontFamily: 'Roboto-Medium',
               marginBottom: 10,
             }}>
-            Categories1
+            Categories
           </Text>
           <FlatList
             horizontal={false}
@@ -73,7 +127,7 @@ const CategoriesScreen = ({navigation}) => {
             keyExtractor={item => item.categoryid}
             renderItem={({item, index}) => (
               <View
-                style={{
+              style={{
                   width: 180,
                   height: 180,
                   backgroundColor: item.background,
@@ -94,6 +148,7 @@ const CategoriesScreen = ({navigation}) => {
         </View>
       )}
     </View>
+  </View>
   );
 };
 

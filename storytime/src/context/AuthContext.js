@@ -6,16 +6,49 @@ import {Alert} from 'react-native';
 import queryString from 'query-string';
 import ToastManager, { Toast } from "toastify-react-native";
 
+// List of allowed languages
+const languagesList = [
+  {
+    id: "l1",
+    name: "Hindi",
+    languageCode: "hi",
+    isActive: false,
+    bg: "bg-purple",
+  },
+  {
+    id: "l2",
+    name: "Tamil",
+    languageCode: "ta",
+    isActive: false,
+    bg: "bg-lime-400",
+  },
+  {
+    id: "l3",
+    name: "Telugu",
+    languageCode: "te",
+    isActive: false,
+    bg: "bg-darkBlue",
+  },
+  {
+    id: "l4",
+    name: "English",
+    languageCode: "en en-US en-AU en-GB",
+    isActive: false,
+    bg: "bg-purple",
+  },
+];
 
 export const AuthContext = createContext();
 
 const spotifyURL = 'https://api.spotify.com/v1/';
-const backendURL = 'http://203.193.173.125:6969/';
+const backendURL = 'http://192.168.225.155:6969/';
 
 export const AuthProvider = ({children}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [selectedLang, setSelectedLang] = useState([]);
+  const [allowedLangages, setAllowedLanguages] = useState([]);
 
   const makeHeaders = async () => {
     let token = await AsyncStorage.getItem('userToken');
@@ -98,7 +131,7 @@ export const AuthProvider = ({children}) => {
     console.log(payload);
     try {
       const response = await axios.post(
-        'http://203.193.173.125:6969/login',
+        'http://192.168.225.155:6969/login',
         payload,
       );
       console.log("response",response)
@@ -123,17 +156,26 @@ export const AuthProvider = ({children}) => {
   };
 
   const logout = () => {
+    setSelectedLang([]);
     setIsLoading(true);
     setUserToken(null);
     AsyncStorage.removeItem('userInfo');
     AsyncStorage.removeItem('userToken');
     setIsLoading(false);
+    setAllowedLanguages([]);
   };
+
+  useEffect(() => {
+    if (userToken) {
+      const newList = JSON.parse(JSON.stringify(languagesList));
+      setAllowedLanguages(newList);
+    }
+  }, [userToken]);
 
   // SPOTIFY HTTP METHOD
   const spotifyGet = async (path, params) => {
         const URL = await makeSpotifyUrl(path, params);
-        console.log("URLlllllllllllllllllllllllllllllllllllllllllllllllllllllll",URL)
+        console.log("URL",URL)
     // setLoading(true);
     try {
       // return await HttpHelper.SpotifyHttpGet(path, params);
@@ -215,7 +257,7 @@ export const AuthProvider = ({children}) => {
 
   return (
     <AuthContext.Provider
-      value={{login, logout, spotifySearch,spotifyGet, HttpGet, isLoading, userToken}}>
+      value={{login, logout, spotifySearch,spotifyGet, HttpGet,     selectedLanguages: selectedLang,    selectLanguages: setSelectedLang,  languages: allowedLangages, isLoading, userToken}}>
       {children}
     </AuthContext.Provider>
   );
