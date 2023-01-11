@@ -1,22 +1,20 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
-import AuthorsScreen from './AuthorsScreen';
-import CategoriesScreen from './CategoriesScreen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import GameDetailsScreen from '../screens/GameDetailsScreen';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import LibraryScreen from './LibraryScreen';
-import PopularStoriesScreen from '../screens/PopularStoriesScreen';
-import CategoryScreen from '../screens/CategoryScreen';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import HomeScreen from "../screens/HomeScreen";
+import AuthorsScreen from "./AuthorsScreen";
+import CategoriesScreen from "./CategoriesScreen";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
+import GameDetailsScreen from "../screens/GameDetailsScreen";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import LibraryScreen from "./LibraryScreen";
+import PopularStoriesScreen from "../screens/PopularStoriesScreen";
+import CategoryScreen from "../screens/CategoryScreen";
 import PlayerScreen from "../screens/PlayerScreen";
 import { Image } from "react-native";
 
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
 
 const TabNavigator = () => {
   return (
@@ -75,13 +73,12 @@ const TabNavigator = () => {
     //   />
     // </Tab.Navigator>
     <Tab.Navigator
-        screenOptions={{
-        
+      screenOptions={{
         headerShown: false,
-        tabBarStyle: {backgroundColor: '#2A0D62'},
-        tabBarInactiveTintColor: '#fff',
-        tabBarActiveTintColor: '#fff',
-       }}
+        tabBarStyle: { backgroundColor: "#2A0D62" },
+        tabBarInactiveTintColor: "#fff",
+        tabBarActiveTintColor: "#fff",
+      }}
     >
       <Tab.Screen
         name="HomeTab"
@@ -89,8 +86,15 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Explore",
           tabBarIcon: ({ focused }) => {
-            const image = focused ? require("../../assets/Images/storytime.png") : require("../../assets/Images/storytime.png");
-            return <Image source={image} style={{ height: 23, width: 23, resizeMode: "contain" }} />;
+            const image = focused
+              ? require("../../assets/Images/storytime.png")
+              : require("../../assets/Images/storytime.png");
+            return (
+              <Image
+                source={image}
+                style={{ height: 23, width: 23, resizeMode: "contain" }}
+              />
+            );
           },
         }}
       />
@@ -100,7 +104,9 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Categories",
           tabBarIcon: ({ focused }) => {
-            const image = focused ? require("../../assets/Images/category.png") : require("../../assets/Images/category.png");
+            const image = focused
+              ? require("../../assets/Images/category.png")
+              : require("../../assets/Images/category.png");
             return <Image source={image} style={{ height: 23, width: 23 }} />;
           },
         }}
@@ -111,7 +117,9 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Authors",
           tabBarIcon: ({ focused }) => {
-            const image = focused ? require("../../assets/Images/Author1.png") : require("../../assets/Images/Author1.png");
+            const image = focused
+              ? require("../../assets/Images/Author1.png")
+              : require("../../assets/Images/Author1.png");
             return <Image source={image} style={{ height: 23, width: 23 }} />;
           },
         }}
@@ -123,7 +131,9 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: "Library",
           tabBarIcon: ({ focused }) => {
-            const image = focused ? require("../../assets/Images/Library1.png") : require("../../assets/Images/Library1.png");
+            const image = focused
+              ? require("../../assets/Images/Library1.png")
+              : require("../../assets/Images/Library1.png");
             return <Image source={image} style={{ height: 23, width: 23 }} />;
           },
         }}
@@ -132,14 +142,14 @@ const TabNavigator = () => {
   );
 };
 
-const getTabBarVisibility = route => {
+const getTabBarVisibility = (route) => {
   // console.log(route);
-  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
   // console.log(routeName);
-  if (routeName === 'GameDetails') {
-    return 'none';
+  if (routeName === "GameDetails") {
+    return "none";
   } else {
-    return 'flex';
+    return "flex";
   }
 };
 

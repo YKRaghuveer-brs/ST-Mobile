@@ -12,13 +12,6 @@ import {
   Animated,
   FlatList,
 } from "react-native";
-import Slider from "@react-native-community/slider";
-
-// import { Feather } from "@expo/vector-icons";
-// import { AntDesign } from "@expo/vector-icons";
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
-// import { Entypo } from "@expo/vector-icons";
-// import { Ionicons } from "@expo/vector-icons";
 import songs from "../model/data";
 import Player from "../app/Player";
 import { AuthContext } from '../context/AuthContext';

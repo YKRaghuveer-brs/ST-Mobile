@@ -1,30 +1,39 @@
 import React, { useState, useEffect, createRef, useContext } from "react";
-import { StyleSheet, TextInput, View, Text, ScrollView, Image, Button, Pressable } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  Button,
+  Pressable,
+} from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
-// import AuthContext from "../../store/app-context";
+import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../config";
 
 const ProfileScreen1 = ({ navigation }) => {
-  // const ctx = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState([]);
-  const [isSubmit,setIsSubmit] = useState(false);
+  // const [user, setUser] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const FirstRoute = () => <View style={[styles.scene, { backgroundColor: "#ff4081" }]} />;
   const SecondRoute = () => <View style={[styles.scene, { backgroundColor: "#673ab7" }]} />;
 
   useEffect(() => {
     setLoading(true);
-    // setUser(ctx.user);
+
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    // storeData()
   }, []);
 
   // Form Validation
@@ -55,7 +64,9 @@ const ProfileScreen1 = ({ navigation }) => {
     const response = await ctx.HttpPost("login", payload);
     if (response) {
       const expirationTime = new Date(new Date().getTime() + response.usertokenExp * 1000);
-      const spotifyExpirationTime = new Date(new Date().getTime() + response.spotifytoken.expires_in * 1000);
+      const spotifyExpirationTime = new Date(
+        new Date().getTime() + response.spotifytoken.expires_in * 1000
+      );
       ctx.login(
         response.token,
         expirationTime.toISOString(),
@@ -69,14 +80,24 @@ const ProfileScreen1 = ({ navigation }) => {
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
       {loading && (
-        <Spinner
-          //visibility of Overlay Loading Spinner
-          visible={true}
-          //Text with the Spinner
-          // textContent={'Loading...'}
-          //Text style of the Spinner Text
-          textStyle={{ color: "#FFF" }}
-        />
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 2,
+            left: 0,
+            right: 0,
+            top: 40,
+            bottom: 0,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            style={{ width: 100, height: 100 }}
+            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
+            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+          />
+        </View>
       )}
       <ScrollView
         // keyboardShouldPersistTaps="handled"
@@ -130,13 +151,27 @@ const ProfileScreen1 = ({ navigation }) => {
             validationSchema={validateSchema}
             initialValues={initialValues}
             onSubmit={async (values) => {
-                const response = await ctx.HttpPut(`updateUser/${user._id}`, values);
-                if (response) {
-                Toast.success("Update your data successfully");
-                }
-                setTimeout(() => {
-                 setIsSubmit(false)
-                }, 5000);
+              // const response = await axios.put(`updateUser/${user._id}`, values);
+              //     axios.put(BASE_URL + "updateUser/" + user._id, values)
+
+              // if (response) {
+              // Toast.success("Update your data successfully");
+              // }
+              // setTimeout(() => {
+              //  setIsSubmit(false)
+              // }, 5000);
+              axios.put(BASE_URL + "updateUser/" + user._id, values)
+                .then((res) => {
+                  if (res) {
+                    Toast.success("Update your data successfully");
+                  }
+                  setTimeout(() => {
+                    setIsSubmit(false);
+                  }, 5000);
+                })
+                .catch((error) => {
+                  Toast.error(error.response.data);
+                });
             }}
 
             // onSubmit={async (values) => {
@@ -250,16 +285,16 @@ const ProfileScreen1 = ({ navigation }) => {
                   />
                 </View>
                 <View>
-                  {errors.last_name && <Text style={tw`text-red-600 text-xs ml-8`}>{errors.last_name}</Text>}
+                  {errors.last_name && (
+                    <Text style={tw`text-red-600 text-xs ml-8`}>{errors.last_name}</Text>
+                  )}
                 </View>
 
                 <Pressable
                   style={tw`bg-[#2A0D62] h-10 mt-4 ml-8 mr-8 mb-2 flex items-center rounded`}
                   activeOpacity={0.5}
                   onPress={handleSubmit}
-                                  disabled={isSubmit}
-
-
+                  disabled={isSubmit}
 
                   // onPress={handleSubmitPress}
                 >
