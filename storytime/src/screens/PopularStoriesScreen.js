@@ -38,24 +38,41 @@ const PopularStoriesScreen = () => {
     };
 
     const response = await spotifySearch(search, queryParams);
-    setPopularStories(response.shows.items);
-    console.log(response);
+
+
+    const removeExplicitStories = response.shows.items.filter(
+      (story) => !story.explicit
+    );
+    if (response.shows.items.length > 0 || response.next) {
+      filteredStories([...popularStories, ...removeExplicitStories]);
+    } else {
+      setHasMoreItems(false);
+      return false;
+    }
+    
+    // setPopularStories(response.shows.items);
+    // console.log(response);
     setLoading(false);
   };
 
+  const filteredStories = (list) => {
+    let removedDuplicates = list.filter(
+      (story, index) => index === list.findIndex((elem) => elem.id === story.id)
+    );
+    setPopularStories(removedDuplicates);
+  };
+
   const loadMoreStories = () => {
-    // if (hasMoreItem) {
-    //   setLoading(true);
-    //   setOffset(offset + 16);
-    // } else {
-    //   setLoading(false);
-    // }
-    alert("reached end...")
+    if (hasMoreItem) {
+      // setLoading(true);
+      setOffset(offset + 16);
+    } 
+    // alert("reached end...")
   };
 
   useEffect(() => {
     getAllPopularShows();
-  }, []);
+  }, [offset]);
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
