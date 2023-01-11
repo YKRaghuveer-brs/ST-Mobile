@@ -137,7 +137,9 @@ const CategoryScreen = ({navigation, route}) => {
               source={require("../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>
-      ) : (
+     ) : (
+        ""
+      )}
 
         <View>
         <View>
@@ -150,7 +152,7 @@ const CategoryScreen = ({navigation, route}) => {
           <FlatList
             horizontal={false}
             numColumns={2}
-            keyExtractor={item => item.id}
+            keyExtractor={(item, index) => index}
             data={shows}
             showsHorizontalScrollIndicator={false}
             onEndReached={loadMoreStories}
@@ -183,7 +185,7 @@ const CategoryScreen = ({navigation, route}) => {
           />
         </View>
         </View>
-      )}
+     
     </View>
   );
 };

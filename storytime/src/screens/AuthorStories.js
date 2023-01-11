@@ -26,6 +26,8 @@ import {
 import Spinner from "react-native-loading-spinner-overlay";
 import { AuthContext } from "../context/AuthContext";
 import tw from "twrnc";
+import { truncateText } from "../utils/common";
+
 
 const AuthorStories = ({ route, navigation }) => {
   const { publisher } = route.params;
@@ -129,9 +131,20 @@ const AuthorStories = ({ route, navigation }) => {
   };
 
   return (
-    <View style={tw`flex-1 bg-[#291F4E] pt-12 text-white`}>
+    <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
       {loading ? (
-        <View style={styles.loader}>
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 2,
+            left: 0,
+            right: 0,
+            top: 40,
+            bottom: 0,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Image
             style={{ width: 100, height: 100 }}
             // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
@@ -141,103 +154,74 @@ const AuthorStories = ({ route, navigation }) => {
       ) : (
         ""
       )}
-      <SafeAreaView
-      // keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.navBar}>
-          <View style={styles.leftContainer}>
-            <Pressable onPress={() => navigation.goBack()}>
-              <Text
-                style={[
-                  {
-                    textAlign: "left",
-                    fontSize: 15,
-                    padding: 5,
-                    color: "#fff",
-                    backgroundColor: "#FFFFFF3E",
-                    marginLeft: 13,
-                  },
-                ]}
-              >
-                {"<"} Authors
-              </Text>
-            </Pressable>
-          </View>
-          <Text style={tw`text-xl text-white font-bold content-center  `}>Author Stories</Text>
 
-          <View style={styles.rightContainer}></View>
+       <View style={styles.navBar}>
+        <View style={styles.leftContainer}>
+          <Pressable onPress={() => navigation.navigate("Home")}>
+            <Text
+              style={[
+                {
+                  textAlign: "left",
+                  fontSize: 15,
+                  padding: 5,
+                  color: "#fff",
+                  backgroundColor: "#FFFFFF3E",
+                  marginLeft: 10,
+                },
+              ]}
+            >
+              {"<"} Explore
+            </Text>
+          </Pressable>
         </View>
+        <Text style={tw`text-xl text-white font-bold content-center  `}>Author Stories</Text>
+        <View style={styles.rightContainer}></View>
+      </View>
 
-        <View
-          style={{
-            height: "100%",
-            width: Dimensions.get("screen").width,
-            marginTop: 10,
-          }}
-        >
-          <FlatList
-            nestedScrollEnabled
-            numColumns={2}
+      <View style={{marginBottom: 90,marginLeft:15 }}>
+        <FlatList
+          horizontal={false}
+          numColumns={2}
             keyExtractor={(item, index) => index}
-            data={authorStories}
-            estimatedItemSize={100}
-            renderItem={(item) => renderItem(item)}
-            initialNumToRender={30}
-            // keyExtractor={(item, index) => item.id.toString()}
-            onEndReached={loadMoreStories}
-            onEndReachedThreshold={0.1}
-            // ListFooterComponent={renderFooter}
-            // onEndReached={loadMoreStories}
-            // onEndReachedThreshold={0.5}
-            // ItemSeparatorComponent={() => <View style={styles.separator} />}
-            // ListFooterComponent={() => renderFooter()}
-            refreshing={true}
-          />
-        </View>
-      </SafeAreaView>
+          data={authorStories}
+          showsHorizontalScrollIndicator={false}
+          onEndReached={loadMoreStories}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <View>
+              <Image
+                source={{ uri: item.images[1].url }}
+                style={{
+                  width: 175,
+                  height: 180,
+                  borderRadius: 10,
+                  marginRight: 8,
+                }}
+              />
+            
+              <Text style={{ fontSize: 18,color:"#fff",marginBottom:3}}>
+                {truncateText(item.name, 20)}
+              </Text>
+
+                <Text style={{ fontSize: 14,color:"#fff",marginBottom:15 }}>
+                {truncateText(item.publisher, 16)}
+              </Text>
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };
 export default AuthorStories;
 
 const styles = StyleSheet.create({
-  mainBody: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#fff",
-    alignContent: "center",
-  },
-  SectionStyle: {
-    flexDirection: "row",
-    height: 40,
-    marginTop: 20,
-    marginLeft: 35,
-    marginRight: 35,
-    margin: 10,
-  },
-  buttonStyle: {
-    backgroundColor: "#2A0D62",
-    borderWidth: 0,
-    color: "#FFFFFF",
-    borderColor: "#fcc630",
-    height: 40,
-    alignItems: "center",
-    borderRadius: 10,
-    marginLeft: 35,
-    marginRight: 35,
-    marginTop: 20,
-    marginBottom: 25,
-  },
-  buttonTextStyle: {
-    color: "#FFFFFF",
-    paddingVertical: 10,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
+
   navBar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    // alignItems: "center",
+    marginBottom: 20,
   },
   leftContainer: {
     flex: 1,
@@ -250,23 +234,5 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  rightIcon: {
-    height: 10,
-    width: 10,
-    resizeMode: "contain",
-    backgroundColor: "white",
-  },
-  loader: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 20,
-    bottom: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  separator: {
-    height: 0.5,
-    backgroundColor: "rgba(0,0,0,0.4)",
-  },
+
 });

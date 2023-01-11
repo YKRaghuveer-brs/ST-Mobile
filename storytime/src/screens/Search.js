@@ -4,7 +4,7 @@ import {
   TextInput,
   View,
   Text,
-  ScrollView,
+  SafeAreaView,
   Image,
   Pressable,
   ActivityIndicator,FlatList
@@ -12,6 +12,8 @@ import {
 import Spinner from "react-native-loading-spinner-overlay";
 import { AuthContext } from "../context/AuthContext";
 import tw from "twrnc";
+import { truncateText } from "../utils/common";
+
 
 const Search = ({ route,navigation }) => {
   const { spotifySearch, logout } = useContext(AuthContext);
@@ -36,7 +38,7 @@ const Search = ({ route,navigation }) => {
 
    useEffect(() => {
     getSearchData();
-  }, []);
+  }, [storiesList]);
 
   // OnLoad Page get Authors,Stories,EPisodes data by Search API
   const getSearchData = async () => {
@@ -175,9 +177,118 @@ const Search = ({ route,navigation }) => {
   // }
 
   return (
-    <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
+    // <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
+    //   {loading ? (
+    //      <View
+    //       style={{
+    //         position: "absolute",
+    //         zIndex: 2,
+    //         left: 0,
+    //         right: 0,
+    //         top: 40,
+    //         bottom: 0,
+    //         alignItems: "center",
+    //         justifyContent: "center",
+    //       }}
+    //     >
+    //       <Image
+    //         style={{ width: 100, height: 100 }}
+    //         // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
+    //         source={require("../../assets/Images/Spiral_logo_loader.gif")}
+    //       />
+    //     </View>
+    //   ) : (
+    //     ""
+    //   )}
+    //   <SafeAreaView
+    //   // keyboardShouldPersistTaps="handled"
+    //   >
+    //     <View style={styles.navBar}>
+    //       <View style={styles.leftContainer}>
+    //         <Pressable onPress={() => navigation.navigate("Home")}>
+    //           <Text
+    //             style={[
+    //               {
+    //                 textAlign: "left",
+    //                 fontSize: 15,
+    //                 padding: 5,
+    //                 color: "#fff",
+    //                 backgroundColor: "#FFFFFF3E",
+    //                 marginLeft: 13,
+    //               },
+    //             ]}
+    //           >
+    //             {"<"} Explore
+    //           </Text>
+    //         </Pressable>
+    //       </View>
+    //       <Text style={tw`text-xl text-white font-bold content-center  `}>
+    //         Search Results {route.params.searchTerm}
+    //       </Text>
+
+    //       <View style={styles.rightContainer}></View>
+    //     </View>
+
+    //      <View style={styles.navBar}>
+    //       <View style={styles.leftContainer}>
+          
+    //           <Text style={tw`text-xl text-white font-bold ml-4 mt-6 mb-4`}>
+    //             Stories
+    //           </Text>
+    //       </View>
+
+    //       <View style={styles.rightContainer}></View>
+    //     </View>
+
+    //     <View style={{ marginTop: 10 }}>
+    //       <FlatList
+    //         // numColumns={2}
+    //         // keyExtractor={(item, index) => index}
+    //         // data={storiesList}
+    //         // estimatedItemSize={100}
+    //         // renderItem={(item) => renderItem(item)}
+    //         // onEndReached={loadMoreStories}
+    //         // onEndReachedThreshold={0.5}
+    //         // ItemSeparatorComponent={() => <View style={styles.separator} />}
+    //         // // ListFooterComponent={() => renderFooter()}
+    //         // refreshing={true}
+
+    //          nestedScrollEnabled
+    //         numColumns={2}
+    //         keyExtractor={(item, index) => index}
+    //         data={storiesList}
+    //         estimatedItemSize={100}
+    //         renderItem={(item) => renderItem(item)}
+    //         initialNumToRender={30}
+    //         // keyExtractor={(item, index) => item.id.toString()}
+    //         onEndReached={loadMoreStories}
+    //         onEndReachedThreshold={0.5}
+    //         // ListFooterComponent={renderFooter}
+    //         // onEndReached={loadMoreStories}
+    //         // onEndReachedThreshold={0.5}
+    //         // ItemSeparatorComponent={() => <View style={styles.separator} />}
+    //         // ListFooterComponent={() => renderFooter()}
+    //         refreshing={true}
+    //       />
+    //     </View>
+    //     {/*<View style={styles.half_circle}></View>*/}
+    //   </SafeAreaView>
+    // </View>
+
+      <View style={tw`flex-1 bg-[#291F4E] pt-4`}>
       {loading ? (
-        <View style={styles.loader}>
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 2,
+            left: 0,
+            right: 0,
+            top: 40,
+            bottom: 0,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Image
             style={{ width: 100, height: 100 }}
             // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
@@ -185,15 +296,11 @@ const Search = ({ route,navigation }) => {
           />
         </View>
       ) : (
-        ""
-      )}
-      <ScrollView
-      // keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.navBar}>
-          <View style={styles.leftContainer}>
-            <Pressable onPress={() => navigation.navigate("Home")}>
-              <Text
+        <View>
+               <View style={styles.navBar}>
+        <View style={styles.leftContainer}>
+           <Pressable onPress={() => navigation.navigate("Home")}>
+             <Text
                 style={[
                   {
                     textAlign: "left",
@@ -219,7 +326,7 @@ const Search = ({ route,navigation }) => {
          <View style={styles.navBar}>
           <View style={styles.leftContainer}>
           
-              <Text style={tw`text-xl text-white font-bold ml-4 mt-6 mb-4`}>
+              <Text style={tw`text-xl text-white font-bold ml-4`}>
                 Stories
               </Text>
           </View>
@@ -227,22 +334,47 @@ const Search = ({ route,navigation }) => {
           <View style={styles.rightContainer}></View>
         </View>
 
-        <View style={{ marginTop: 10 }}>
-          <FlatList
-            numColumns={2}
-            keyExtractor={(item, index) => index}
-            data={storiesList}
-            estimatedItemSize={100}
-            renderItem={(item) => renderItem(item)}
-            onEndReached={loadMoreStories}
-            onEndReachedThreshold={0.5}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            // ListFooterComponent={() => renderFooter()}
-            refreshing={true}
-          />
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: 200,
+              marginTop: 10,
+            }}
+          >
+            <FlatList
+              horizontal={false}
+              numColumns={2}
+              keyExtractor={(item) => item.id}
+              data={storiesList}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <View>
+                        <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+
+                  <Image
+                    source={{ uri: item.images[1].url }}
+                    style={{
+                      width: 175,
+                      height: 180,
+                      borderRadius: 10,
+                      marginRight: 8,
+                    }}
+                  />
+                   <Text style={{ fontSize: 16,color:"#fff",marginBottom:4 }}>
+                    {truncateText(item.name, 24)}
+                  </Text>
+                  <Text style={{ fontSize: 13,color:"#fff",marginBottom:12 }}>
+                    {truncateText(item.publisher, 24)}
+                  </Text>
+                 </Pressable>
+                </View>
+              )}
+            />
+          </View>
         </View>
-        {/*<View style={styles.half_circle}></View>*/}
-      </ScrollView>
+      )}
     </View>
   );
 };

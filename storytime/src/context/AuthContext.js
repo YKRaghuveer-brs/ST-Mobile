@@ -41,7 +41,7 @@ const languagesList = [
 export const AuthContext = createContext();
 
 const spotifyURL = 'https://api.spotify.com/v1/';
-const backendURL = 'http://192.168.225.155:6969/';
+const backendURL = 'http://203.193.173.125:6969/';
 
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }) => {
     console.log(payload);
     try {
       const response = await axios.post(
-        'http://192.168.225.155:6969/login',
+        'http://203.193.173.125:6969/login',
         payload,
       );
       console.log("response",response)
@@ -246,7 +246,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{login, logout, spotifySearch,spotifyGet, HttpGet,     selectedLanguages: selectedLang,    selectLanguages: setSelectedLang,  languages: allowedLangages, isLoading, userToken}}>
+      value={{login, logout, spotifySearch,spotifyGet, HttpGet,     selectedLanguages: selectedLang,    selectLanguages: setSelectedLang,  languages: allowedLangages, isLoading, userToken,user}}>
       {children}
     </AuthContext.Provider>
   );

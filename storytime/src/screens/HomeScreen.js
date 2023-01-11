@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useContext, useState, useEffect } from "react";
 import {
   ImageBackground,
@@ -25,15 +26,13 @@ import ListItems from "./ListItems";
 import { AuthContext } from "../context/AuthContext";
 import { truncateText } from "../utils/common";
 import tw from "twrnc";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 
 export default function HomeScreeen({ navigation }) {
   const { spotifySearch, logout } = useContext(AuthContext);
   const [popularStories, setPopularStories] = useState([]);
   const [loading, setLoading] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
-  const [searchTerms, setSearchTerms] = useState();
+  const [searchTerms, setSearchTerms] = useState([]);
   const [query, setQuery] = useState("");
     const [value, setValue] = useState("");
 
@@ -54,25 +53,12 @@ export default function HomeScreeen({ navigation }) {
     const response = await spotifySearch(search, queryParams);
     setPopularStories(response.shows.items);
     setLoading(false);
-
-     var value = await AsyncStorage.getItem("searchTerms");
-    if(value){
-        // console.log("searchTerms",searchTerms ? true :false, searchTerms)
-      setSearchTerms(value)
-
-    }
-    console.log("searchTerms",searchTerms)
   };
 
   useEffect(() => {
     getPopularShows();
-  }, [searchTerms]);
- 
+  }, []);
 
- // OnCLick already searched term redirect to search Page
-  const selectSearchItem = (searchTerm) => {
-    navigation.navigate("Search", { searchTerm: searchTerm });
-  };
 
   // Search Terms save in localstorage and redirect to search
   const handleSearch = (e) => {
@@ -193,10 +179,10 @@ export default function HomeScreeen({ navigation }) {
           style={{
             position: "absolute",
             top: 130,
+            left:10,
             width: "100%",
             zIndex: 3,
             paddingHorizontal: 20,
-            left:10
           }}
         >
           {showDropdown ? (
@@ -266,17 +252,7 @@ export default function HomeScreeen({ navigation }) {
                 </Text>
               </Pressable>
 
-              <Text
-                style={{
-                  color: "#000",
-                  fontSize: 15,
-                  marginTop: 12,
-                  paddingLeft: 8,
-                  fontWeight: "500",
-                }}
-              >
-                Languages
-              </Text>
+
             </View>
           ) : null}
         </View>
