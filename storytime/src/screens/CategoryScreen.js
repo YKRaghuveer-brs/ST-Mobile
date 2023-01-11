@@ -47,8 +47,8 @@ const CategoryScreen = ({navigation, route}) => {
     };
 
     const response = await spotifySearch(search, queryParams);
-  
-  
+  console.log("&&&&&&&&&&&&&&");
+    console.log(response);
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
       let res = [];
@@ -88,7 +88,9 @@ const CategoryScreen = ({navigation, route}) => {
     //   setHasMoreItems(false);
     // }
     // console.log('>>>>>>>>>>>>>>>>>>>>>>>>SHOWS RESPONSE END >>>>>>>>>>>>>>>>>>>');
-    // setLoading(false);
+
+    
+    setLoading(false);
   };
 
 
