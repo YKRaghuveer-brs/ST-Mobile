@@ -47,7 +47,7 @@ const CategoriesScreen = ({navigation}) => {
   }
 
   return (
-    <View >
+    <View style={tw`flex-1 bg-[#291F4E]`}>
 
     <Text style={{ marginTop: 15, marginLeft: 10, fontSize: 18, fontFamily: 'Roboto-Medium', marginBottom: 10 }}> Languages </Text>
     <View style={{
