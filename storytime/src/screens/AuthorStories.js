@@ -96,11 +96,8 @@ const AuthorStories = ({ route, navigation }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={{ marginBottom: 15, paddingLeft: 13 }}>
-         <Pressable
-          onPress={() =>
-            navigation.navigate("Player", { story: item })
-          }
-        >
+                 <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+
         <Image
           source={{
             uri: item.images[1].url,
@@ -189,6 +186,8 @@ const AuthorStories = ({ route, navigation }) => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <View>
+                    <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+
               <Image
                 source={{ uri: item.images[1].url }}
                 style={{
@@ -206,6 +205,7 @@ const AuthorStories = ({ route, navigation }) => {
                 <Text style={{ fontSize: 14,color:"#fff",marginBottom:15 }}>
                 {truncateText(item.publisher, 16)}
               </Text>
+              </Pressable>
             </View>
           )}
         />

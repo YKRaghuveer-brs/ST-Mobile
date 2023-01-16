@@ -53,6 +53,22 @@ const AppNav = () => {
     <NavigationContainer>
       {userToken !== null ? <AppStack2 /> : <AuthStack />}
     {/*<AppStack2 />*/}
+       {/*<View style={{ flex: 1, position: "absolute", zIndex: 3, bottom:"20%",paddingLeft:10 }}>
+            <View
+              style={{
+                justifyContent: "space-between",
+                backgroundColor: "#5E48A8",
+                width: 372,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={{ uri: "https://source.unsplash.com/random" }}
+                style={{ height: 70, width: 70 }}
+              />
+            </View>
+          </View>*/}
     </NavigationContainer>
   );
 };
