@@ -52,7 +52,7 @@ const calculateRemainingExpirationTime = (expirationTime) => {
 export const AuthContext = createContext();
 
 const spotifyURL = 'https://api.spotify.com/v1/';
-const backendURL = 'http://203.193.173.125:6969/';
+const backendURL = 'http://192.168.225.155:6969/';
 
 export const AuthProvider = ({ children }) => {
 
@@ -132,7 +132,7 @@ export const AuthProvider = ({ children }) => {
  
     try {
       const response = await axios.post(
-        'http://203.193.173.125:6969/login',
+        'http://192.168.225.155:6969/login',
         payload,
       );
     
