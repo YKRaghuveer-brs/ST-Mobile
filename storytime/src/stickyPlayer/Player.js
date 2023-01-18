@@ -26,7 +26,7 @@ import TextTicker from "react-native-text-ticker";
 
 const Player = ({ tracks, story, press }) => {
 // await AsyncStorage.setItem('user', JSON.stringify(token))
-  console.log("tracks",tracks,"story",story,"Pressable",press)
+  console.log("story",story)
   const [paused, setPaused] = useState(true);
   const [totalLength, setTotalLength] = useState(1);
   const [currentPosition, setCurrentPosition] = useState(0);

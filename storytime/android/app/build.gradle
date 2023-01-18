@@ -266,7 +266,8 @@ dependencies {
   // For WebP support, without animations
   implementation 'com.facebook.fresco:webpsupport:2.5.0'
 
-    
+        implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

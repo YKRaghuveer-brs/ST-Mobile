@@ -27,33 +27,44 @@ import ListItems from "./ListItems";
 import { AuthContext } from "../context/AuthContext";
 import { truncateText } from "../utils/common";
 import tw from "twrnc";
-import Controls from '../stickyPlayer/Controls'
-import Player from '../stickyPlayer/Player'
-import TextTicker from 'react-native-text-ticker'
+import Controls from "../stickyPlayer/Controls";
+import Player from "../stickyPlayer/Player";
+import TextTicker from "react-native-text-ticker";
 
 export const TRACKS = [
   {
-    title: 'Stressed Out',
-    artist: 'Twenty One Pilots',
-    albumArtUrl: "http://36.media.tumblr.com/14e9a12cd4dca7a3c3c4fe178b607d27/tumblr_nlott6SmIh1ta3rfmo1_1280.jpg",
+    title: "Stressed Out",
+    artist: "Twenty One Pilots",
+    albumArtUrl:
+      "http://36.media.tumblr.com/14e9a12cd4dca7a3c3c4fe178b607d27/tumblr_nlott6SmIh1ta3rfmo1_1280.jpg",
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   },
   {
-    title: 'Love Yourself',
-    artist: 'Justin Bieber',
-    albumArtUrl: "http://arrestedmotion.com/wp-content/uploads/2015/10/JB_Purpose-digital-deluxe-album-cover_lr.jpg",
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    title: "Love Yourself",
+    artist: "Justin Bieber",
+    albumArtUrl:
+      "http://arrestedmotion.com/wp-content/uploads/2015/10/JB_Purpose-digital-deluxe-album-cover_lr.jpg",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
   },
   {
-    title: 'Hotline Bling',
-    artist: 'Drake',
-    albumArtUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Drake_-_Hotline_Bling.png',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    title: "Hotline Bling",
+    artist: "Drake",
+    albumArtUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/c/c9/Drake_-_Hotline_Bling.png",
+    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
   },
 ];
 
 export default function HomeScreeen({ navigation }) {
-  const { spotifySearch,spotifyGet, logout } = useContext(AuthContext);
+  const {
+    spotifySearch,
+    spotifyGet,
+    logout,
+    languages,
+    selectLanguages,
+    selectedLanguages,
+  } = useContext(AuthContext);
+
   const [popularStories, setPopularStories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -61,9 +72,8 @@ export default function HomeScreeen({ navigation }) {
   const [query, setQuery] = useState("");
   const [value, setValue] = useState("");
   const [stickyPlayer, setStickyPlayer] = useState(false);
-    const [episodeList, setEpisodeList] = useState([]);
-    const [story,setStory] = useState([]);
-
+  const [episodeList, setEpisodeList] = useState([]);
+  const [story, setStory] = useState([]);
 
   const getPopularShows = async () => {
     setLoading(true);
@@ -102,12 +112,15 @@ export default function HomeScreeen({ navigation }) {
     navigation.navigate("Search", { searchTerm: value });
   };
 
-    const getEpisodeList = async (story) => {
-      setStory(story)
-      setEpisodeList([])
-      setStickyPlayer(false)
+  const getEpisodeList = async (story) => {
+    setStory(story);
+    setEpisodeList([]);
+    setStickyPlayer(false);
     const queryParams = { limit: 50, market: "IN" };
-    const response = await spotifyGet(`shows/${story.id}/episodes`, queryParams);
+    const response = await spotifyGet(
+      `shows/${story.id}/episodes`,
+      queryParams
+    );
     const episodes = [];
     if (response.items.length > 0 || response.next) {
       response.items.map((episode, index) => {
@@ -125,9 +138,8 @@ export default function HomeScreeen({ navigation }) {
     } else {
       return false;
     }
-   
-    setStickyPlayer(true)
-    
+
+    setStickyPlayer(true);
   };
 
   // const lastItem = index === data.length - 1;
@@ -137,11 +149,7 @@ export default function HomeScreeen({ navigation }) {
         <Pressable
           // onPress={() => navigation.navigate("Player", { story: item })}
           // onPress={() => setStickyPlayer(true)}
-                    onPress={() => getEpisodeList(item)}
-
-
-
-          
+          onPress={() => getEpisodeList(item)}
         >
           <Image
             source={{
@@ -177,8 +185,6 @@ export default function HomeScreeen({ navigation }) {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-[#291F4E] text-white px-3`}>
-
-    
       <View style={styles.navBar}>
         <View style={styles.leftContainer}></View>
         <Image
@@ -336,6 +342,61 @@ export default function HomeScreeen({ navigation }) {
                 Kid Stories
               </Text>
             </Pressable>
+
+            <Text
+              style={{
+                color: "#000",
+                fontSize: 15,
+                marginVertical: 7,
+                paddingLeft: 8,
+                fontWeight: "500",
+              }}
+            >
+              Langugaes
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                paddingLeft: 8,
+              }}
+            >
+              {/* <Button  title='Get Selected' onPress={getSelected}></Button> */}
+              {languages.map((language, index) => {
+                return (
+                  <View key={language.id}>
+                    {language.isActive ? (
+                      <View style={{ padding: 5 }}>
+                        <Button
+                          color="green"
+                          title={language.name}
+                          onPress={() => {
+                            language.isActive = false;
+                            selectLanguages((prevState) =>
+                              prevState.filter((item) => {
+                                return item.id !== language.id;
+                              })
+                            );
+                          }}
+                        ></Button>
+                      </View>
+                    ) : (
+                      <View style={{ padding: 5 }}>
+                        <Button
+                          color="grey"
+                          title={language.name}
+                          onPress={() =>
+                            selectLanguages((prevState) => {
+                              language.isActive = true;
+                              return [...prevState, language];
+                            })
+                          }
+                        ></Button>
+                      </View>
+                    )}
+                  </View>
+                );
+              })}
+            </View>
           </View>
         ) : null}
       </View>
@@ -377,7 +438,7 @@ export default function HomeScreeen({ navigation }) {
 
         {stickyPlayer ? (
           <View style={{ flex: 1, position: "absolute", zIndex: 3, top: 310 }}>
-           {/* <View
+            {/* <View
               style={{
                 justifyContent: "space-between",
                 backgroundColor: "#5E48A8",
@@ -392,7 +453,13 @@ export default function HomeScreeen({ navigation }) {
               />
              <Controls/>
             </View>*/}
-      {episodeList  && episodeList.length ? <Player tracks={episodeList} story={story} press={() => navigation.navigate("Player", { story: story }) }/> : null}
+            {episodeList && episodeList.length ? (
+              <Player
+                tracks={episodeList}
+                story={story}
+                press={() => navigation.navigate("Player", { story: story })}
+              />
+            ) : null}
           </View>
         ) : null}
 

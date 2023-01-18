@@ -135,7 +135,7 @@ const CategoriesScreen = ({navigation}) => {
             horizontal={false}
             numColumns={2}
             data={categories}
-            keyExtractor={item => item.categoryid}
+            // keyExtractor={item => item.categoryid}
             renderItem={({item, index}) => (
               <View
               style={{
