@@ -80,7 +80,6 @@ const AppNav = () => {
   const { isLoading, userToken } = useContext(AuthContext);
   const [isVisible, setIsVisible] = useState(false);
 
-  console.log("userToken", userToken);
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -149,7 +148,7 @@ const AppNav = () => {
               />
              <Controls/>
             </View>*/}
-        {TRACKS && TRACKS.length ? (
+        {TRACKS && TRACKS.length === 0 ? (
           <Player
             tracks={TRACKS}
             story={story}

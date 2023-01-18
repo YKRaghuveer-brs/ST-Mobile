@@ -63,7 +63,7 @@ const Player = ({ tracks,story}) => {
   const getLibrary = async () => {
    
     const res = await HttpGet("library");
-    console.log("res",res)
+    // console.log("res",res)
     setUserStories(res.saved_stories)
   };
 
@@ -165,7 +165,7 @@ const Player = ({ tracks,story}) => {
   }, []);
   const getEpisodeList = async () => {
     tracks.map((episode, index) => {
-      console.log("episode",episode.title)
+      // console.log("episode",episode.title)
       episodes.push(
         <View style={{ flex: 1, flexDirection: "row" }}>
           <Image
@@ -198,11 +198,11 @@ const Player = ({ tracks,story}) => {
 
   // User Saves & remove story from savedStories
   const saveStory = (story) => {
-    console.log("story",story)
+    // console.log("story",story)
     const user_stories = userStories;
     const index = user_stories.indexOf(story);
 
-    console.log("userStories",userStories)
+    // console.log("userStories",userStories)
     if (index > -1) {
       user_stories.splice(index, 1);
     } else {
@@ -211,7 +211,7 @@ const Player = ({ tracks,story}) => {
     setUserStories(user_stories);
     const obj = {};
     obj.saved_stories = user_stories;
-    console.log("Updated_Stories----------------",user_stories)
+    // console.log("Updated_Stories----------------",user_stories)
     axios.put(BASE_URL + "saveStory/" + user._id, obj)
 
       .then((res) => {
@@ -322,7 +322,7 @@ const Player = ({ tracks,story}) => {
 
           onPress={(index) => {
             /* do something */
-            console.log("updateSelectedTack",index)
+            // console.log("updateSelectedTack",index)
             setSelectedTrack(index - 1)
           }}
         />

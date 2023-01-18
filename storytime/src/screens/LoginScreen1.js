@@ -104,7 +104,7 @@ const LoginScreen1 = ({ navigation }) => {
           <Formik
             validationSchema={loginValidationSchema}
             initialValues={{
-              email: "nraju.nyros@gmail.com",
+              email: "gopinathkrm@gmail.com",
               password: "123456",
             }}
             onSubmit={async (values) => {
