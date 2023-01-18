@@ -1,18 +1,12 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  FlatList,
-  ActivityIndicator,
-  Image,Pressable
-} from 'react-native';
-import {AuthContext} from '../context/AuthContext';
-import {truncateText} from '../utils/common';
-import tw from 'twrnc';
+import React, { useContext, useState, useEffect } from "react";
+import { Text, View, FlatList, ActivityIndicator, Image, Pressable } from "react-native";
+import { AuthContext } from "../context/AuthContext";
+import { truncateText } from "../utils/common";
+import tw from "twrnc";
 
-const CategoryScreen = ({navigation, route}) => {
+const CategoryScreen = ({ navigation, route }) => {
   console.log(route.params?.item);
-  const {spotifySearch, selectedLanguages} = useContext(AuthContext);
+  const { spotifySearch, selectedLanguages } = useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(false);
   const [shows, setShows] = useState([]);
@@ -32,13 +26,13 @@ const CategoryScreen = ({navigation, route}) => {
 
   const getShowsByCategory = async () => {
     setLoading(true);
-    const languages = await languageNameArr.toString().replaceAll(",", "%20");  
+    const languages = await languageNameArr.toString().replaceAll(",", "%20");
     const queryParams = {
-      type: 'show',
-      include_external: 'audio',
-      market: 'IN',
-      offset : offset,
-      limit: '16',
+      type: "show",
+      include_external: "audio",
+      market: "IN",
+      offset: offset,
+      limit: "16",
     };
 
     const search = {
@@ -47,7 +41,7 @@ const CategoryScreen = ({navigation, route}) => {
     };
 
     const response = await spotifySearch(search, queryParams);
-  console.log("&&&&&&&&&&&&&&");
+    console.log("&&&&&&&&&&&&&&");
     console.log(response);
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
@@ -76,7 +70,6 @@ const CategoryScreen = ({navigation, route}) => {
       setHasMoreItems(false);
     }
 
-  
     // console.log('>>>>>>>>>>>>>>>>>>>>>>>>SHOWS RESPONSE START >>>>>>>>>>>>>>>>>>>');
     // console.log(response);
     // if(response.shows.next){
@@ -89,11 +82,8 @@ const CategoryScreen = ({navigation, route}) => {
     // }
     // console.log('>>>>>>>>>>>>>>>>>>>>>>>>SHOWS RESPONSE END >>>>>>>>>>>>>>>>>>>');
 
-    
     setLoading(false);
   };
-
-
 
   const loadMoreStories = () => {
     if (hasMoreItem) {
@@ -111,7 +101,6 @@ const CategoryScreen = ({navigation, route}) => {
     getLanguageName(selectedLanguages);
   }, [selectedLanguages]);
 
-
   useEffect(() => {
     getShowsByCategory();
   }, [route.params?.item.keywords, offset, languageNameArr]);
@@ -120,35 +109,41 @@ const CategoryScreen = ({navigation, route}) => {
     <View style={tw`flex-1 bg-[#291F4E]`}>
       {loading ? (
         <View
-            style={{
-              position: "absolute",
-              zIndex: 2,
-              left: 0,
-              right: 0,
-              top: 40,
-              bottom: 0,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Image
-              style={{ width: 100, height: 100 }}
-              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-              source={require("../../assets/Images/Spiral_logo_loader.gif")}
-            />
-          </View>
-     ) : (
+          style={{
+            position: "absolute",
+            zIndex: 2,
+            left: 0,
+            right: 0,
+            top: 40,
+            bottom: 0,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            style={{ width: 100, height: 100 }}
+            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
+            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+          />
+        </View>
+      ) : (
         ""
       )}
 
+      <View>
         <View>
-        <View>
-            <Pressable onPress={() => navigation.navigate("Home")}>
-                           <Text style={tw`text-xl text-white font-bold ml-4 mt-6`}>Categories</Text>
-
-            </Pressable>
-          </View>
-        <View style={{justifyContent: 'center', alignItems: 'center',marginBottom: 110, marginTop: 25}}>
+          <Pressable onPress={() => navigation.navigate("Home")}>
+            <Text style={tw`text-xl text-white font-bold ml-4 mt-6`}>Categories</Text>
+          </Pressable>
+        </View>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 110,
+            marginTop: 25,
+          }}
+        >
           <FlatList
             horizontal={false}
             numColumns={2}
@@ -157,35 +152,28 @@ const CategoryScreen = ({navigation, route}) => {
             showsHorizontalScrollIndicator={false}
             onEndReached={loadMoreStories}
             showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
-              <View style={{marginBottom:15}}>
-               <Pressable
-          onPress={() =>
-            navigation.navigate("Player", { story: item })
-          }
-        >
-                <Image
-                  source={{uri: item.images[1].url}}
-                  style={{
-                    width: 175,
-                    height: 180,
-                    borderRadius: 10,
-                    marginRight: 8,
-                  }}
-                />
-                <Text style={{fontSize: 18,color:"#fff"}}>
-                  {truncateText(item.publisher, 16)}
-                </Text>
-                <Text style={{fontSize: 15,color:"#fff"}}>
-                  {truncateText(item.name, 15)}
-                </Text>
+            renderItem={({ item }) => (
+              <View style={{ marginBottom: 15 }}>
+                <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+                  <Image
+                    source={{ uri: item.images[1].url }}
+                    style={{
+                      width: 175,
+                      height: 180,
+                      borderRadius: 10,
+                      marginRight: 8,
+                    }}
+                  />
+                  <Text style={{ fontSize: 18, color: "#fff" }}>
+                    {truncateText(item.publisher, 16)}
+                  </Text>
+                  <Text style={{ fontSize: 15, color: "#fff" }}>{truncateText(item.name, 15)}</Text>
                 </Pressable>
               </View>
             )}
           />
         </View>
-        </View>
-     
+      </View>
     </View>
   );
 };
