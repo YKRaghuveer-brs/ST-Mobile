@@ -11,7 +11,7 @@ import {truncateText} from '../utils/common';
 import tw from 'twrnc';
 
 const CategoryScreen = ({navigation, route}) => {
-  console.log(route.params?.item);
+  // console.log(route.params?.item);
   const {spotifySearch, selectedLanguages} = useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(false);
@@ -47,8 +47,6 @@ const CategoryScreen = ({navigation, route}) => {
     };
 
     const response = await spotifySearch(search, queryParams);
-  console.log("&&&&&&&&&&&&&&");
-    console.log(response);
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
       let res = [];

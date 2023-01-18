@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 const AppNav = () => {
   const {isLoading, userToken} = useContext(AuthContext);
 
-  console.log("userToken",userToken)
+  // console.log("userToken",userToken)
 
   if (isLoading) {
     return (
