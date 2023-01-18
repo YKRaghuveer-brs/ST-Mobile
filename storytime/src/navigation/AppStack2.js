@@ -6,6 +6,8 @@ import CategoryScreen from "../screens/CategoryScreen";
 import ProfileScreen1 from "../screens/ProfileScreen1";
 import Search from "../screens/Search";
 import AuthorStories from "../screens/AuthorStories";
+import MiniPlayer from "./MiniPlayer";
+
 import {View, Text, ActivityIndicator,Image} from 'react-native';
 
 
@@ -23,6 +25,8 @@ const AuthStack = () => {
             <Stack.Screen name="Profile" component={ProfileScreen1} />
                         <Stack.Screen name="Search" component={Search} />
                                                 <Stack.Screen name="AuthorStories" component={AuthorStories} />
+                                                      <Stack.Screen name="MiniPlayer" component={MiniPlayer} />
+
 
 
     </Stack.Navigator>

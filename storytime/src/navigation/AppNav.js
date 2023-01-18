@@ -7,6 +7,8 @@ import AddGifImage from "../components/AddGifImage";
 
 import AuthStack from "./AuthStack";
 import Player from "../stickyPlayer/Player";
+import MiniPlayer from "./MiniPlayer";
+
 
 import AppStack2 from "./AppStack2";
 import { AuthContext } from "../context/AuthContext";
@@ -132,7 +134,7 @@ const AppNav = () => {
               <Text>Hiii</Text>
             </View>
           </View>*/}
-      <View style={{ flex: 1, position: "absolute", zIndex: 3, top: 310 }}>
+      <View style={{ flex: 1, position: "absolute", zIndex: 3, bottom: 50,paddingLeft:10 }}>
         {/* <View
               style={{
                 justifyContent: "space-between",
@@ -148,13 +150,18 @@ const AppNav = () => {
               />
              <Controls/>
             </View>*/}
-        {TRACKS && TRACKS.length === 0 ? (
+        {/*{TRACKS && TRACKS.length ? (
           <Player
             tracks={TRACKS}
             story={story}
             press={() => navigation.navigate("Player", { story: story })}
           />
-        ) : null}
+
+        ) : null}*/}
+
+     <MiniPlayer tracks={TRACKS}
+            story={story}
+            press={() => navigation.navigate("Player", { story: story })}/>
       </View>
     </NavigationContainer>
   );
