@@ -15,7 +15,7 @@ console.log("tracks",tracks,press,story)
               <Player
                 tracks={tracks}
                 story={story}
-                // onPress={() => press()}
+                onPress={press}
               />
             ) : null}
 		</View>
