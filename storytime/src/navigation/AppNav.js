@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from "./AuthStack";
 import Player from "../stickyPlayer/Player";
 import MiniPlayer from "./MiniPlayer";
+import { View, Text, ActivityIndicator, Image } from "react-native";
 
 
 import AppStack2 from "./AppStack2";
