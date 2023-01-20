@@ -7,9 +7,12 @@ import {
   Image,
   Pressable,
 } from "react-native";
+
+import tw from "twrnc";
 import { AuthContext } from "../context/AuthContext";
 import { truncateText } from "../utils/common";
-import tw from "twrnc";
+
+
 
 const AuthorsScreen = ({ navigation }) => {
   const { spotifySearch } = useContext(AuthContext);

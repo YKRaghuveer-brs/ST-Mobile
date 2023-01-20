@@ -16,7 +16,7 @@ import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {AuthContext} from '../context/AuthContext';
+import { AuthContext } from "../../context/AuthContext";
 
 const LoginScreen1 = ({ navigation }) => {
   // const ctx = useContext(AuthContext);
@@ -84,7 +84,7 @@ const LoginScreen1 = ({ navigation }) => {
           <Image
             style={{ width: 100, height: 100 }}
             // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+            source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
       ) : (

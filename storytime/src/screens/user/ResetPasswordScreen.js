@@ -63,7 +63,7 @@ const ResetPasswordScreen = ({ route, navigation }) => {
             <Image
               style={{ width: 100, height: 100 }}
               // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-              source={require("../../assets/Images/Spiral_logo_loader.gif")}
+              source={require("../../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>
         ) : (

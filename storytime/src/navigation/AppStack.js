@@ -1,12 +1,7 @@
 import {View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import OnboardingScreen from '../screens/OnboardingScreen';
-import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import MessagesScreen from '../screens/MessagesScreen';
-import MomentsScreen from '../screens/MomentsScreen';
+import ProfileScreen from '../screens/user/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import CustomDrawer from '../screens/CustomDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -47,24 +42,6 @@ const AppStack = () => {
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={MessagesScreen}
-        name="Messages"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={MomentsScreen}
-        name="Moments"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="timer-outline" size={22} color={color} />
           ),
         }}
       />

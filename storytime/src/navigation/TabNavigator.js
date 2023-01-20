@@ -1,15 +1,13 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/home/HomeScreen";
 import AuthorsScreen from "./AuthorsScreen";
 import CategoriesScreen from "./CategoriesScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
-import GameDetailsScreen from "../screens/GameDetailsScreen";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import LibraryScreen from "./LibraryScreen";
-import PopularStoriesScreen from "../screens/PopularStoriesScreen";
-import CategoryScreen from "../screens/CategoryScreen";
+import PopularStoriesScreen from "../screens/home/PopularStoriesScreen";
 import PlayerScreen from "../screens/PlayerScreen";
 import { Image } from "react-native";
 

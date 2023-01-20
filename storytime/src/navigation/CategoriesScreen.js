@@ -1,22 +1,18 @@
 import {
   ImageBackground,
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   FlatList,
-  ActivityIndicator,
   Image,
   Button,
 } from 'react-native';
 import React, {useContext, useState, useEffect} from 'react';
 
-import {truncateText} from '../utils/common';
-import {AuthContext} from '../context/AuthContext';
 import tw from 'twrnc';
+import { AuthContext } from '../context/AuthContext';
+
 
 const categoriesBg = [ "green", "red", "blue", "magenta",  "violet","coral"]
 

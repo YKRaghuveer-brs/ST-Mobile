@@ -10,14 +10,15 @@ import {
   Pressable,
 } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
+
 
 const ProfileScreen1 = ({ navigation }) => {
   const { user } = useContext(AuthContext);
@@ -95,7 +96,7 @@ const ProfileScreen1 = ({ navigation }) => {
           <Image
             style={{ width: 100, height: 100 }}
             // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+            source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
       )}

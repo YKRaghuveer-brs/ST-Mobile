@@ -20,7 +20,6 @@
 import React, { useState, useEffect, createRef, useContext } from "react";
 import {
   StyleSheet,
-  TextInput,
   View,
   Text,
   SafeAreaView,
@@ -29,10 +28,9 @@ import {
   Dimensions,
   FlatList,
 } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
-import { AuthContext } from "../context/AuthContext";
 import tw from "twrnc";
-import * as Yup from "yup";
+import { AuthContext } from "../context/AuthContext";
+
 
 // import { FlashList } from "@shopify/flash-list";
 
@@ -127,7 +125,7 @@ const LibraryScreen = ({ navigation }) => {
       </View>
     );
   };
-
+  
   return (
     <View style={tw`flex-1 bg-[#291F4E] text-white`}>
       {loading ? (
