@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 import PlayerScreen from "../screens/PlayerScreen";
-import PopularStoriesScreen from "../screens/PopularStoriesScreen";
-import CategoryScreen from "../screens/CategoryScreen";
-import ProfileScreen1 from "../screens/ProfileScreen1";
+import PopularStoriesScreen from "../screens/home/PopularStoriesScreen";
+import CategoryScreen from "../screens/categories/CategoryScreen";
+import ProfileScreen1 from "../screens/user/ProfileScreen1";
 import Search from "../screens/Search";
-import AuthorStories from "../screens/AuthorStories";
+import AuthorStories from "../screens/authors/AuthorStories";
 import MiniPlayer from "./MiniPlayer";
 
 import { View, Text, ActivityIndicator, Image } from "react-native";

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, createRef } from "react";
-import { StyleSheet, TextInput, View, Text, ScrollView, Image, Pressable, SafeAreaView } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, ScrollView, Image, Pressable, SafeAreaView } from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
 import axios from "axios";
 import ToastManager, { Toast } from "toastify-react-native";
@@ -58,7 +57,6 @@ const EmailVerification = ({ route, navigation }) => {
 
     try {
       const response = await axios.post("http://203.193.173.125:6969/resendVerificationCode", payload);
-      // navigation.navigate("ResetPasswordVerify",email: response.data.email,);
       if (response) {
         Toast.success(response.data);
         setCounter(59);
@@ -87,15 +85,13 @@ const EmailVerification = ({ route, navigation }) => {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-              source={require("../../assets/Images/Spiral_logo_loader.gif")}
+              source={require("../../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>
         ) : (
           ""
         )}
       <ScrollView
-        // keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           flex: 1,
           justifyContent: "center",

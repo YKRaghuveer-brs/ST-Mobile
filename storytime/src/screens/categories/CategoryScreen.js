@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, View, FlatList, ActivityIndicator, Image, Pressable } from "react-native";
-import { AuthContext } from "../context/AuthContext";
-import { truncateText } from "../utils/common";
+import { Text, View, FlatList, Image, Pressable } from "react-native";
+import { AuthContext } from "../../context/AuthContext";
+import { truncateText } from "../../utils/common";
 import tw from "twrnc";
 
 const CategoryScreen = ({navigation, route}) => {
@@ -69,19 +69,6 @@ const CategoryScreen = ({navigation, route}) => {
     } else {
       setHasMoreItems(false);
     }
-
-    // console.log('>>>>>>>>>>>>>>>>>>>>>>>>SHOWS RESPONSE START >>>>>>>>>>>>>>>>>>>');
-    // console.log(response);
-    // if(response.shows.next){
-    //   setHasMoreItems(true)
-    //   const newArr = [...shows, ...response.shows.items]
-    //   console.log(newArr);
-    //   setShows(newArr);
-    // }else {
-    //   setHasMoreItems(false);
-    // }
-    // console.log('>>>>>>>>>>>>>>>>>>>>>>>>SHOWS RESPONSE END >>>>>>>>>>>>>>>>>>>');
-
     setLoading(false);
   };
 
@@ -153,8 +140,7 @@ const CategoryScreen = ({navigation, route}) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+            source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
       ) : (

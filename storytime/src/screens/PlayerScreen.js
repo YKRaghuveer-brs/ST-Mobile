@@ -1,18 +1,9 @@
-import React, { useState, useEffect, createRef, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import {
   StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  TextInput,
-  View,
-  Text,
   Dimensions,
-  Pressable,
-  Image,
   Animated,
-  FlatList,
 } from "react-native";
-import songs from "../model/data";
 import Player from "../app/Player";
 import { AuthContext } from '../context/AuthContext';
 const { width, height } = Dimensions.get("window");
@@ -40,9 +31,7 @@ const TRACKS = [
 
 const PlayerScreen = ({ route, navigation }) => {
   const scrollX = useRef(new Animated.Value(0).current);
-  // const authCtx = useContext(AuthContext);
-    const {spotifyGet} = useContext(AuthContext);
-
+  const {spotifyGet} = useContext(AuthContext);
   const [episodeList, setEpisodeList] = useState([]);
   const { story } = route.params;
 

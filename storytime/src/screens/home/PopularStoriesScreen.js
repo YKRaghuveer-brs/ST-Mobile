@@ -1,19 +1,13 @@
 import {
-  ImageBackground,
-  SafeAreaView,
-  ScrollView,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
   FlatList,
-  ActivityIndicator,
   Image,
-  Button,StyleSheet,Pressable
+  StyleSheet,Pressable
 } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
-import { truncateText } from "../utils/common";
-import { AuthContext } from "../context/AuthContext";
+import { truncateText } from "../../utils/common";
+import { AuthContext } from "../../context/AuthContext";
 import tw from "twrnc";
 
 
@@ -50,9 +44,6 @@ const PopularStoriesScreen = ({navigation}) => {
       setHasMoreItems(false);
       return false;
     }
-
-    // setPopularStories(response.shows.items);
-    // console.log(response);
     setLoading(false);
   };
 
@@ -65,10 +56,8 @@ const PopularStoriesScreen = ({navigation}) => {
 
   const loadMoreStories = () => {
     if (hasMoreItem) {
-      // setLoading(true);
       setOffset(offset + 16);
     }
-    // alert("reached end...")
   };
 
   useEffect(() => {
@@ -123,8 +112,7 @@ const PopularStoriesScreen = ({navigation}) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+            source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
       ) : (
@@ -204,7 +192,6 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // alignItems: "center",
     marginBottom: 20,
   },
   leftContainer: {

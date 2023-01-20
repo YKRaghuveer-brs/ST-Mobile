@@ -3,13 +3,14 @@ import {
   Text,
   View,
   FlatList,
-  ActivityIndicator,
   Image,
   Pressable,
 } from "react-native";
+import tw from "twrnc";
 import { AuthContext } from "../context/AuthContext";
 import { truncateText } from "../utils/common";
-import tw from "twrnc";
+
+
 
 const AuthorsScreen = ({ navigation }) => {
   const { spotifySearch } = useContext(AuthContext);
@@ -35,14 +36,7 @@ const AuthorsScreen = ({ navigation }) => {
     };
 
     const response = await spotifySearch(search, queryParams);
-    // console.log("SHOWS RESPONSE...");
-    // console.log(response);
-    // setShows(response.shows.items);
-    // setLoading(false);
     if (response.shows.items.length > 0 || response.shows.next) {
-      // const authors = response.shows.items.filter((obj) => {
-      //   return obj.publisher === publisher;
-      // });
       const removeExplicitStories = response.shows.items.filter(
         (story) => !story.explicit
       );
@@ -69,9 +63,6 @@ const AuthorsScreen = ({ navigation }) => {
   };
 
   return (
-    // <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    //   <Text>Authors Screen</Text>
-    // </View>
     <View style={tw`flex-1 bg-[#291F4E]`}>
       {loading ? (
         <View
@@ -88,7 +79,6 @@ const AuthorsScreen = ({ navigation }) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
             source={require("../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
@@ -138,8 +128,7 @@ const AuthorsScreen = ({ navigation }) => {
                       marginRight: 8,
                     }}
                   />
-                               <Text style={{ fontSize: 18,color:"#fff",marginBottom:13}}>
-
+                  <Text style={{ fontSize: 18,color:"#fff",marginBottom:13}}>
                     {truncateText(item.publisher, 24)}
                   </Text>
                 </Pressable>

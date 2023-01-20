@@ -1,22 +1,17 @@
 import {
   ImageBackground,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   FlatList,
-  ActivityIndicator,
   Image,
   Button,
 } from 'react-native';
 import React, {useContext, useState, useEffect} from 'react';
 
-import {truncateText} from '../utils/common';
-import {AuthContext} from '../context/AuthContext';
 import tw from 'twrnc';
+import { AuthContext } from '../context/AuthContext';
+
 
 const categoriesBg = [ "green", "red", "blue", "magenta",  "violet","coral"]
 
@@ -116,7 +111,6 @@ const CategoriesScreen = ({navigation}) => {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
               source={require("../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>
@@ -163,43 +157,5 @@ const CategoriesScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginLeft: 60,
-    marginTop: 80,
-  },
-  header: {
-    fontWeight: "bold",
-    paddingBottom: 15,
-  },
-  heading: {
-    fontWeight: "bold",
-    fontSize: 25,
-    paddingBottom: 35,
-  },
-  category: {
-    width: "70%",
-    marginBottom: 10,
-    marginLeft: 50,
-  },
-  category1: {
-    backgroundColor: "yellow"
-  },
-  category2: {
-    backgroundColor: "red"
-  },
-  category3: {
-    backgroundColor: "green"
-  },
-  category4: {
-    backgroundColor: "cyan"
-  },
-  category5: {
-    backgroundColor: "violet"
-  },
-  category6: {
-    backgroundColor: "grey"
-  }
-});
 
 export default CategoriesScreen;

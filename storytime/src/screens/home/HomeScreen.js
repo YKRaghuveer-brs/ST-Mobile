@@ -1,14 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useContext, useState, useEffect } from "react";
 import {
-  ImageBackground,
   SafeAreaView,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  ActivityIndicator,
   FlatList,
   Image,
   Button,
@@ -17,19 +14,11 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import Feather from "react-native-vector-icons/Feather";
-import BannerSlider from "../components/BannerSlider";
-import { freeGames, paidGames, sliderData } from "../model/data";
-import { windowWidth } from "../utils/Dimensions";
-import Carousel from "react-native-snap-carousel";
-import CustomSwitch from "../components/CustomSwitch";
-import ListItems from "./ListItems";
-import { AuthContext } from "../context/AuthContext";
-import { truncateText } from "../utils/common";
 import tw from "twrnc";
-import Controls from "../stickyPlayer/Controls";
-import Player from "../stickyPlayer/Player";
-import TextTicker from "react-native-text-ticker";
+import Player from "../../stickyPlayer/Player";
+import { truncateText } from "../../utils/common";
+import { AuthContext } from "../../context/AuthContext";
+
 
 
 export default function HomeScreeen({ navigation }) {
@@ -381,7 +370,7 @@ export default function HomeScreeen({ navigation }) {
 
       <View style={{ position: "relative" }}>
         <Image
-          source={require("../../assets/Images/banner.png")}
+          source={require("../../../assets/Images/banner.png")}
           style={{
             width: "100%",
             height: 200,
@@ -409,6 +398,7 @@ export default function HomeScreeen({ navigation }) {
           </TouchableOpacity>
         </View>
 
+
         {loading ? (
           <View
             style={{
@@ -424,8 +414,7 @@ export default function HomeScreeen({ navigation }) {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-              source={require("../../assets/Images/Spiral_logo_loader.gif")}
+              source={require("../../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>
         ) : (
@@ -434,29 +423,6 @@ export default function HomeScreeen({ navigation }) {
               numColumns={3}
               keyExtractor={(item) => item.id}
               data={popularStories}
-              // renderItem={({item}) => (
-              //   <View>
-              //           <TouchableOpacity onPress={() => navigation.navigate("Player", { story: item })}>
-
-              //     <Image
-              //       source={{uri: item.images[1].url}}
-              //       style={{
-              //         width: 110,
-              //         height: 110,
-              //         borderRadius: 10,
-              //         marginRight: 8,
-              //       }}
-
-              //     />
-              //     <Text style={{fontSize: 18}}>
-              //       {truncateText(item.publisher, 12)}
-              //     </Text>
-              //     <Text style={{fontSize: 15}}>
-              //       {truncateText(item.name, 12)}
-              //     </Text>
-              //     </TouchableOpacity>
-              //   </View>
-              // )}
               renderItem={(item, index) => renderItem(item, index)}
             />
           </View>
@@ -471,8 +437,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 25,
-    // marginLeft: 12,
-    // marginRight: 12,
   },
   leftContainer: {
     flex: 1,

@@ -1,17 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
-import { View, Text, ActivityIndicator, Image } from "react-native";
-
+import React, { useContext, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AddGifImage from "../components/AddGifImage";
-
 import AuthStack from "./AuthStack";
 import Player from "../stickyPlayer/Player";
 import MiniPlayer from "./MiniPlayer";
 
+
 import AppStack2 from "./AppStack2";
 import { AuthContext } from "../context/AuthContext";
-const Stack = createNativeStackNavigator();
+
 const AppNav = () => {
   const { isLoading, userToken,stickyPlayer,setStickyPlayer,minPlayerTracks,minPlayerStory } = useContext(AuthContext);
 

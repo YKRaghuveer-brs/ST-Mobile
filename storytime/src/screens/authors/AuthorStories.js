@@ -1,32 +1,15 @@
-// import {View, Text} from 'react-native';
-
-// const AuthorStories = () => {
-//   return (
-//     <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-//       <Text>Author Screen</Text>
-//     </View>
-//   );
-// };
-
-// export default AuthorStories
-
-
-import React, { useState, useEffect, createRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
-  TextInput,
   View,
   Text,
-  SafeAreaView,
   Image,
   Pressable,
-  Dimensions,
   FlatList,
 } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import tw from "twrnc";
-import { truncateText } from "../utils/common";
+import { truncateText } from "../../utils/common";
 
 
 const AuthorStories = ({ route, navigation }) => {
@@ -179,8 +162,7 @@ const AuthorStories = ({ route, navigation }) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-            source={require("../../assets/Images/Spiral_logo_loader.gif")}
+            source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
       ) : (
@@ -259,7 +241,6 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // alignItems: "center",
     marginBottom: 20,
   },
   leftContainer: {

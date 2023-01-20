@@ -1,18 +1,10 @@
 import React, {
   useState,
-  useEffect,
-  createRef,
-  useContext,
-  useRef,
 } from "react";
-import axios from "axios";
 import {
   View,
   Text,
-  StatusBar,
-  Image,
   Pressable,
-  Animated,
 } from "react-native";
 import Header from "./Header";
 import AlbumArt from "./AlbumArt";

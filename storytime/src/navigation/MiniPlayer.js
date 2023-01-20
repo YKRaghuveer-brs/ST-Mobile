@@ -4,7 +4,6 @@ import { AuthContext } from "../context/AuthContext";
 import React, { useContext, useState, useEffect } from "react";
 
 export default function MiniPlayer({ tracks, story, press }) {
-  // const Player = ({ tracks, story, press }) => {
   const { minPlayerTracks, minPlayerStory } = useContext(AuthContext);
 
   const press1 = (minPlayerStory) => {
@@ -13,15 +12,12 @@ export default function MiniPlayer({ tracks, story, press }) {
 
   return (
     <View>
-      {minPlayerTracks && minPlayerTracks.length ? (
-        <Player
-          tracks={minPlayerTracks}
-          story={minPlayerStory}
-          press={press1}
-          // onPress={() => navigation.navigate("Player", { story: item })}
-
-        />
+         {minPlayerTracks && minPlayerTracks.length ? (
+        <Player tracks={minPlayerTracks} story={minPlayerStory} onPress={press} />
       ) : null}
-    </View>
+        </View>
+
   );
 }
+
+
