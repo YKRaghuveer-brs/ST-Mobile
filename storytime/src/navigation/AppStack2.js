@@ -6,6 +6,8 @@ import CategoryScreen from "../screens/categories/CategoryScreen";
 import ProfileScreen1 from "../screens/user/ProfileScreen1";
 import Search from "../screens/Search";
 import AuthorStories from "../screens/authors/AuthorStories";
+import MiniPlayer from "./MiniPlayer";
+
 import {View, Text, ActivityIndicator,Image} from 'react-native';
 
 
