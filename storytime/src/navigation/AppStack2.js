@@ -8,10 +8,7 @@ import Search from "../screens/Search";
 import AuthorStories from "../screens/AuthorStories";
 import MiniPlayer from "./MiniPlayer";
 
-import {View, Text, ActivityIndicator,Image} from 'react-native';
-
-
-
+import { View, Text, ActivityIndicator, Image } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,13 +19,10 @@ const AuthStack = () => {
       <Stack.Screen name="Popular" component={PopularStoriesScreen} />
       <Stack.Screen name="Player" component={PlayerScreen} />
       <Stack.Screen name="Category" component={CategoryScreen} />
-            <Stack.Screen name="Profile" component={ProfileScreen1} />
-                        <Stack.Screen name="Search" component={Search} />
-                                                <Stack.Screen name="AuthorStories" component={AuthorStories} />
-                                                      <Stack.Screen name="MiniPlayer" component={MiniPlayer} />
-
-
-
+      <Stack.Screen name="Profile" component={ProfileScreen1} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="AuthorStories" component={AuthorStories} />
+      <Stack.Screen name="MiniPlayer" component={MiniPlayer} />
     </Stack.Navigator>
   );
 };

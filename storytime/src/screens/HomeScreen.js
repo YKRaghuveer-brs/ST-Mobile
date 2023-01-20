@@ -31,29 +31,6 @@ import Controls from "../stickyPlayer/Controls";
 import Player from "../stickyPlayer/Player";
 import TextTicker from "react-native-text-ticker";
 
-export const TRACKS = [
-  {
-    title: "Stressed Out",
-    artist: "Twenty One Pilots",
-    albumArtUrl:
-      "http://36.media.tumblr.com/14e9a12cd4dca7a3c3c4fe178b607d27/tumblr_nlott6SmIh1ta3rfmo1_1280.jpg",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-  },
-  {
-    title: "Love Yourself",
-    artist: "Justin Bieber",
-    albumArtUrl:
-      "http://arrestedmotion.com/wp-content/uploads/2015/10/JB_Purpose-digital-deluxe-album-cover_lr.jpg",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-  },
-  {
-    title: "Hotline Bling",
-    artist: "Drake",
-    albumArtUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/c/c9/Drake_-_Hotline_Bling.png",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-  },
-];
 
 export default function HomeScreeen({ navigation }) {
   const {
@@ -62,7 +39,7 @@ export default function HomeScreeen({ navigation }) {
     logout,
     languages,
     selectLanguages,
-    selectedLanguages,
+    selectedLanguages,setTracks,setStory,stickyPlayer,setStickyPlayer
   } = useContext(AuthContext);
 
   const [popularStories, setPopularStories] = useState([]);
@@ -71,9 +48,9 @@ export default function HomeScreeen({ navigation }) {
   const [searchTerms, setSearchTerms] = useState([]);
   const [query, setQuery] = useState("");
   const [value, setValue] = useState("");
-  const [stickyPlayer, setStickyPlayer] = useState(false);
+  // const [stickyPlayer, setStickyPlayer] = useState(false);
   const [episodeList, setEpisodeList] = useState([]);
-  const [story, setStory] = useState([]);
+  // const [story, setStory] = useState([]);
 
   const getPopularShows = async () => {
     setLoading(true);
@@ -113,9 +90,8 @@ export default function HomeScreeen({ navigation }) {
   };
 
   const getEpisodeList = async (story) => {
-    setStory(story);
-    setEpisodeList([]);
-    setStickyPlayer(false);
+    // setStory(story);
+    // setEpisodeList([]);
     const queryParams = { limit: 50, market: "IN" };
     const response = await spotifyGet(
       `shows/${story.id}/episodes`,
@@ -134,7 +110,9 @@ export default function HomeScreeen({ navigation }) {
         episodes.push(obj);
       });
 
-      setEpisodeList(episodes);
+      // setEpisodeList(episodes);
+      setTracks(episodes)
+      setStory(story)
     } else {
       return false;
     }
@@ -430,38 +408,6 @@ export default function HomeScreeen({ navigation }) {
             <Text style={{ color: "#fff" }}>See all</Text>
           </TouchableOpacity>
         </View>
-
-        {/* <View style={{position: 'absolute',zIndex: 3}}>
-<View><Text style={{color:"red"}}>my text</Text></View>
-<View><Text style={{color:"red"}}>My fixed footer</Text></View>
-</View>*/}
-
-        {stickyPlayer ? (
-          <View style={{ flex: 1, position: "absolute", zIndex: 3, top: 310 }}>
-            {/* <View
-              style={{
-                justifyContent: "space-between",
-                backgroundColor: "#5E48A8",
-                width: 372,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={{ uri: "https://source.unsplash.com/random" }}
-                style={{ height: 70, width: 70 }}
-              />
-             <Controls/>
-            </View>*/}
-            {episodeList && episodeList.length ? (
-              <Player
-                tracks={episodeList}
-                story={story}
-                press={() => navigation.navigate("Player", { story: story })}
-              />
-            ) : null}
-          </View>
-        ) : null}
 
         {loading ? (
           <View

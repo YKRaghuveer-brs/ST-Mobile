@@ -6,7 +6,8 @@ import tw from "twrnc";
 
 const CategoryScreen = ({navigation, route}) => {
   // console.log(route.params?.item);
-  const {spotifySearch, selectedLanguages} = useContext(AuthContext);
+  const {spotifySearch, selectedLanguages,setTracks,spotifyGet,setStory} = useContext(AuthContext);
+
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(false);
   const [shows, setShows] = useState([]);
@@ -90,6 +91,37 @@ const CategoryScreen = ({navigation, route}) => {
     }
   };
 
+   const getEpisodeList = async (story) => {
+     setStory(story);
+    // setEpisodeList([]);
+    // setStickyPlayer(false);
+    const queryParams = { limit: 50, market: "IN" };
+    const response = await spotifyGet(
+      `shows/${story.id}/episodes`,
+      queryParams
+    );
+    const episodes = [];
+    if (response.items.length > 0 || response.next) {
+      response.items.map((episode, index) => {
+        let obj = {
+          id: index,
+          title: episode.name.slice(0, 20),
+          artist: "Justin Bieber",
+          albumArtUrl: episode.images[0].url,
+          audioUrl: episode.audio_preview_url,
+        };
+        episodes.push(obj);
+      });
+
+      // setEpisodeList(episodes);
+      setTracks(episodes)
+    } else {
+      return false;
+    }
+
+    // setStickyPlayer(true);
+  };
+
   useEffect(() => {
     if (selectedLanguages.length === 0) {
       setLanguageCodeAr(["ta", "te", "hi", "en en-US en-AU en-GB"]);
@@ -153,7 +185,11 @@ const CategoryScreen = ({navigation, route}) => {
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <View style={{ marginBottom: 15 }}>
-                <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+                <Pressable 
+                // onPress={() => navigation.navigate("Player", { story: item })}
+                                              onPress={() => getEpisodeList(item)}
+
+                >
                   <Image
                     source={{ uri: item.images[1].url }}
                     style={{

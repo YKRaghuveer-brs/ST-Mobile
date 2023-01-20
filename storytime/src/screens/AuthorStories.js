@@ -31,7 +31,7 @@ import { truncateText } from "../utils/common";
 
 const AuthorStories = ({ route, navigation }) => {
   const { publisher } = route.params;
-  const { spotifySearch, logout } = useContext(AuthContext);
+  const { spotifySearch, logout,setTracks,spotifyGet } = useContext(AuthContext);
   const [author, setAuthor] = useState(publisher);
   const [authorStories, setAuthorStories] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -84,6 +84,38 @@ const AuthorStories = ({ route, navigation }) => {
     setSidebarOpen(true); //  Open Side Bar with pass story,episodes
   };
 
+   const getEpisodeList = async (story) => {
+    // setStory(story);
+    // setEpisodeList([]);
+    // setStickyPlayer(false);
+    const queryParams = { limit: 50, market: "IN" };
+    const response = await spotifyGet(
+      `shows/${story.id}/episodes`,
+      queryParams
+    );
+    const episodes = [];
+    if (response.items.length > 0 || response.next) {
+      response.items.map((episode, index) => {
+        let obj = {
+          id: index,
+          title: episode.name.slice(0, 20),
+          artist: "Justin Bieber",
+          albumArtUrl: episode.images[0].url,
+          audioUrl: episode.audio_preview_url,
+        };
+        episodes.push(obj);
+      });
+
+      // setEpisodeList(episodes);
+      setTracks(episodes)
+    } else {
+      return false;
+    }
+
+    // setStickyPlayer(true);
+  };
+
+
   const loadMoreStories = () => {
     if (hasMoreItem) {
       setLoading(true);
@@ -96,7 +128,10 @@ const AuthorStories = ({ route, navigation }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={{ marginBottom: 15, paddingLeft: 13 }}>
-                 <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+                 <Pressable 
+                 // onPress={() => navigation.navigate("Player", { story: item })}
+          onPress={() => getEpisodeList(item)}
+                 >
 
         <Image
           source={{
@@ -186,7 +221,11 @@ const AuthorStories = ({ route, navigation }) => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <View>
-                    <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+                    <Pressable
+                     // onPress={() => navigation.navigate("Player", { story: item })}
+                              onPress={() => getEpisodeList(item)}
+
+                     >
 
               <Image
                 source={{ uri: item.images[1].url }}

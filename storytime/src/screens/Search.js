@@ -16,7 +16,7 @@ import tw from "twrnc";
 import { truncateText } from "../utils/common";
 
 const Search = ({ route, navigation }) => {
-  const { spotifySearch, selectedLanguages, logout } = useContext(AuthContext);
+  const { spotifySearch, selectedLanguages, logout,spotifyGet,setTracks,setStory,setStickyPlayer } = useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
 
@@ -127,7 +127,37 @@ const Search = ({ route, navigation }) => {
       loadMoreStories();
     }
   };
+  
+  const getEpisodeList = async (story) => {
+     setStory(story);
+    // setEpisodeList([]);
+    // setStickyPlayer(false);
+    const queryParams = { limit: 50, market: "IN" };
+    const response = await spotifyGet(
+      `shows/${story.id}/episodes`,
+      queryParams
+    );
+    const episodes = [];
+    if (response.items.length > 0 || response.next) {
+      response.items.map((episode, index) => {
+        let obj = {
+          id: index,
+          title: episode.name.slice(0, 20),
+          artist: "Justin Bieber",
+          albumArtUrl: episode.images[0].url,
+          audioUrl: episode.audio_preview_url,
+        };
+        episodes.push(obj);
+      });
 
+      // setEpisodeList(episodes);
+      setTracks(episodes)
+    } else {
+      return false;
+    }
+
+     setStickyPlayer(true);
+  };
   // useEffect(() => {
   //   getSeveralShows();
   // }, [offset]);
@@ -252,7 +282,11 @@ const Search = ({ route, navigation }) => {
             onEndReached={loadMoreStories}
             renderItem={({ item }) => (
               <View>
-                <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+                <Pressable
+                 // onPress={() => navigation.navigate("Player", { story: item })}
+                                                              onPress={() => getEpisodeList(item)}
+
+                 >
                   <Image
                     source={{ uri: item.images[1].url }}
                     style={{

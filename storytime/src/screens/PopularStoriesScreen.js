@@ -18,7 +18,7 @@ import tw from "twrnc";
 
 
 const PopularStoriesScreen = ({navigation}) => {
-  const { spotifySearch, HttpGet } = useContext(AuthContext);
+  const { spotifySearch, HttpGet,setTracks,spotifyGet,setStory } = useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [popularStories, setPopularStories] = useState([]);
@@ -74,6 +74,37 @@ const PopularStoriesScreen = ({navigation}) => {
   useEffect(() => {
     getAllPopularShows();
   }, [offset]);
+
+  const getEpisodeList = async (story) => {
+     setStory(story);
+    // setEpisodeList([]);
+    // setStickyPlayer(false);
+    const queryParams = { limit: 50, market: "IN" };
+    const response = await spotifyGet(
+      `shows/${story.id}/episodes`,
+      queryParams
+    );
+    const episodes = [];
+    if (response.items.length > 0 || response.next) {
+      response.items.map((episode, index) => {
+        let obj = {
+          id: index,
+          title: episode.name.slice(0, 20),
+          artist: "Justin Bieber",
+          albumArtUrl: episode.images[0].url,
+          audioUrl: episode.audio_preview_url,
+        };
+        episodes.push(obj);
+      });
+
+      // setEpisodeList(episodes);
+      setTracks(episodes)
+    } else {
+      return false;
+    }
+
+    // setStickyPlayer(true);
+  };
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
@@ -134,6 +165,11 @@ const PopularStoriesScreen = ({navigation}) => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <View>
+              <Pressable
+                     // onPress={() => navigation.navigate("Player", { story: item })}
+                              onPress={() => getEpisodeList(item)}
+
+                     >
               <Image
                 source={{ uri: item.images[1].url }}
                 style={{
@@ -151,6 +187,7 @@ const PopularStoriesScreen = ({navigation}) => {
                 <Text style={{ fontSize: 14,color:"#fff",marginBottom:15 }}>
                 {truncateText(item.publisher, 16)}
               </Text>
+              </Pressable>
             </View>
           )}
         />

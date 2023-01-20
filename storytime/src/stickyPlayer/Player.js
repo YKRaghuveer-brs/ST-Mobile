@@ -34,6 +34,7 @@ const Player = ({ tracks, story, press }) => {
   const [repeatOn, setRepeatOn] = useState(false);
   const [shuffleOn, setShuffleOn] = useState(false);
   const [isChanging, setIsChanging] = useState(false);
+    const {setStickyPlayer} = useContext(AuthContext);
 
   // console.log("tracks",tracks)
   const setDuration = (data) => {
@@ -125,6 +126,7 @@ const Player = ({ tracks, story, press }) => {
 
   return (
     <View style={styles.container}>
+     <View><Pressable onPress={() => setStickyPlayer(false)}><Text style={{textAlign: 'right'}}>Close</Text></Pressable></View>
       <View style={{ flexDirection: "row" }}>
         <AlbumArt url={track.albumArtUrl} />
         <Pressable onPress={() => press()}>
@@ -145,6 +147,8 @@ const Player = ({ tracks, story, press }) => {
             </TextTicker>
           </View>
         </Pressable>
+
+
         <Controls
           onPressRepeat={() => setRepeatOn(!repeatOn)}
           repeatOn={repeatOn}

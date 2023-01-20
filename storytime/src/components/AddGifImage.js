@@ -4,13 +4,13 @@ import {Text ,View , Image , StyleSheet} from 'react-native' ;
 const AddGifImage = () => {
     return (
         <View style={Styles.container}>
-          <Image
+          {/*<Image
             style ={{width: "100%", height:"100%"}}
             // source={{ }}
-            source={require("../../assets/Images/Cube_1.gif")}  
+            source={require("../../assets/Images/cube.gif")}  
 
 
-          />
+          />*/}
         </View>
       );
 }

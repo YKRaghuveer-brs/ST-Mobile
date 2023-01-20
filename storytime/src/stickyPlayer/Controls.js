@@ -22,6 +22,7 @@ const Controls = ({
   forwardDisabled,
 }) => (
   <View style={styles.container}>
+
     <Pressable activeOpacity={0.0} onPress={onPressShuffle}>
      {/* <Image
         style={{

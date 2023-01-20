@@ -37,7 +37,7 @@ import * as Yup from "yup";
 // import { FlashList } from "@shopify/flash-list";
 
 const LibraryScreen = ({ navigation }) => {
-  const { HttpGet, spotifyGet } = useContext(AuthContext);
+  const { HttpGet, spotifyGet,setTracks,setStory,setStickyPlayer } = useContext(AuthContext);
   const [libraryList, setLibraryList] = useState([]);
   const [libraryIdList, setLibraryIdList] = useState([]);
   const [updatedLibraryList, setUpdatedLibraryList] = useState([]);
@@ -80,6 +80,38 @@ const LibraryScreen = ({ navigation }) => {
     }
   };
 
+   const getEpisodeList = async (story) => {
+     setStory(story);
+    // setEpisodeList([]);
+    // setStickyPlayer(false);
+    const queryParams = { limit: 50, market: "IN" };
+    const response = await spotifyGet(
+      `shows/${story.id}/episodes`,
+      queryParams
+    );
+    const episodes = [];
+    if (response.items.length > 0 || response.next) {
+      response.items.map((episode, index) => {
+        let obj = {
+          id: index,
+          title: episode.name.slice(0, 20),
+          artist: "Justin Bieber",
+          albumArtUrl: episode.images[0].url,
+          audioUrl: episode.audio_preview_url,
+        };
+        episodes.push(obj);
+      });
+
+      // setEpisodeList(episodes);
+      setTracks(episodes)
+    } else {
+      return false;
+    }
+
+    setStickyPlayer(true);
+  };
+
+
   useEffect(() => {
     getLibrary();
   }, []);
@@ -98,7 +130,11 @@ const LibraryScreen = ({ navigation }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={{ marginBottom: 15, paddingLeft: 13 }}>
-        <Pressable onPress={() => navigation.navigate("Player", { story: item })}>
+        <Pressable 
+        // onPress={() => navigation.navigate("Player", { story: item })}
+                                                      onPress={() => getEpisodeList(item)}
+
+        >
           <Image
             source={{
               uri: item.images[1].url,
