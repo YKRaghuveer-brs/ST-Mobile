@@ -23,6 +23,8 @@ const AuthStack = () => {
             <Stack.Screen name="Profile" component={ProfileScreen1} />
                         <Stack.Screen name="Search" component={Search} />
                                                 <Stack.Screen name="AuthorStories" component={AuthorStories} />
+                                                      <Stack.Screen name="MiniPlayer" component={MiniPlayer} />
+
 
 
     </Stack.Navigator>
