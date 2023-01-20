@@ -1,6 +1,5 @@
-import React, { useState, useEffect, createRef, useContext } from "react";
-import { StyleSheet, TextInput, View, Text, SafeAreaView, Image, Button, Pressable } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, TextInput, View, Text, SafeAreaView, Image, Pressable } from "react-native";
 import axios from "axios";
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -14,7 +13,6 @@ const ForgotPassword = ({ navigation }) => {
     setTimeout(() => {
       setLoading(false);
     }, 3000);
-    // storeData()
   }, []);
 
   const loginValidationSchema = yup.object().shape({
@@ -38,7 +36,6 @@ const ForgotPassword = ({ navigation }) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
             source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
@@ -46,7 +43,6 @@ const ForgotPassword = ({ navigation }) => {
         ""
       )}
       <SafeAreaView
-        // keyboardShouldPersistTaps="handled"
         style={{
           flex: 1,
           justifyContent: "center",
@@ -178,7 +174,6 @@ const styles = StyleSheet.create({
     marginLeft: 35,
   },
   registerTextStyle: {
-    // color: '#FFFFFF',
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 14,

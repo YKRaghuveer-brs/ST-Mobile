@@ -8,11 +8,6 @@ import Search from "../screens/Search";
 import AuthorStories from "../screens/authors/AuthorStories";
 import MiniPlayer from "./MiniPlayer";
 
-import {View, Text, ActivityIndicator,Image} from 'react-native';
-
-
-
-
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {

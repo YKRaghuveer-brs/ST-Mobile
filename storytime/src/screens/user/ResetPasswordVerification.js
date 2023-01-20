@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text, View, StyleSheet, Pressable, Image } from "react-native";
-
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
 import axios from "axios";
-import Spinner from "react-native-loading-spinner-overlay";
 import ToastManager, { Toast } from "toastify-react-native";
 
 const CELL_COUNT = 4;
@@ -23,7 +21,6 @@ const ResetPasswordVerification = ({ route, navigation }) => {
     setTimeout(() => {
       setLoading(false);
     }, 3000);
-    // storeData()
   }, []);
 
   useEffect(() => {
@@ -100,7 +97,6 @@ const ResetPasswordVerification = ({ route, navigation }) => {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
               source={require("../../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>

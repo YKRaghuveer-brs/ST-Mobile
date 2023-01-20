@@ -1,6 +1,4 @@
-import {View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-// import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProfileScreen from '../screens/user/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import CustomDrawer from '../screens/CustomDrawer';
@@ -9,8 +7,6 @@ import TabNavigator from './TabNavigator';
 
 
 const Drawer = createDrawerNavigator();
-
-// const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
   return (

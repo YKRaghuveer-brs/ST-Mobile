@@ -33,9 +33,6 @@ const OnboardingScreen = ({navigation}) => {
           style={{width: 150, height: 150, marginBottom: 50,resizeMode: "contain"}}
           source={require('../assets/images/misc/logo.png')}
         />
-
-       
-
       </View>
 
 

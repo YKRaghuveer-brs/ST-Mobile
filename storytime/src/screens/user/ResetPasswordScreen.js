@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -6,10 +6,7 @@ import {
   Text,
   SafeAreaView,
   Image,
-  Keyboard,
   Pressable,
-  KeyboardAvoidingView,
-  Switch,
 } from "react-native";
 import axios from "axios";
 import * as Yup from "yup";
@@ -62,7 +59,6 @@ const ResetPasswordScreen = ({ route, navigation }) => {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
               source={require("../../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>
@@ -70,7 +66,6 @@ const ResetPasswordScreen = ({ route, navigation }) => {
           ""
         )}
       <SafeAreaView
-        // keyboardShouldPersistTaps="handled"
         style={{
           flex: 1,
           justifyContent: "center",

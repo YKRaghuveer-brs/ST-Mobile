@@ -1,16 +1,12 @@
-import React, { useState, useEffect, createRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
-  TextInput,
   View,
   Text,
-  SafeAreaView,
   Image,
   Pressable,
-  ActivityIndicator,
   FlatList,
 } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
 import { AuthContext } from "../context/AuthContext";
 import tw from "twrnc";
 import { truncateText } from "../utils/common";
@@ -163,25 +159,7 @@ const Search = ({ route, navigation }) => {
     );
   };
 
-  //  const renderFooter = () =>{
-  //   return (
-  //   //Footer View with Load More button
-  //     <View style={styles.footer}>
-
-  //        <Text style={styles.btnText}>Loading</Text>
-  //         {loading ? (
-  //            <Image
-  //         style={{width: 100, height: 100}}
-  //         // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
-  //         source={require("../../assets/Images/Spiral_logo_loader.gif")}
-  //         />
-  //         ) : null}
-  //     </View>
-  //   );
-  // }
-
   return (
-
     <View style={tw`flex-1 bg-[#291F4E] pt-4`}>
       {loading ? (
         <View
@@ -198,7 +176,6 @@ const Search = ({ route, navigation }) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
             source={require("../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>

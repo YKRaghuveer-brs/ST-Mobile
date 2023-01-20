@@ -1,15 +1,11 @@
-import React, { useState, useEffect, createRef, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   TextInput,
   View,
   Text,
   ScrollView,
   Image,
-  Keyboard,
   Pressable,
-  KeyboardAvoidingView,
-  Switch,
 } from "react-native";
 import axios from "axios";
 import * as Yup from "yup";
@@ -75,7 +71,6 @@ const RegisterScreen1 = ({ navigation }) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
             source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
@@ -83,7 +78,6 @@ const RegisterScreen1 = ({ navigation }) => {
         ""
       )}
       <ScrollView
-        // keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           flex: 1,
           justifyContent: "center",
@@ -112,7 +106,6 @@ const RegisterScreen1 = ({ navigation }) => {
                 }
               } catch (error) {
                 Toast.error(error.response.data);
-                // console.log(error);
               }
               setLoading(false);
             }}
@@ -232,66 +225,3 @@ const RegisterScreen1 = ({ navigation }) => {
 };
 export default RegisterScreen1;
 
-// const styles = StyleSheet.create({
-//   mainBody: {
-//     flex: 1,
-//     justifyContent: "center",
-//     backgroundColor: "#fff",
-//     alignContent: "center",
-//   },
-//   form: {
-//     position: "absolute",
-//     zIndex: 2,
-//     width: "100%",
-//   },
-//   SectionStyle: {
-//     flexDirection: "row",
-//     height: 40,
-//     marginTop: 20,
-//     marginLeft: 35,
-//     marginRight: 35,
-//     margin: 10,
-//   },
-//   buttonStyle: {
-//     backgroundColor: "#2A0D62",
-//     borderWidth: 0,
-//     color: "#FFFFFF",
-//     borderColor: "#072c32",
-//     height: 40,
-//     alignItems: "center",
-//     borderRadius: 10,
-//     marginLeft: 35,
-//     marginRight: 35,
-//     marginTop: 20,
-//     marginBottom: 25,
-//   },
-//   buttonTextStyle: {
-//     color: "#FFFFFF",
-//     paddingVertical: 10,
-//     fontSize: 16,
-//     fontWeight: "bold",
-//   },
-//   inputStyle: {
-//     flex: 1,
-//     color: "#000",
-//     paddingLeft: 15,
-//     paddingRight: 15,
-//     borderWidth: 1,
-//     borderRadius: 10,
-//     borderColor: "#dadae8",
-//   },
-//   registerTextStyle: {
-//     // color: "#FFFFFF",
-//     textAlign: "center",
-//     fontWeight: "bold",
-//     fontSize: 14,
-//     alignSelf: "center",
-//     padding: 10,
-//   },
-//   errorTextStyle: {
-//     color: "red",
-//     textAlign: "left",
-//     fontSize: 11,
-//     marginLeft: 35,
-//   },
-// });

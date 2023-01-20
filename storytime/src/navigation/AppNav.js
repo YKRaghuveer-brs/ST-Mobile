@@ -1,14 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
-import { View, Text, ActivityIndicator, Image } from "react-native";
-
+import React, { useContext, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import AuthStack from "./AuthStack";
 
 import AppStack2 from "./AppStack2";
 import { AuthContext } from "../context/AuthContext";
-const Stack = createNativeStackNavigator();
+
 const AppNav = () => {
   const TRACKS = [
     {

@@ -1,23 +1,4 @@
-// import {View, Text, TouchableOpacity} from 'react-native';
-
-// const LibraryScreen = ({navigation}) => {
-//   return (
-//     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//       <Text style={{marginTop: 15, fontSize: 18, marginBottom: 10}}>
-//         The Library is currently empty
-//       </Text>
-//       <Text>Find more of the stories amoung our popular stories</Text>
-//       <TouchableOpacity onPress={() => navigation.navigate('Popular')}>
-//         <Text style={{marginTop: 15, fontSize: 18, color: '#0aada8'}}>
-//           Go To Popular Stories
-//         </Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// };
-
-// export default LibraryScreen;
-import React, { useState, useEffect, createRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -31,8 +12,6 @@ import {
 import tw from "twrnc";
 import { AuthContext } from "../context/AuthContext";
 
-
-// import { FlashList } from "@shopify/flash-list";
 
 const LibraryScreen = ({ navigation }) => {
   const { HttpGet, spotifyGet } = useContext(AuthContext);
@@ -132,7 +111,6 @@ const LibraryScreen = ({ navigation }) => {
         <View style={styles.loader}>
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
             source={require("../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
@@ -140,7 +118,6 @@ const LibraryScreen = ({ navigation }) => {
         ""
       )}
       <SafeAreaView
-      // keyboardShouldPersistTaps="handled"
       >
         <View style={styles.navBar}>
           <View style={styles.leftContainer}>
@@ -164,7 +141,6 @@ const LibraryScreen = ({ navigation }) => {
             <FlatList
               numColumns={2}
               data={updatedLibraryList}
-              // renderItem={list_stories(story)}
               renderItem={(item) => renderItem(item)}
               estimatedItemSize={100}
             />
@@ -183,7 +159,6 @@ const LibraryScreen = ({ navigation }) => {
             <FlatList
               numColumns={2}
               data={updatedLibraryList}
-              // renderItem={list_stories(story)}
               renderItem={(item) => renderItem(item)}
               estimatedItemSize={100}
             />
@@ -210,8 +185,6 @@ const LibraryScreen = ({ navigation }) => {
             </Pressable>
           </View>
         )}
-
-        {/*<View style={styles.half_circle}></View>*/}
       </SafeAreaView>
     </View>
   );

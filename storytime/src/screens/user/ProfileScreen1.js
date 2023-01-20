@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -6,24 +6,20 @@ import {
   Text,
   ScrollView,
   Image,
-  Button,
   Pressable,
 } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../../config";
 
 
 const ProfileScreen1 = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  // const [user, setUser] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
 
   const FirstRoute = () => <View style={[styles.scene, { backgroundColor: "#ff4081" }]} />;
@@ -95,13 +91,11 @@ const ProfileScreen1 = ({ navigation }) => {
         >
           <Image
             style={{ width: 100, height: 100 }}
-            // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
             source={require("../../../assets/Images/Spiral_logo_loader.gif")}
           />
         </View>
       )}
       <ScrollView
-        // keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           flex: 1,
         }}
@@ -152,15 +146,6 @@ const ProfileScreen1 = ({ navigation }) => {
             validationSchema={validateSchema}
             initialValues={initialValues}
             onSubmit={async (values) => {
-              // const response = await axios.put(`updateUser/${user._id}`, values);
-              //     axios.put(BASE_URL + "updateUser/" + user._id, values)
-
-              // if (response) {
-              // Toast.success("Update your data successfully");
-              // }
-              // setTimeout(() => {
-              //  setIsSubmit(false)
-              // }, 5000);
               axios.put(BASE_URL + "updateUser/" + user._id, values)
                 .then((res) => {
                   if (res) {
@@ -174,50 +159,6 @@ const ProfileScreen1 = ({ navigation }) => {
                   Toast.error(error.response.data);
                 });
             }}
-
-            // onSubmit={async (values) => {
-            //   // showToast()
-            //   setLoading(true);
-
-            //   try {
-            //     const response = await axios.post(
-            //       "http://192.168.146.2:6969/login",
-            //       values
-            //     );
-            //     console.log(response);
-
-            //     if(response){
-            //       const expirationTime = new Date(
-            //         new Date().getTime() + response.usertokenExp * 1000
-            //       );
-            //       const spotifyExpirationTime = new Date(
-            //         new Date().getTime() +
-            //           response.spotifytoken.expires_in * 1000
-            //       );
-            //       ctx.login(
-            //         response.token,
-            //         expirationTime.toISOString(),
-            //         response.spotifytoken.access_token,
-            //         spotifyExpirationTime.toISOString()
-            //       );
-            //       navigation.navigate("Home");
-            //     }
-            //     Toast.success("You logged in successfully!");
-
-            //     // setTimeout(() => {
-            //     //   navigation.navigate("Home");
-            //     // }, 3000);
-            //     setLoading(false);
-            //   } catch (error) {
-            //     // alert(error.response.data);
-            //     Toast.error(error.response.data);
-            //     setLoading(false);
-
-            //     console.error(error);
-            //   }
-
-            //   // handleSubmitPress();
-            // }}
           >
             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid }) => (
               <>
@@ -245,7 +186,6 @@ const ProfileScreen1 = ({ navigation }) => {
                     name="email"
                     placeholder="Email"
                     style={tw`flex-1 rounded pl-4 bg-slate-400`}
-                    // style={[tw`rounded-full ml-2 justify-between`]}
                     editable={false}
                     onChangeText={handleChange("email")}
                     onBlur={handleBlur("email")}
@@ -259,8 +199,6 @@ const ProfileScreen1 = ({ navigation }) => {
                     name="first_name"
                     placeholder="First Name"
                     style={tw`flex-1 rounded pl-4 bg-slate-400`}
-                    // style={[tw`rounded-full ml-2 justify-between`]}
-
                     onChangeText={handleChange("first_name")}
                     onBlur={handleBlur("first_name")}
                     value={values.first_name}
@@ -278,8 +216,6 @@ const ProfileScreen1 = ({ navigation }) => {
                     name="last_name"
                     placeholder="Last Name"
                     style={tw`flex-1 rounded pl-4 bg-slate-400`}
-                    // style={[tw`rounded-full ml-2 justify-between`]}
-
                     onChangeText={handleChange("last_name")}
                     onBlur={handleBlur("last_name")}
                     value={values.last_name}
@@ -296,8 +232,6 @@ const ProfileScreen1 = ({ navigation }) => {
                   activeOpacity={0.5}
                   onPress={handleSubmit}
                   disabled={isSubmit}
-
-                  // onPress={handleSubmitPress}
                 >
                   <Text style={tw`text-white py-3 font-bold`}>Update</Text>
                 </Pressable>
@@ -315,7 +249,6 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // alignItems: "center",
     marginBottom: 20,
   },
   leftContainer: {

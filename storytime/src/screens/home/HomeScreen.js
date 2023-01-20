@@ -420,28 +420,8 @@ export default function HomeScreeen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* <View style={{position: 'absolute',zIndex: 3}}>
-<View><Text style={{color:"red"}}>my text</Text></View>
-<View><Text style={{color:"red"}}>My fixed footer</Text></View>
-</View>*/}
-
         {stickyPlayer ? (
           <View style={{ flex: 1, position: "absolute", zIndex: 3, top: 310 }}>
-            {/* <View
-              style={{
-                justifyContent: "space-between",
-                backgroundColor: "#5E48A8",
-                width: 372,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={{ uri: "https://source.unsplash.com/random" }}
-                style={{ height: 70, width: 70 }}
-              />
-             <Controls/>
-            </View>*/}
             {episodeList && episodeList.length ? (
               <Player
                 tracks={episodeList}
@@ -467,7 +447,6 @@ export default function HomeScreeen({ navigation }) {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              // source={{uri: 'https://media3.giphy.com/media/wWue0rCDOphOE/giphy.gif'}}
               source={require("../../../assets/Images/Spiral_logo_loader.gif")}
             />
           </View>
@@ -477,29 +456,6 @@ export default function HomeScreeen({ navigation }) {
               numColumns={3}
               keyExtractor={(item) => item.id}
               data={popularStories}
-              // renderItem={({item}) => (
-              //   <View>
-              //           <TouchableOpacity onPress={() => navigation.navigate("Player", { story: item })}>
-
-              //     <Image
-              //       source={{uri: item.images[1].url}}
-              //       style={{
-              //         width: 110,
-              //         height: 110,
-              //         borderRadius: 10,
-              //         marginRight: 8,
-              //       }}
-
-              //     />
-              //     <Text style={{fontSize: 18}}>
-              //       {truncateText(item.publisher, 12)}
-              //     </Text>
-              //     <Text style={{fontSize: 15}}>
-              //       {truncateText(item.name, 12)}
-              //     </Text>
-              //     </TouchableOpacity>
-              //   </View>
-              // )}
               renderItem={(item, index) => renderItem(item, index)}
             />
           </View>
@@ -514,8 +470,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 25,
-    // marginLeft: 12,
-    // marginRight: 12,
   },
   leftContainer: {
     flex: 1,
