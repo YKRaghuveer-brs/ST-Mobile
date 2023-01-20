@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import { navigationRef } from './RootNavigation';
 import AuthStack from "./AuthStack";
 import Player from "../stickyPlayer/Player";
 import MiniPlayer from "./MiniPlayer";
@@ -43,7 +44,7 @@ const AppNav = () => {
   // }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {userToken !== null ? <AppStack2 />:<AuthStack />}
       {stickyPlayer?<View
         style={{
@@ -55,10 +56,10 @@ const AppNav = () => {
         }}
       >
 
-        <MiniPlayer
+        <Player
           tracks={minPlayerTracks}
           story={minPlayerStory}
-          press={() => navigation.navigate("Player", { story: story })}
+         
         />
       </View>:null}
     </NavigationContainer>

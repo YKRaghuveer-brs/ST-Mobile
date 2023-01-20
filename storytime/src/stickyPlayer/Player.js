@@ -13,10 +13,11 @@ import Video from "react-native-video";
 import { AuthContext } from "../context/AuthContext";
 import { truncateText } from "../utils/common";
 import TextTicker from "react-native-text-ticker";
+import * as RootNavigation from '../navigation/RootNavigation.js';
 
-const Player = ({ tracks, story, press }) => {
+
+const Player = ({tracks,story}) => {
 // await AsyncStorage.setItem('user', JSON.stringify(token))
-  console.log("story",story)
   const [paused, setPaused] = useState(true);
   const [totalLength, setTotalLength] = useState(1);
   const [currentPosition, setCurrentPosition] = useState(0);
@@ -114,12 +115,18 @@ const Player = ({ tracks, story, press }) => {
     />
   );
 
+  const openPlayer = () => {
+  setStickyPlayer(false)
+  RootNavigation.navigate('Player', { story: story })
+  }
+
   return (
     <View style={styles.container}>
      <View><Pressable onPress={() => setStickyPlayer(false)}><Text style={{textAlign: 'right'}}>Close</Text></Pressable></View>
       <View style={{ flexDirection: "row" }}>
         <AlbumArt url={track.albumArtUrl} />
-        <Pressable onPress={() => press()}>
+        <Pressable 
+        onPress={() => openPlayer()}>
           <View style={{ paddingLeft: 10, paddingTop: 14 }}>
             <Text style={{ color: "#fff", fontSize: 14 }}>
               {truncateText(story.name, 14)}
