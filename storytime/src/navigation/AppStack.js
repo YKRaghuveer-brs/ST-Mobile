@@ -1,20 +1,16 @@
-import {View, Text} from 'react-native';
+/** 
+Created: 23.01.2023
+Component: App Stack component
+Description: If the User is logged in then this component is rendered.
+(c) Copyright (c) by Nyros. 
+**/
+
 import {createDrawerNavigator} from '@react-navigation/drawer';
-// import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import OnboardingScreen from '../screens/OnboardingScreen';
-import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import MessagesScreen from '../screens/MessagesScreen';
-import MomentsScreen from '../screens/MomentsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import CustomDrawer from '../screens/CustomDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TabNavigator from './TabNavigator';
 
 const Drawer = createDrawerNavigator();
-
-// const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
   return (
@@ -37,42 +33,6 @@ const AppStack = () => {
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={ProfileScreen}
-        name="Profile"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="person-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={MessagesScreen}
-        name="Messages"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={MomentsScreen}
-        name="Moments"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="timer-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={SettingsScreen}
-        name="Settings"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="settings-outline" size={22} color={color} />
           ),
         }}
       />

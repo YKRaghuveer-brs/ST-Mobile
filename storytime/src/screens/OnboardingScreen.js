@@ -1,9 +1,16 @@
+/** 
+Created: 23.01.2022
+Component: Onboarding Screen
+Description: Renders the Initial screen when the App is opened
+(c) Copyright (c) by Nyros. 
+**/
+
 import {
   SafeAreaView,
   TouchableOpacity,
   View,
   Text,
-  ImageBackground,
+  Image,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -29,11 +36,12 @@ const OnboardingScreen = ({navigation}) => {
       </View>
 
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ImageBackground
-          style={{width: 150, height: 150, marginBottom: 50}}
+        <Image
+          style={{width: 150, height: 150, marginBottom: 50,resizeMode: "contain"}}
           source={require('../assets/images/misc/logo.png')}
         />
       </View>
+
 
       <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>
         Listen to the best stories from all around the world
