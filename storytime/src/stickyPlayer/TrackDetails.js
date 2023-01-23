@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
+/** 
+Created: 23.01.2022
+Component: Track Details
+Description: Renders the Track details of a particular Show for sticky player
+(c) Copyright (c) by Nyros. 
+**/
 
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Image,
-  TouchableHighlight,
-  Pressable,
-  Dimensions,
+
 } from 'react-native';
 
 const TrackDetails = ({
@@ -19,20 +22,10 @@ const TrackDetails = ({
   onArtistPress,
 }) => (
   <View style={styles.container}>
-    {/*<Pressable onPress={onAddPress}>
-      <Image style={styles.button}
-        source={require('../img/ic_add_circle_outline_white.png')} />
-    </Pressable>*/}
     <View style={styles.detailsWrapper}>
       <Text style={styles.title} onPress={onTitlePress}>{title}</Text>
       <Text style={styles.artist} onPress={onArtistPress}>{artist}</Text>
     </View>
-   {/* <Pressable onPress={onMorePress}>
-      <View style={styles.moreButton}>
-        <Image style={styles.moreButtonIcon}
-          source={require('../img/ic_more_horiz_white.png')} />
-      </View>
-    </Pressable>*/}
   </View>
 );
 

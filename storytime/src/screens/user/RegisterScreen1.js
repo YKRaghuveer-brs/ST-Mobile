@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2022
+Component: Register Screen
+Description: Renders the Registration Form to register a new user
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, { useState, useEffect } from "react";
 import {
   TextInput,

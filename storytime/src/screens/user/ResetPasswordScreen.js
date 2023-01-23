@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2022
+Component: Reset Password Screen
+Description: Renders the reset password logic
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -89,7 +96,6 @@ const ResetPasswordScreen = ({ route, navigation }) => {
                 }
               } catch (error) {
                 Toast.error(error.response.data);
-                console.log(error);
               }
             }}
           >

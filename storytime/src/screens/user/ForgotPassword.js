@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2023
+Component: Forgot Password
+Description: Renders forgot password logic 
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, { useState, useEffect } from "react";
 import { StyleSheet, TextInput, View, Text, SafeAreaView, Image, Pressable } from "react-native";
 import axios from "axios";

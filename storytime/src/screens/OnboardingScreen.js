@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2022
+Component: Onboarding Screen
+Description: Renders the Initial screen when the App is opened
+(c) Copyright (c) by Nyros. 
+**/
+
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -63,7 +70,7 @@ const OnboardingScreen = ({navigation}) => {
         <MaterialIcons
           name="arrow-forward-ios"
           size={22}
-          color="#000"></MaterialIcons>
+          color="#ccc"></MaterialIcons>
       </TouchableOpacity>
     </SafeAreaView>
   );

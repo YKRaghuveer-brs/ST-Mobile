@@ -1,4 +1,10 @@
-import { View, Text } from "react-native";
+/** 
+Created: 23.01.2023
+Component: App Stack component
+Description: If the User is not logged in then this component is rendered.
+(c) Copyright (c) by Nyros. 
+**/
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import LoginScreen1 from "../screens/user/LoginScreen1";
@@ -7,15 +13,13 @@ import EmailVerification from "../screens/user/EmailVerification";
 import ForgotPassword from "../screens/user/ForgotPassword";
 import ResetPasswordVerification from "../screens/user/ResetPasswordVerification";
 import ResetPasswordScreen from "../screens/user/ResetPasswordScreen";
-import ProfileScreen1 from "../screens/user/ProfileScreen1";
-import PlayerScreen from "../screens/PlayerScreen";
 
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ hederShown: false }}>
-      <Stack.Screen component={OnboardingScreen} name="Onboarding" />
+      <Stack.Screen options={{headerShown: false}} component={OnboardingScreen} name="Onboarding" />
       <Stack.Screen component={LoginScreen1} name="Login" />
       <Stack.Screen component={RegisterScreen1} name="Register" />
       <Stack.Screen component={EmailVerification} name="EmailVerify" />

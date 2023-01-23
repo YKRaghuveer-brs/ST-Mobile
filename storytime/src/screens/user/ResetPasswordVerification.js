@@ -1,15 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView, Text, View, StyleSheet, Pressable, Image } from "react-native";
-import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
-import axios from "axios";
-import ToastManager, { Toast } from "toastify-react-native";
+/** 
+Created: 23.01.2022
+Component: Reset Password Verification Screen
+Description: To verify the user - to reset the password
+(c) Copyright (c) by Nyros. 
+**/
+
+import React, {useState, useEffect} from 'react';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  Image,
+} from 'react-native';
+import {
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell,
+} from 'react-native-confirmation-code-field';
+import axios from 'axios';
+import ToastManager, {Toast} from 'toastify-react-native';
 
 const CELL_COUNT = 4;
 
-const ResetPasswordVerification = ({ route, navigation }) => {
-  const { email } = route.params;
-  const [value, setValue] = useState("");
-  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+const ResetPasswordVerification = ({route, navigation}) => {
+  const {email} = route.params;
+  const [value, setValue] = useState('');
+  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -24,7 +43,8 @@ const ResetPasswordVerification = ({ route, navigation }) => {
   }, []);
 
   useEffect(() => {
-    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
   }, [counter]);
 
@@ -35,11 +55,14 @@ const ResetPasswordVerification = ({ route, navigation }) => {
       code: value,
     };
     try {
-      const response = await axios.post("http://203.193.173.125:6969/resetPasswordCodeVerifyMobile", payload);
+      const response = await axios.post(
+        'http://203.193.173.125:6969/resetPasswordCodeVerifyMobile',
+        payload,
+      );
       if (response) {
         Toast.success(response.data);
         setTimeout(() => {
-          navigation.navigate("ResetPassword", {
+          navigation.navigate('ResetPassword', {
             email: email,
           });
         }, 3000);
@@ -57,11 +80,14 @@ const ResetPasswordVerification = ({ route, navigation }) => {
       email: email,
     };
     try {
-      const response = await axios.post("http://203.193.173.125:6969/resetPasswordEmailMobile", payload);
+      const response = await axios.post(
+        'http://203.193.173.125:6969/resetPasswordEmailMobile',
+        payload,
+      );
       if (response) {
         Toast.success(response.data);
         setCounter(59);
-        setValue("");
+        setValue('');
       }
     } catch (error) {
       Toast.error(error.response.data);
@@ -73,42 +99,40 @@ const ResetPasswordVerification = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <ToastManager duration={3000} style={{ fontSize: 10 }} />
+      <ToastManager duration={3000} style={{fontSize: 10}} />
 
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         {loading ? (
           <View
             style={{
-              position: "absolute",
+              position: 'absolute',
               zIndex: 2,
               left: 0,
               right: 0,
               top: 20,
               bottom: 0,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
             <Image
-              style={{ width: 100, height: 100 }}
-              source={require("../../../assets/Images/Spiral_logo_loader.gif")}
+              style={{width: 100, height: 100}}
+              source={require('../../../assets/Images/Spiral_logo_loader.gif')}
             />
           </View>
         ) : (
-          ""
+          ''
         )}
         <Image
-          source={{ uri: "https://i.ibb.co/YfCLy1z/storytime.png" }}
+          source={{uri: 'https://i.ibb.co/YfCLy1z/storytime.png'}}
           style={{
             width: 60,
             height: 60,
-            resizeMode: "contain",
+            resizeMode: 'contain',
             margin: 10,
           }}
         />
@@ -127,34 +151,41 @@ const ResetPasswordVerification = ({ route, navigation }) => {
         rootStyle={styles.codeFiledRoot}
         keyboardType="number-pad"
         textContentType="oneTimeCode"
-        renderCell={({ index, symbol, isFocused }) => (
+        renderCell={({index, symbol, isFocused}) => (
           <View
             // Make sure that you pass onLayout={getCellOnLayoutHandler(index)} prop to root component of "Cell"
             onLayout={getCellOnLayoutHandler(index)}
             key={index}
-            style={[styles.cellRoot, isFocused && styles.focusCell]}
-          >
-            <Text style={styles.cellText}>{symbol || (isFocused ? <Cursor /> : null)}</Text>
+            style={[styles.cellRoot, isFocused && styles.focusCell]}>
+            <Text style={styles.cellText}>
+              {symbol || (isFocused ? <Cursor /> : null)}
+            </Text>
           </View>
         )}
       />
 
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
           marginTop: 20,
-        }}
-      >
-        <Pressable disabled={counter == 0 ? false : true} onPress={resendPassword}>
+        }}>
+        <Pressable
+          disabled={counter == 0 ? false : true}
+          onPress={resendPassword}>
           <Text style={styles.registerTextStyle}>Resend OTP</Text>
         </Pressable>
 
-        <Text style={styles.registerTextStyle}>{counter != 0 ? " in 00:" + counter : ""}</Text>
+        <Text style={styles.registerTextStyle}>
+          {counter != 0 ? ' in 00:' + counter : ''}
+        </Text>
       </View>
 
-      <Pressable style={styles.buttonStyle} activeOpacity={0.5} onPress={handleSubmit}>
+      <Pressable
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={handleSubmit}>
         <Text style={styles.buttonTextStyle}>VERIFY & PROCEED</Text>
       </Pressable>
     </SafeAreaView>
@@ -166,44 +197,44 @@ export default ResetPasswordVerification;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#291F4E",
-    alignContent: "center",
+    justifyContent: 'center',
+    backgroundColor: '#291F4E',
+    alignContent: 'center',
     padding: 20,
   },
-  title: { textAlign: "center", fontSize: 30, color: "#fff" },
-  title1: { textAlign: "center", fontSize: 15, color: "#fff" },
+  title: {textAlign: 'center', fontSize: 30, color: '#fff'},
+  title1: {textAlign: 'center', fontSize: 15, color: '#fff'},
 
   codeFiledRoot: {
     marginTop: 20,
     width: 280,
-    marginLeft: "auto",
-    marginRight: "auto",
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   cellRoot: {
     width: 60,
     height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    borderBottomColor: "#ccc",
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomColor: '#ccc',
     borderBottomWidth: 1,
   },
   cellText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 36,
-    textAlign: "center",
+    textAlign: 'center',
   },
   focusCell: {
-    borderBottomColor: "#007AFF",
+    borderBottomColor: '#007AFF',
     borderBottomWidth: 2,
   },
   buttonStyle: {
-    backgroundColor: "#2A0D62",
+    backgroundColor: '#2A0D62',
     borderWidth: 0,
-    color: "#FFFFFF",
-    borderColor: "#fcc630",
+    color: '#FFFFFF',
+    borderColor: '#fcc630',
     height: 40,
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 10,
     marginLeft: 35,
     marginRight: 35,
@@ -211,17 +242,17 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   buttonTextStyle: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     paddingVertical: 10,
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   registerTextStyle: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
 
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 14,
-    alignSelf: "center",
+    alignSelf: 'center',
     paddingTop: 10,
   },
 });

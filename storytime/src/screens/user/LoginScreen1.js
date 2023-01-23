@@ -1,4 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+/** 
+Created: 23.01.2023
+Component: Login Screen
+Description: Renders the Login Screen for the user to enter email and password, and 
+ upon successfull login - redirects the user to Home Screen
+(c) Copyright (c) by Nyros. 
+**/
+
+import React, {useState, useEffect, useContext} from 'react';
 import {
   TextInput,
   View,
@@ -6,16 +14,16 @@ import {
   SafeAreaView,
   Image,
   Pressable,
-} from "react-native";
-import * as yup from "yup";
-import { Formik } from "formik";
-import ToastManager, { Toast } from "toastify-react-native";
-import tw from "twrnc";
-import { AuthContext } from "../../context/AuthContext";
+} from 'react-native';
+import * as yup from 'yup';
+import {Formik} from 'formik';
+import ToastManager, {Toast} from 'toastify-react-native';
+import tw from 'twrnc';
+import {AuthContext} from '../../context/AuthContext';
 
-const LoginScreen1 = ({ navigation }) => {
-    const {login, logout} = useContext(AuthContext);
-    const [loading, setLoading] = useState(true);
+const LoginScreen1 = ({navigation}) => {
+  const {login, logout} = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -26,12 +34,12 @@ const LoginScreen1 = ({ navigation }) => {
   const loginValidationSchema = yup.object().shape({
     email: yup
       .string()
-      .email("Please enter valid email")
-      .required("Email Address is Required"),
+      .email('Please enter valid email')
+      .required('Email Address is Required'),
     password: yup
       .string()
-      .min(6, ({ min }) => `Password must be at least ${min} characters`)
-      .required("Password is required"),
+      .min(6, ({min}) => `Password must be at least ${min} characters`)
+      .required('Password is required'),
   });
 
   return (
@@ -39,44 +47,41 @@ const LoginScreen1 = ({ navigation }) => {
       {loading ? (
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             zIndex: 2,
             left: 0,
             right: 0,
             top: 20,
             bottom: 0,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <Image
-            style={{ width: 100, height: 100 }}
-            source={require("../../../assets/Images/Spiral_logo_loader.gif")}
+            style={{width: 100, height: 100}}
+            source={require('../../../assets/Images/Spiral_logo_loader.gif')}
           />
         </View>
       ) : (
-        ""
+        ''
       )}
       <SafeAreaView
         style={{
           flex: 1,
-          justifyContent: "center",
-          alignContent: "center",
-        }}
-      >
-        <ToastManager duration={3000} style={{ fontSize: 10 }} />
+          justifyContent: 'center',
+          alignContent: 'center',
+        }}>
+        <ToastManager duration={3000} style={{fontSize: 10}} />
 
         <View style={tw`w-full`}>
           <Formik
             validationSchema={loginValidationSchema}
             initialValues={{
-              email: "gopinathkrm@gmail.com",
-              password: "123456",
+              email: 'gopinathkrm@gmail.com',
+              password: '123456',
             }}
-            onSubmit={async (values) => {
-              login(values.email,values.password);
-            }}
-          >
+            onSubmit={async values => {
+              login(values.email, values.password);
+            }}>
             {({
               handleChange,
               handleBlur,
@@ -88,23 +93,21 @@ const LoginScreen1 = ({ navigation }) => {
               <>
                 <View
                   style={{
-                    alignItems: "center",
+                    alignItems: 'center',
                     marginTop: 10,
                     marginBottom: 20,
-                  }}
-                >
+                  }}>
                   <Image
-                    source={{ uri: "https://i.ibb.co/YfCLy1z/storytime.png" }}
+                    source={{uri: 'https://i.ibb.co/YfCLy1z/storytime.png'}}
                     style={{
                       width: 60,
                       height: 60,
-                      resizeMode: "contain",
+                      resizeMode: 'contain',
                       margin: 10,
                     }}
                   />
                   <Text
-                    style={{ alignSelf: "center", color: "#fff", fontSize: 20 }}
-                  >
+                    style={{alignSelf: 'center', color: '#fff', fontSize: 20}}>
                     Login
                   </Text>
                 </View>
@@ -114,8 +117,8 @@ const LoginScreen1 = ({ navigation }) => {
                     name="email"
                     placeholder="Email Address"
                     style={tw`flex-1 rounded pl-4 bg-slate-400`}
-                    onChangeText={handleChange("email")}
-                    onBlur={handleBlur("email")}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
                     value={values.email}
                     keyboardType="email-address"
                   />
@@ -132,8 +135,8 @@ const LoginScreen1 = ({ navigation }) => {
                     name="password"
                     placeholder="Password"
                     style={tw`flex-1 rounded pl-4 bg-slate-400`}
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
                     value={values.password}
                     secureTextEntry
                   />
@@ -148,27 +151,23 @@ const LoginScreen1 = ({ navigation }) => {
                 <View style={tw`flex items-end mr-8`}>
                   <Text
                     style={tw`font-bold text-white`}
-                    onPress={() => navigation.navigate("ForgotPassword")}
-                  >
+                    onPress={() => navigation.navigate('ForgotPassword')}>
                     Forgot Password?
                   </Text>
                 </View>
                 <Pressable
                   style={tw`bg-[#2A0D62] h-10 mt-4 ml-8 mr-8 mb-2 flex items-center rounded`}
                   activeOpacity={0.5}
-                  onPress={handleSubmit}
-                >
+                  onPress={handleSubmit}>
                   <Text style={tw`text-white py-3 font-bold`}>LOGIN</Text>
                 </Pressable>
 
                 <View style={tw`flex items-center`}>
                   <Text
                     style={tw`font-bold text-white`}
-                    onPress={() => navigation.navigate("Register")}
-                  >
+                    onPress={() => navigation.navigate('Register')}>
                     You don't have account ? Sign up
                   </Text>
-                 
                 </View>
               </>
             )}

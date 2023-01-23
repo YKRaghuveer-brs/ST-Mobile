@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2023
+Component: Email Verfification
+Description: Contains the email verification logic through OTP
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, Image, Pressable, SafeAreaView } from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+/** 
+Created: 23.01.2022
+Component: Controls
+Description: contains the controls needed for the sticky player.
+(c) Copyright (c) by Nyros. 
+**/
 
-import {
-  View,
-  StyleSheet,
-  Image,
-  Pressable,
-} from 'react-native';
-
+import React from 'react';
+import {View, StyleSheet, Image, Pressable} from 'react-native';
 
 const Controls = ({
   paused,
@@ -21,44 +21,32 @@ const Controls = ({
   forwardDisabled,
 }) => (
   <View style={styles.container}>
-
-    <Pressable activeOpacity={0.0} onPress={onPressShuffle}>
-     {/* <Image
-        style={{
-           height: 25,
-                                    width: 25,
-                                    marginLeft: 20,
-                                    marginRight: 10,
-                                    tintColor: "#FF8C00",
-                                    alignSelf: "center",
-        }}
-       source={require('../img/ic_skip_previous_white_36pt.png')}
-        />*/}
-    </Pressable>
     <View style={{width: 40}} />
     <Pressable onPress={onBack}>
-      <Image source={require('../img/ic_skip_previous_white_36pt.png')}/>
+      <Image source={require('../img/ic_skip_previous_white_36pt.png')} />
     </Pressable>
     <View style={{width: 20}} />
-    {!paused ?
+    {!paused ? (
       <Pressable onPress={onPressPause}>
         <View style={styles.playButton}>
-          <Image source={require('../img/ic_pause_white_48pt.png')}/>
-        </View>
-      </Pressable> :
-      <Pressable onPress={onPressPlay}>
-        <View style={styles.playButton}>
-          <Image source={require('../img/ic_play_arrow_white_48pt.png')}/>
+          <Image source={require('../img/ic_pause_white_48pt.png')} />
         </View>
       </Pressable>
-    }
+    ) : (
+      <Pressable onPress={onPressPlay}>
+        <View style={styles.playButton}>
+          <Image source={require('../img/ic_play_arrow_white_48pt.png')} />
+        </View>
+      </Pressable>
+    )}
     <View style={{width: 20}} />
-    <Pressable onPress={onForward}
-      disabled={forwardDisabled}>
-      <Image style={[forwardDisabled && {opacity: 0.3}]}
-        source={require('../img/ic_skip_next_white_36pt.png')}/>
+    <Pressable onPress={onForward} disabled={forwardDisabled}>
+      <Image
+        style={[forwardDisabled && {opacity: 0.3}]}
+        source={require('../img/ic_skip_next_white_36pt.png')}
+      />
     </Pressable>
-   </View>
+  </View>
 );
 
 export default Controls;
@@ -66,7 +54,7 @@ export default Controls;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    
+
     paddingTop: 16,
   },
   playButton: {
@@ -83,6 +71,6 @@ const styles = StyleSheet.create({
     width: 18,
   },
   off: {
-    opacity: 0.30,
-  }
-})
+    opacity: 0.3,
+  },
+});
