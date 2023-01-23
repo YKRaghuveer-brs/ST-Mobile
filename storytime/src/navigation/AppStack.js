@@ -1,10 +1,14 @@
+/** 
+Created: 23.01.2023
+Component: App Stack component
+Description: If the User is logged in then this component is rendered.
+(c) Copyright (c) by Nyros. 
+**/
+
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import ProfileScreen from '../screens/user/ProfileScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import CustomDrawer from '../screens/CustomDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TabNavigator from './TabNavigator';
-
 
 const Drawer = createDrawerNavigator();
 
@@ -29,24 +33,6 @@ const AppStack = () => {
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={ProfileScreen}
-        name="Profile"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="person-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        component={SettingsScreen}
-        name="Settings"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="settings-outline" size={22} color={color} />
           ),
         }}
       />

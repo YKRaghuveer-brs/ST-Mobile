@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2022
+Component: Album Art
+Description: Renders the Album Image of the main player
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, { Component } from 'react';
 
 import {

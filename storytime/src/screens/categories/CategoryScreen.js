@@ -1,12 +1,19 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Text, View, FlatList, Image, Pressable } from "react-native";
-import { AuthContext } from "../../context/AuthContext";
-import { truncateText } from "../../utils/common";
-import tw from "twrnc";
+/** 
+Created: 23.01.2023
+Component: Category screen
+Description: Renders the list of Shows of a selected category and languages
+(c) Copyright (c) by Nyros. 
+**/
+
+import React, {useContext, useState, useEffect} from 'react';
+import {Text, View, FlatList, Image, Pressable} from 'react-native';
+import {AuthContext} from '../../context/AuthContext';
+import {truncateText} from '../../utils/common';
+import tw from 'twrnc';
 
 const CategoryScreen = ({navigation, route}) => {
-  // console.log(route.params?.item);
-  const {spotifySearch, selectedLanguages,setTracks,spotifyGet,setStory} = useContext(AuthContext);
+  const {spotifySearch, selectedLanguages, setTracks, spotifyGet, setStory} =
+    useContext(AuthContext);
 
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(false);
@@ -15,25 +22,25 @@ const CategoryScreen = ({navigation, route}) => {
   const [languageCodeArr, setLanguageCodeAr] = useState([]);
   const [languageNameArr, setLanguageNameArr] = useState([]);
 
-  const getLanguageName = (lngs) => {
-    const langNames = lngs.map((item) => item.name);
+  const getLanguageName = lngs => {
+    const langNames = lngs.map(item => item.name);
     setLanguageNameArr(langNames);
   };
 
-  const getLanguageCode = (lngs) => {
-    const langCodes = lngs.map((item) => item.languageCode);
+  const getLanguageCode = lngs => {
+    const langCodes = lngs.map(item => item.languageCode);
     setLanguageCodeAr(langCodes);
   };
 
   const getShowsByCategory = async () => {
     setLoading(true);
-    const languages = await languageNameArr.toString().replaceAll(",", "%20");
+    const languages = await languageNameArr.toString().replaceAll(',', '%20');
     const queryParams = {
-      type: "show",
-      include_external: "audio",
-      market: "IN",
+      type: 'show',
+      include_external: 'audio',
+      market: 'IN',
       offset: offset,
-      limit: "16",
+      limit: '16',
     };
 
     const search = {
@@ -46,14 +53,14 @@ const CategoryScreen = ({navigation, route}) => {
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
       let res = [];
-      const filteredLang = response.shows.items.filter((show) => {
-        languageCodeArr.forEach((lang) => {
-          if (lang === "en en-US en-AU en-GB") {
+      const filteredLang = response.shows.items.filter(show => {
+        languageCodeArr.forEach(lang => {
+          if (lang === 'en en-US en-AU en-GB') {
             if (
-              (show.languages.includes("en") ||
-                show.languages.includes("en-US") ||
-                show.languages.includes("en-AU") ||
-                show.languages.includes("en-GB")) &&
+              (show.languages.includes('en') ||
+                show.languages.includes('en-US') ||
+                show.languages.includes('en-AU') ||
+                show.languages.includes('en-GB')) &&
               !show.explicit
             ) {
               return res.push(show);
@@ -78,14 +85,12 @@ const CategoryScreen = ({navigation, route}) => {
     }
   };
 
-   const getEpisodeList = async (story) => {
-     setStory(story);
-    // setEpisodeList([]);
-    // setStickyPlayer(false);
-    const queryParams = { limit: 50, market: "IN" };
+  const getEpisodeList = async story => {
+    setStory(story);
+    const queryParams = {limit: 50, market: 'IN'};
     const response = await spotifyGet(
       `shows/${story.id}/episodes`,
-      queryParams
+      queryParams,
     );
     const episodes = [];
     if (response.items.length > 0 || response.next) {
@@ -93,26 +98,22 @@ const CategoryScreen = ({navigation, route}) => {
         let obj = {
           id: index,
           title: episode.name.slice(0, 20),
-          artist: "Justin Bieber",
+          artist: 'Justin Bieber',
           albumArtUrl: episode.images[0].url,
           audioUrl: episode.audio_preview_url,
         };
         episodes.push(obj);
       });
-
-      // setEpisodeList(episodes);
-      setTracks(episodes)
+      setTracks(episodes);
     } else {
       return false;
     }
-
-    // setStickyPlayer(true);
   };
 
   useEffect(() => {
     if (selectedLanguages.length === 0) {
-      setLanguageCodeAr(["ta", "te", "hi", "en en-US en-AU en-GB"]);
-      setLanguageNameArr(["hindi", "tamil", "telugu", "english"]);
+      setLanguageCodeAr(['ta', 'te', 'hi', 'en en-US en-AU en-GB']);
+      setLanguageNameArr(['hindi', 'tamil', 'telugu', 'english']);
       return;
     }
     getLanguageCode(selectedLanguages);
@@ -128,39 +129,39 @@ const CategoryScreen = ({navigation, route}) => {
       {loading ? (
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             zIndex: 2,
             left: 0,
             right: 0,
             top: 40,
             bottom: 0,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <Image
-            style={{ width: 100, height: 100 }}
-            source={require("../../../assets/Images/Spiral_logo_loader.gif")}
+            style={{width: 100, height: 100}}
+            source={require('../../../assets/Images/Spiral_logo_loader.gif')}
           />
         </View>
       ) : (
-        ""
+        ''
       )}
 
       <View>
         <View>
-          <Pressable onPress={() => navigation.navigate("Home")}>
-            <Text style={tw`text-xl text-white font-bold ml-4 mt-6`}>Categories</Text>
+          <Pressable onPress={() => navigation.navigate('Home')}>
+            <Text style={tw`text-xl text-white font-bold ml-4 mt-6`}>
+              Categories
+            </Text>
           </Pressable>
         </View>
         <View
           style={{
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             marginBottom: 110,
             marginTop: 25,
-          }}
-        >
+          }}>
           <FlatList
             horizontal={false}
             numColumns={2}
@@ -169,15 +170,11 @@ const CategoryScreen = ({navigation, route}) => {
             showsHorizontalScrollIndicator={false}
             onEndReached={loadMoreStories}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View style={{ marginBottom: 15 }}>
-                <Pressable 
-                // onPress={() => navigation.navigate("Player", { story: item })}
-                                              onPress={() => getEpisodeList(item)}
-
-                >
+            renderItem={({item}) => (
+              <View style={{marginBottom: 15}}>
+                <Pressable onPress={() => getEpisodeList(item)}>
                   <Image
-                    source={{ uri: item.images[1].url }}
+                    source={{uri: item.images[1].url}}
                     style={{
                       width: 175,
                       height: 180,
@@ -185,10 +182,12 @@ const CategoryScreen = ({navigation, route}) => {
                       marginRight: 8,
                     }}
                   />
-                  <Text style={{ fontSize: 18, color: "#fff" }}>
+                  <Text style={{fontSize: 18, color: '#fff'}}>
                     {truncateText(item.publisher, 16)}
                   </Text>
-                  <Text style={{ fontSize: 15, color: "#fff" }}>{truncateText(item.name, 15)}</Text>
+                  <Text style={{fontSize: 15, color: '#fff'}}>
+                    {truncateText(item.name, 15)}
+                  </Text>
                 </Pressable>
               </View>
             )}

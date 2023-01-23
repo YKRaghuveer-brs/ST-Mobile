@@ -1,30 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Pressable,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 
-const Header = ({
-  message,
-  onDownPress,
-  onQueuePress,
-  onMessagePress,
-}) => (
+const Header = ({message, onDownPress, onQueuePress, onMessagePress}) => (
   <View style={styles.container}>
     <Pressable onPress={onDownPress}>
-      <Image style={styles.button}
-        source={require('../img/ic_keyboard_arrow_down_white.png')} />
+      <Image
+        style={styles.button}
+        source={require('../img/ic_keyboard_arrow_down_white.png')}
+      />
     </Pressable>
-    <Text onPress={onMessagePress}
-      style={styles.message}>{message}</Text>
+    <Text onPress={onMessagePress} style={styles.message}>
+      {message}
+    </Text>
     <Pressable onPress={onQueuePress}>
-     {/* <Image style={styles.button}
-        source={require('../img/ic_queue_music_white.png')} />*/}
-     <Text style={styles.cc}>CC</Text>
+      <Text style={styles.cc}>CC</Text>
     </Pressable>
   </View>
 );
@@ -42,17 +32,15 @@ const styles = StyleSheet.create({
   message: {
     flex: 1,
     textAlign: 'center',
-    // color: 'rgba(255, 255, 255, 0.72)',
-    color:"#fff",
+    color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
   },
   button: {
-    opacity: 0.72
+    opacity: 0.72,
   },
-  cc:{
-       color: 'rgba(255, 255, 255, 0.72)',
-       paddingTop:10
-
-  }
+  cc: {
+    color: 'rgba(255, 255, 255, 0.72)',
+    paddingTop: 10,
+  },
 });

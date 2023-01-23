@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2022
+Component: Player Screen
+Description: Renders the Player
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, { useState, useEffect, useContext, useRef } from "react";
 import {
   StyleSheet,
@@ -64,7 +71,6 @@ const PlayerScreen = ({ route, navigation }) => {
   return (
     <>
       {episodeList && episodeList.length ? <Player tracks={episodeList} story={story.id} /> : null}
-      {/*<Player tracks={TRACKS} />*/}
     </>
   );
 };

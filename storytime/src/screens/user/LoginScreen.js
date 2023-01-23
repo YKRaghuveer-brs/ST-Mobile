@@ -1,3 +1,11 @@
+/** 
+Created: 23.01.2023
+Component: Login Screen
+Description: Renders the Login Screen for the user to enter email and password, and 
+ upon successfull login - redirects the user to Home Screen
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, {useContext, useState} from 'react';
 import {
   View,
@@ -15,16 +23,15 @@ import {AuthContext} from '../context/AuthContext';
 
 const LoginScreen = ({navigation}) => {
   const {login, logout} = useContext(AuthContext);
-  const [email, setEmail] = useState("gopinathkrm@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState('gopinathkrm@gmail.com');
+  const [password, setPassword] = useState('123456');
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <View style={{paddingHorizontal: 25}}>
         <View style={{alignItems: 'center'}}>
           <ImageBackground
-             style={{width: 150, height: 150, marginBottom: 50}}
-             source={require('../assets/images/misc/logo.png')}
-
+            style={{width: 150, height: 150, marginBottom: 50}}
+            source={require('../assets/images/misc/logo.png')}
           />
         </View>
         <Text

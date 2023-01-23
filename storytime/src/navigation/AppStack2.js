@@ -1,20 +1,24 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TabNavigator from "./TabNavigator";
-import PlayerScreen from "../screens/PlayerScreen";
-import PopularStoriesScreen from "../screens/home/PopularStoriesScreen";
-import CategoryScreen from "../screens/categories/CategoryScreen";
-import ProfileScreen1 from "../screens/user/ProfileScreen1";
-import Search from "../screens/Search";
-import AuthorStories from "../screens/authors/AuthorStories";
+/** 
+Created: 23.01.2023
+Component: App Stack component
+Description: If the User is logged in then this component is rendered. This component has the navigation control
+(c) Copyright (c) by Nyros. 
+**/
 
-
-import { View, Text, ActivityIndicator, Image } from "react-native";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import TabNavigator from './TabNavigator';
+import PlayerScreen from '../screens/PlayerScreen';
+import PopularStoriesScreen from '../screens/home/PopularStoriesScreen';
+import CategoryScreen from '../screens/categories/CategoryScreen';
+import ProfileScreen1 from '../screens/user/ProfileScreen1';
+import Search from '../screens/Search';
+import AuthorStories from '../screens/authors/AuthorStories';
 
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={TabNavigator} />
       <Stack.Screen name="Popular" component={PopularStoriesScreen} />
       <Stack.Screen name="Player" component={PlayerScreen} />

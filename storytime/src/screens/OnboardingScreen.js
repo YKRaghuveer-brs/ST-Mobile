@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2022
+Component: Onboarding Screen
+Description: Renders the Initial screen when the App is opened
+(c) Copyright (c) by Nyros. 
+**/
+
 import {
   SafeAreaView,
   TouchableOpacity,

@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2023
+Component: Author Stories screen
+Description: Renders the list of Shows related to Authors
+(c) Copyright (c) by Nyros. 
+**/
+
 import React, { useContext, useState, useEffect } from "react";
 import {
   Text,
@@ -9,8 +16,6 @@ import {
 import tw from "twrnc";
 import { AuthContext } from "../context/AuthContext";
 import { truncateText } from "../utils/common";
-
-
 
 const AuthorsScreen = ({ navigation }) => {
   const { spotifySearch } = useContext(AuthContext);

@@ -1,3 +1,10 @@
+/** 
+Created: 23.01.2023
+Component: Input
+Description: Reusable Input component
+(c) Copyright (c) by Nyros. 
+**/
+
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 
 export default function InputField({
