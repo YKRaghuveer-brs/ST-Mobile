@@ -15,11 +15,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import tw from "twrnc";
-import Player2 from "../../stickyPlayer/Player2";
 import { truncateText } from "../../utils/common";
 import { AuthContext } from "../../context/AuthContext";
-
-
 
 export default function HomeScreeen({ navigation }) {
   const {
