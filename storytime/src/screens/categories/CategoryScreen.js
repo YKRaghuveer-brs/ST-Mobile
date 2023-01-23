@@ -12,7 +12,8 @@ import {truncateText} from '../../utils/common';
 import tw from 'twrnc';
 
 const CategoryScreen = ({navigation, route}) => {
-  const {spotifySearch, selectedLanguages, setTracks, spotifyGet, setStory} =
+  const {spotifySearch, selectedLanguages, setTracks, spotifyGet, setStory, stickyPlayer,
+    setStickyPlayer} =
     useContext(AuthContext);
 
   const [offset, setOffset] = useState(0);
@@ -108,6 +109,8 @@ const CategoryScreen = ({navigation, route}) => {
     } else {
       return false;
     }
+        setStickyPlayer(true);
+
   };
 
   useEffect(() => {

@@ -13,12 +13,13 @@ import {truncateText} from '../../utils/common';
 
 const AuthorStories = ({route, navigation}) => {
   const {publisher} = route.params;
-  const {spotifySearch, logout, setTracks, spotifyGet} =
+  const {spotifySearch, logout, setTracks, spotifyGet,setStory, stickyPlayer,
+    setStickyPlayer} =
     useContext(AuthContext);
   const [author, setAuthor] = useState(publisher);
   const [authorStories, setAuthorStories] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [story, setStory] = useState([]);
+  // const [story, setStory] = useState([]);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -63,6 +64,7 @@ const AuthorStories = ({route, navigation}) => {
   };
 
   const getEpisodeList = async story => {
+    setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
     const response = await spotifyGet(
       `shows/${story.id}/episodes`,
@@ -84,6 +86,8 @@ const AuthorStories = ({route, navigation}) => {
     } else {
       return false;
     }
+            setStickyPlayer(true);
+
   };
 
   const loadMoreStories = () => {
