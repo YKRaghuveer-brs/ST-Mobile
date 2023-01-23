@@ -5,7 +5,7 @@ Description: User saved shows are rendered in this component
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext,useCallback} from 'react';
 import {
   StyleSheet,
   View,
@@ -14,7 +14,7 @@ import {
   Image,
   Pressable,
   Dimensions,
-  FlatList,
+  FlatList,RefreshControl,ScrollView
 } from 'react-native';
 import tw from 'twrnc';
 import {AuthContext} from '../context/AuthContext';
@@ -27,6 +27,17 @@ const LibraryScreen = ({navigation}) => {
   const [updatedLibraryList, setUpdatedLibraryList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState(13);
+    const [refreshing, setRefreshing] = useState(false);
+
+  
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      getLibrary()
+    }, 2000);
+  }, []);
+
 
   // get Library (Saved Stories)
   const getLibrary = async () => {
@@ -150,7 +161,10 @@ const LibraryScreen = ({navigation}) => {
       ) : (
         ''
       )}
-      <SafeAreaView>
+     <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={styles.navBar}>
           <View style={styles.leftContainer}>
             <Pressable onPress={() => navigation.navigate('Home')}>
@@ -223,7 +237,7 @@ const LibraryScreen = ({navigation}) => {
             </Pressable>
           </View>
         )}
-      </SafeAreaView>
+      </ScrollView>
     </View>
   );
 };
