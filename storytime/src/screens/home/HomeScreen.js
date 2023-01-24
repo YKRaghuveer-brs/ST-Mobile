@@ -51,7 +51,7 @@ export default function HomeScreeen({navigation}) {
 
   const getPopularShows = async () => {
     setLoading(true);
-    const searchQuery = 'popular-stories-podcasts';
+    const searchQuery = 'popular-stories';
     const queryParams = {
       type: 'show',
       include_external: 'audio',
