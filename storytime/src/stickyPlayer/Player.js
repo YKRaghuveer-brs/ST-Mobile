@@ -104,7 +104,7 @@ const Player = ({tracks, story}) => {
               {truncateText(story.name, 14)}
             </Text>
 
-            <TextTicker
+           {/* <TextTicker
               style={{fontSize: 12, color: '#fff', width: 100}}
               duration={3000}
               loop
@@ -112,7 +112,15 @@ const Player = ({tracks, story}) => {
               repeatSpacer={50}
               marqueeDelay={1000}>
               {track.title}
-            </TextTicker>
+            </TextTicker>*/}
+            <TextTicker
+              style={{fontSize: 12, color: '#fff', width: 100}}
+          duration={3000}
+       
+          marqueeDelay={3000}
+        >
+         {track.title}
+        </TextTicker>
           </View>
         </Pressable>
 

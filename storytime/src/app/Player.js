@@ -5,26 +5,33 @@ Description: Renders the Main Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useState, useEffect, useContext, useRef} from 'react';
-import axios from 'axios';
-import {View, Text, StatusBar, Image, Pressable, Animated} from 'react-native';
-import Header from './Header';
-import AlbumArt from './AlbumArt';
-import TrackDetails from './TrackDetails';
-import SeekBar from './SeekBar';
-import Controls from './Controls';
-import Video from 'react-native-video';
-import {ActionSheetCustom as ActionSheet} from 'react-native-actionsheet';
-import {AuthContext} from '../context/AuthContext';
+import React, { useState, useEffect, useContext, useRef } from "react";
+import axios from "axios";
+import {
+  View,
+  Text,
+  StatusBar,
+  Image,
+  Pressable,
+  Animated,
+} from "react-native";
+import Header from "./Header";
+import AlbumArt from "./AlbumArt";
+import TrackDetails from "./TrackDetails";
+import SeekBar from "./SeekBar";
+import Controls from "./Controls";
+import Video from "react-native-video";
+import { ActionSheetCustom as ActionSheet } from "react-native-actionsheet";
+import { AuthContext } from "../context/AuthContext";
 
-import ToastManager, {Toast} from 'toastify-react-native';
-import {BASE_URL} from '../config';
+import ToastManager, { Toast } from "toastify-react-native";
+import { BASE_URL } from "../config";
 
-const options = ['Cancel'];
+const options = ["Close"];
 
-const Player = ({tracks, story}) => {
-  const {user, HttpGet} = useContext(AuthContext);
-
+const Player = ({ tracks, story,author }) => {
+  const { user, HttpGet } = useContext(AuthContext);
+  console.log("story",story)
   const [paused, setPaused] = useState(true);
   const [totalLength, setTotalLength] = useState(1);
   const [currentPosition, setCurrentPosition] = useState(0);
@@ -43,6 +50,14 @@ const Player = ({tracks, story}) => {
     }
   };
 
+  const upNextPress = (index) => {
+    if (index === 0) {
+      console.log("Cancel");
+    } else {
+      setSelectedTrack(index - 1);
+    }
+  };
+
   const [animatePress, setAnimatePress] = useState(new Animated.Value(1));
   const animateIn = () => {
     Animated.timing(animatePress, {
@@ -54,7 +69,7 @@ const Player = ({tracks, story}) => {
 
   // get Library (Saved Stories)
   const getLibrary = async () => {
-    const res = await HttpGet('library');
+    const res = await HttpGet("library");
     setUserStories(res.saved_stories);
   };
 
@@ -62,15 +77,15 @@ const Player = ({tracks, story}) => {
     getLibrary();
   }, []);
 
-  const setDuration = data => {
+  const setDuration = (data) => {
     setTotalLength(Math.floor(data.duration));
   };
 
-  const setTime = data => {
+  const setTime = (data) => {
     setCurrentPosition(Math.floor(data.currentTime));
   };
 
-  const seek = time => {
+  const seek = (time) => {
     time = Math.round(time);
     setCurrentPosition(time);
     setPaused(false);
@@ -85,10 +100,8 @@ const Player = ({tracks, story}) => {
         setTotalLength(1);
         setIsChanging(false);
         setSelectedTrack(selectedTrack - 1);
-     
       }, 0);
     } else {
-  
       setCurrentPosition(0);
     }
   };
@@ -112,15 +125,17 @@ const Player = ({tracks, story}) => {
   const getEpisodeList = async () => {
     tracks.map((episode, index) => {
       episodes.push(
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
           <Image
-            style={{width: 40, height: 40}}
+            style={{ width: 40, height: 40 }}
             source={{
               uri: episode.albumArtUrl,
             }}
           />
-          <Text style={{paddingLeft: 10, paddingTop: 5}}>{episode.title}</Text>
-        </View>,
+          <Text style={{ paddingLeft: 10, paddingTop: 5 }}>
+            {episode.title}
+          </Text>
+        </View>
       );
     });
   };
@@ -128,13 +143,13 @@ const Player = ({tracks, story}) => {
   const track = tracks[selectedTrack];
   const video = isChanging ? null : (
     <Video
-      source={{uri: track.audioUrl}} // Can be a URL or a local file.
+      source={{ uri: track.audioUrl }} // Can be a URL or a local file.
       paused={paused} // Pauses playback entirely.
       resizeMode="cover" // Fill the whole screen at aspect ratio.
       repeat={true} // Repeat forever.
       onLoadStart={this.loadStart} // Callback when video starts to load
-      onLoad={data => setDuration(data)} // Callback when video loads
-      onProgress={data => setTime(data)} // Callback every ~250ms with currentTime
+      onLoad={(data) => setDuration(data)} // Callback when video loads
+      onProgress={(data) => setTime(data)} // Callback every ~250ms with currentTime
       onEnd={this.onEnd} // Callback when playback finishes
       onError={this.videoError} // Callback when video cannot be loaded
       style={styles.audioElement}
@@ -142,7 +157,7 @@ const Player = ({tracks, story}) => {
   );
 
   // User Saves & remove story from savedStories
-  const saveStory = story => {
+  const saveStory = (story) => {
     const user_stories = userStories;
     const index = user_stories.indexOf(story);
     if (index > -1) {
@@ -154,32 +169,32 @@ const Player = ({tracks, story}) => {
     const obj = {};
     obj.saved_stories = user_stories;
     axios
-      .put(BASE_URL + 'saveStory/' + user._id, obj)
+      .put(BASE_URL + "saveStory/" + user._id, obj)
 
-      .then(res => {
+      .then((res) => {
         if (res) {
           setUserStories(res.data.saved_stories);
 
           if (index > -1) {
-            Toast.error('Story removed from your library.');
+            Toast.error("Story removed from your library.");
           } else {
-            Toast.success('Story added to your library.');
+            Toast.success("Story added to your library.");
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         Toast.error(error.response.data);
       });
   };
 
   return (
     <View style={styles.container}>
-      <ToastManager duration={3000} style={{fontSize: 10}} />
+      <ToastManager duration={3000} style={{ fontSize: 10 }} />
 
       <StatusBar hidden={true} />
       <Header message="Now Playing" />
       <AlbumArt url={track.albumArtUrl} />
-      <TrackDetails title={track.title} artist={track.artist} />
+      <TrackDetails title={track.title} artist={author}/>
 
       <SeekBar
         onSeek={() => seek(tme)}
@@ -203,32 +218,29 @@ const Player = ({tracks, story}) => {
 
       <View>
         <Pressable onPress={() => saveStory(story)}>
-          <Text style={{color: '#fff', paddingLeft: 20}}>
-            {userStories.includes(story) ? 'Saved' : 'Save'}
+          <Text style={{ color: "#fff", paddingLeft: 20 }}>
+            {userStories.includes(story) ? "Saved" : "Save"}
           </Text>
         </Pressable>
       </View>
 
-      <View style={{paddingTop: 20}}>
+      <View style={{ paddingTop: 20 }}>
         <Text
-          style={{color: '#fff', textAlign: 'center'}}
-          onPress={this.showActionSheet}>
+          style={{ color: "#fff", textAlign: "center" }}
+          onPress={this.showActionSheet}
+        >
           Upnext
         </Text>
         <ActionSheet
           ref={refActionSheet}
-          title={
-            <Text style={{color: '#000', fontSize: 18}}>
-              Which one do you like?
-            </Text>
-          }
+          title={<Text style={{ color: "#000", fontSize: 18 }}>UpNext</Text>}
           options={episodes}
           cancelButtonIndex={0}
           styles={{
-            body: {flex: 1, alignSelf: 'flex-end', backgroundColor: 'red'},
+            body: { flex: 1, alignSelf: "flex-end", backgroundColor: "red" },
           }}
-          onPress={index => {
-            setSelectedTrack(index - 1);
+          onPress={(index) => {
+            upNextPress(index);
           }}
         />
       </View>
@@ -241,7 +253,7 @@ export default Player;
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#291F4E',
+    backgroundColor: "#291F4E",
   },
   audioElement: {
     height: 0,

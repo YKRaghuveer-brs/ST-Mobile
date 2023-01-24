@@ -71,6 +71,12 @@ const TabNavigator = () => {
       <Tab.Screen
         name="Library" // Library Screen
         component={LibraryScreen}
+        // listeners={{
+        //   tabPress: (e) => {
+        //     e.preventDefault();
+        //     console.log("tabPress tabTwo");
+        //   },
+        // }}
         options={{
           tabBarLabel: 'Library',
           tabBarIcon: ({focused}) => {
