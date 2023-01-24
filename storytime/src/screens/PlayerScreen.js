@@ -70,7 +70,7 @@ const PlayerScreen = ({ route, navigation }) => {
 
   return (
     <>
-      {episodeList && episodeList.length ? <Player tracks={episodeList} story={story.id} /> : null}
+      {episodeList && episodeList.length ? <Player tracks={episodeList} story={story.id} author={story.publisher}/> : null}
     </>
   );
 };
