@@ -345,6 +345,19 @@ export default function HomeScreeen({navigation}) {
                 );
               })}
             </View>
+
+            <View>
+            <Pressable onPress={()=>setShowDropdown(false)}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 15,
+                marginVertical: 7,
+                paddingLeft: 8,
+                fontWeight: '500',
+              }}>
+              Close
+            </Text></Pressable></View>
           </View>
         ) : null}
       </View>

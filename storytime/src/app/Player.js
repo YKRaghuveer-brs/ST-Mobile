@@ -20,7 +20,7 @@ import {AuthContext} from '../context/AuthContext';
 import ToastManager, {Toast} from 'toastify-react-native';
 import {BASE_URL} from '../config';
 
-const options = ['Cancel'];
+const options = ['Close'];
 
 const Player = ({tracks, story}) => {
   const {user, HttpGet} = useContext(AuthContext);
@@ -42,6 +42,19 @@ const Player = ({tracks, story}) => {
       refActionSheet.current.show();
     }
   };
+  
+ const  upNextPress = (index) => {
+
+    if(index === 0){
+      console.log("Cancel")
+
+    }
+    else{
+                       setSelectedTrack(index - 1);
+
+    }
+ }
+
 
   const [animatePress, setAnimatePress] = useState(new Animated.Value(1));
   const animateIn = () => {
@@ -219,7 +232,7 @@ const Player = ({tracks, story}) => {
           ref={refActionSheet}
           title={
             <Text style={{color: '#000', fontSize: 18}}>
-              Which one do you like?
+              UpNext
             </Text>
           }
           options={episodes}
@@ -228,7 +241,7 @@ const Player = ({tracks, story}) => {
             body: {flex: 1, alignSelf: 'flex-end', backgroundColor: 'red'},
           }}
           onPress={index => {
-            setSelectedTrack(index - 1);
+            upNextPress(index)
           }}
         />
       </View>
