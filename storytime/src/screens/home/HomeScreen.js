@@ -364,7 +364,7 @@ export default function HomeScreeen({navigation}) {
 
       <View style={{position: 'relative'}}>
         <Image
-          source={require('../../../assets/Images/banner.png')}
+          source={require('../../assets/images/banner.png')}
           style={{
             width: '100%',
             height: 200,
@@ -404,7 +404,7 @@ export default function HomeScreeen({navigation}) {
             }}>
             <Image
               style={{width: 100, height: 100}}
-              source={require('../../../assets/Images/Spiral_logo_loader.gif')}
+              source={require('../../assets/images/Spiral_logo_loader.gif')}
             />
           </View>
         ) : (

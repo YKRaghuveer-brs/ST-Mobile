@@ -106,7 +106,7 @@ const PopularStoriesScreen = ({navigation}) => {
           }}>
           <Image
             style={{width: 100, height: 100}}
-            source={require('../../../assets/Images/Spiral_logo_loader.gif')}
+            source={require('./../../assets/images/Spiral_logo_loader.gif')}
           />
         </View>
       ) : (

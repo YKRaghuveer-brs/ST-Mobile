@@ -7,7 +7,7 @@ const Header = ({message, onDownPress, onQueuePress, onMessagePress}) => (
     <Pressable onPress={onDownPress}>
       <Image
         style={styles.button}
-        source={require('../assets/images/player/ic_keyboard_arrow_down_white.png')}
+        source={require('../../../assets/images/player/ic_keyboard_arrow_down_white.png')}
       />
     </Pressable>
     <Text onPress={onMessagePress} style={styles.message}>

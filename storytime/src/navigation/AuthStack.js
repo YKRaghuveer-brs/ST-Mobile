@@ -7,8 +7,8 @@ Description: If the User is not logged in then this component is rendered.
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnboardingScreen from "../screens/OnboardingScreen";
-import LoginScreen1 from "../screens/user/LoginScreen1";
-import RegisterScreen1 from "../screens/user/RegisterScreen1";
+import LoginScreen from "../screens/user/LoginScreen";
+import RegisterScreen from "../screens/user/RegisterScreen";
 import EmailVerification from "../screens/user/EmailVerification";
 import ForgotPassword from "../screens/user/ForgotPassword";
 import ResetPasswordVerification from "../screens/user/ResetPasswordVerification";
@@ -20,8 +20,8 @@ const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ hederShown: false }}>
       <Stack.Screen options={{headerShown: false}} component={OnboardingScreen} name="Onboarding" />
-      <Stack.Screen component={LoginScreen1} name="Login" />
-      <Stack.Screen component={RegisterScreen1} name="Register" />
+      <Stack.Screen component={LoginScreen} name="Login" />
+      <Stack.Screen component={RegisterScreen} name="Register" />
       <Stack.Screen component={EmailVerification} name="EmailVerify" />
       <Stack.Screen component={ForgotPassword} name="ForgotPassword" />
       <Stack.Screen component={ResetPasswordVerification} name="ResetPasswordVerify"/>

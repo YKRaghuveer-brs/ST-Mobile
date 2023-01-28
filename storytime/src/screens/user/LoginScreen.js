@@ -6,122 +6,175 @@ Description: Renders the Login Screen for the user to enter email and password, 
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useContext, useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
+  TextInput,
   View,
   Text,
   SafeAreaView,
-  TextInput,
-  ImageBackground,
-  TouchableOpacity,
+  Image,
+  Pressable,
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Logo from '../assets/images/misc/logo.png';
-import InputField from '../components/InputField';
-import {AuthContext} from '../context/AuthContext';
+import * as yup from 'yup';
+import {Formik} from 'formik';
+import ToastManager, {Toast} from 'toastify-react-native';
+import tw from 'twrnc';
+import {AuthContext} from '../../context/AuthContext';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen1 = ({navigation}) => {
   const {login, logout} = useContext(AuthContext);
-  const [email, setEmail] = useState('gopinathkrm@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  const loginValidationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email('Please enter valid email')
+      .required('Email Address is Required'),
+    password: yup
+      .string()
+      .min(6, ({min}) => `Password must be at least ${min} characters`)
+      .required('Password is required'),
+  });
+
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 25}}>
-        <View style={{alignItems: 'center'}}>
-          <ImageBackground
-            style={{width: 150, height: 150, marginBottom: 50}}
-            source={require('../assets/images/misc/logo.png')}
+    <View style={tw`flex-1 bg-[#291F4E] text-white`}>
+      {loading ? (
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 2,
+            left: 0,
+            right: 0,
+            top: 20,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Image
+            style={{width: 100, height: 100}}
+            source={require('../../assets/images/Spiral_logo_loader.gif')}
           />
         </View>
-        <Text
-          style={{
-            fontFamily: 'Roboto-Medium',
-            fontSize: 28,
-            fontWeight: '500',
-            color: '#333',
-            marginBottom: 30,
-          }}>
-          Login
-        </Text>
+      ) : (
+        ''
+      )}
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignContent: 'center',
+        }}>
+        <ToastManager duration={3000} style={{fontSize: 10}} />
 
-        <InputField
-          label={'Email ID'}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{marginRight: 5, marginTop: 12}}
-            />
-          }
-          keyboardType="email-address"
-          value={email}
-          onChangeText={text => setEmail(text)}
-        />
-
-        <InputField
-          label={'Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          inputType="password"
-          fieldButtonLabel={'Forget?'}
-          fieldButtonFunction={() => {}}
-          value={password}
-          onChangeText={text => setPassword(text)}
-        />
-
-        <TouchableOpacity
-          onPress={() => {
-            login(email, password);
-          }}
-          style={{
-            backgroundColor: '#443280',
-            padding: 20,
-            borderRadius: 10,
-            marginBottom: 30,
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontWeight: '700',
-              fontSize: 16,
-              color: '#fff',
+        <View style={tw`w-full`}>
+          <Formik
+            validationSchema={loginValidationSchema}
+            initialValues={{
+              email: 'nraju.nyros@gmail.com',
+              password: '123456',
+            }}
+            onSubmit={async values => {
+              login(values.email, values.password);
             }}>
-            Login
-          </Text>
-        </TouchableOpacity>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              isValid,
+            }) => (
+              <>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    marginTop: 10,
+                    marginBottom: 20,
+                  }}>
+                  <Image
+                    source={{uri: 'https://i.ibb.co/YfCLy1z/storytime.png'}}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      resizeMode: 'contain',
+                      margin: 10,
+                    }}
+                  />
+                  <Text
+                    style={{alignSelf: 'center', color: '#fff', fontSize: 20}}>
+                    Login
+                  </Text>
+                </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 30,
-          }}></View>
+                <View style={tw`h-10 mt-4 ml-8 mr-8 mb-2`}>
+                  <TextInput
+                    name="email"
+                    placeholder="Email Address"
+                    style={tw`flex-1 rounded pl-4 bg-slate-400`}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    keyboardType="email-address"
+                  />
+                </View>
+                <View>
+                  {errors.email && (
+                    <Text style={tw`text-red-600 text-xs ml-8`}>
+                      {errors.email}
+                    </Text>
+                  )}
+                </View>
+                <View style={tw`h-10 mt-4 ml-8 mr-8 mb-2`}>
+                  <TextInput
+                    name="password"
+                    placeholder="Password"
+                    style={tw`flex-1 rounded pl-4 bg-slate-400`}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    secureTextEntry
+                  />
+                </View>
+                <View>
+                  {errors.password && (
+                    <Text style={tw`text-red-600 text-xs ml-8`}>
+                      {errors.password}
+                    </Text>
+                  )}
+                </View>
+                <View style={tw`flex items-end mr-8`}>
+                  <Text
+                    style={tw`font-bold text-white`}
+                    onPress={() => navigation.navigate('ForgotPassword')}>
+                    Forgot Password?
+                  </Text>
+                </View>
+                <Pressable
+                  style={tw`bg-[#2A0D62] h-10 mt-4 ml-8 mr-8 mb-2 flex items-center rounded`}
+                  activeOpacity={0.5}
+                  onPress={handleSubmit}>
+                  <Text style={tw`text-white py-3 font-bold`}>LOGIN</Text>
+                </Pressable>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}>
-          <Text>You don't have account ? Sign up </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color: '#AD40AF', fontWeight: '700'}}>
-              {' '}
-              Register{' '}
-            </Text>
-          </TouchableOpacity>
+                <View style={tw`flex items-center`}>
+                  <Text
+                    style={tw`font-bold text-white`}
+                    onPress={() => navigation.navigate('Register')}>
+                    You don't have account ? Sign up
+                  </Text>
+                </View>
+              </>
+            )}
+          </Formik>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };
-
-export default LoginScreen;
+export default LoginScreen1;
