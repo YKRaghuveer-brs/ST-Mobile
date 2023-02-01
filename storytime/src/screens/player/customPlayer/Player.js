@@ -72,9 +72,22 @@ const Player = ({ tracks, story,author }) => {
     setCurrentPosition(Math.floor(data.currentTime));
   };
 
+  useEffect(() => {
+  // this will be triggered whenever user will be updated
+  if (currentPosition) {
+    // connect to backend now
+      console.log('useEffect', currentPosition);
+
+  }
+}, [currentPosition]);
+
   const seek = (time) => {
     time = Math.round(time);
+        console.log("onChangeTIme",time)
+
     setCurrentPosition(time);
+
+    console.log("currentPosition",currentPosition)
     setPaused(false);
   };
 
@@ -133,13 +146,14 @@ const Player = ({ tracks, story,author }) => {
       source={{ uri: track.audioUrl }} // Can be a URL or a local file.
       paused={paused} // Pauses playback entirely.
       resizeMode="cover" // Fill the whole screen at aspect ratio.
-      repeat={true} // Repeat forever.
-      onLoadStart={this.loadStart} // Callback when video starts to load
+      repeat={repeatOn} // Repeat forever.
       onLoad={(data) => setDuration(data)} // Callback when video loads
       onProgress={(data) => setTime(data)} // Callback every ~250ms with currentTime
-      onEnd={this.onEnd} // Callback when playback finishes
-      onError={this.videoError} // Callback when video cannot be loaded
+    
       style={styles.audioElement}
+      
+       
+
     />
   );
 
@@ -184,10 +198,16 @@ const Player = ({ tracks, story,author }) => {
       <TrackDetails title={track.title} artist={author}/>
 
       <SeekBar
-        onSeek={() => seek(tme)}
+        onSeek={(time) => seek(time)}
         trackLength={totalLength}
-        onSlidingStart={() => setPaused(false)}
+        onSlidingStart={() => setPaused(true)}
         currentPosition={currentPosition}
+
+
+        // onSeek={this.seek.bind(this)}
+        //   trackLength={this.state.totalLength}
+        //   onSlidingStart={() => this.setState({paused: true})}
+        //   currentPosition={this.state.currentPosition}
       />
       <Controls
         onPressRepeat={() => setRepeatOn(!repeatOn)}
@@ -247,3 +267,54 @@ const styles = {
     width: 0,
   },
 };
+
+
+
+// import React, { useState } from 'react';
+
+// import { View, StyleSheet, Text } from 'react-native';
+
+// import Slider from '@react-native-community/slider';
+
+// export default function Player() {
+
+//   const [data, setSliderData] = useState(10);
+
+//   return (
+//     <View style={styleSheet.MainContainer}>
+
+//       <Text style={{ color: 'blue', fontSize: 30, textAlign: 'center' }}>
+//         Example of React Native Community/Slider
+//       </Text>
+
+//       <Text style={{ fontSize: 28 }}>
+//         Value of slider is : {data}
+//       </Text>
+
+//       <Slider
+//         maximumValue={100}
+//         minimumValue={0}
+//         minimumTrackTintColor="#D50000"
+//         maximumTrackTintColor="#01579B"
+//         step={1}
+//         value={data}
+//         onValueChange={
+//           (sliderValue) => setSliderData(sliderValue)
+//         }
+//         thumbTintColor="#1B5E20"
+//         style={{width: 400, height: 40}}
+//       />
+
+//     </View>
+//   );
+// }
+
+// const styleSheet = StyleSheet.create({
+
+//   MainContainer: {
+//     flex: 1,
+//     padding: 10,
+//     justifyContent: 'center',
+//     alignItems: 'center'
+//   }
+// });
