@@ -5,12 +5,14 @@ Description: Contains the email verification logic through OTP
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, Image, Pressable, SafeAreaView } from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
 import axios from "axios";
+
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
+import { HttpPost } from "../../context/httpHelpers";
 
 const EmailVerification = ({ route, navigation }) => {
   const { email } = route.params;
@@ -44,7 +46,8 @@ const EmailVerification = ({ route, navigation }) => {
       code: value,
     };
     try {
-      const response = await axios.post("http://203.193.173.125:6969/verifyEmailFromMobile", payload);
+      // const response = await axios.post("http://203.193.173.125:6969/verifyEmailFromMobile", payload);
+      const response = await HttpPost("verifyEmailFromMobile", payload);
       if (response) {
         Toast.success(response.data);
         setTimeout(() => {
@@ -63,7 +66,8 @@ const EmailVerification = ({ route, navigation }) => {
     };
 
     try {
-      const response = await axios.post("http://203.193.173.125:6969/resendVerificationCode", payload);
+      // const response = await axios.post("http://203.193.173.125:6969/resendVerificationCode", payload);
+      const response = await HttpPost("resendVerificationCode", payload);
       if (response) {
         Toast.success(response.data);
         setCounter(59);

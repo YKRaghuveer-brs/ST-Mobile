@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 
 const Header = ({message, onDownPress, onQueuePress, onMessagePress}) => (

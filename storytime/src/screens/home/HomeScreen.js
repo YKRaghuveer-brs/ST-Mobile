@@ -24,15 +24,13 @@ import {
 import tw from "twrnc";
 import { truncateText } from "../../utils/common";
 import { AuthContext } from "../../context/AuthContext";
+import { HttpGet, spotifyGet, spotifySearch } from '../../context/httpHelpers';
 
 export default function HomeScreeen({navigation}) {
   const {
-    spotifySearch,
-    spotifyGet,
     logout,
     languages,
     selectLanguages,
-    selectedLanguages,
     setTracks,
     setStory,
     stickyPlayer,
@@ -43,11 +41,7 @@ export default function HomeScreeen({navigation}) {
   const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerms, setSearchTerms] = useState([]);
-  const [query, setQuery] = useState('');
   const [value, setValue] = useState('');
-  // const [stickyPlayer, setStickyPlayer] = useState(false);
-  const [episodeList, setEpisodeList] = useState([]);
-  // const [story, setStory] = useState([]);
 
   const getPopularShows = async () => {
     setLoading(true);

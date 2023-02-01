@@ -5,39 +5,38 @@ Description: User saved shows are rendered in this component
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useState, useEffect, useContext,useCallback} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
   Image,
   Pressable,
   Dimensions,
-  FlatList,RefreshControl,ScrollView
+  FlatList,
+  RefreshControl,
+  ScrollView,
 } from 'react-native';
 import tw from 'twrnc';
 import {AuthContext} from '../../context/AuthContext';
+import {HttpGet, spotifyGet} from '../../context/httpHelpers';
 
 const LibraryScreen = ({navigation}) => {
-  const {HttpGet, spotifyGet, setTracks, setStory, setStickyPlayer} =
-    useContext(AuthContext);
+  const {setTracks, setStory, setStickyPlayer} = useContext(AuthContext);
   const [libraryList, setLibraryList] = useState([]);
   const [libraryIdList, setLibraryIdList] = useState([]);
   const [updatedLibraryList, setUpdatedLibraryList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState(13);
-    const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-      getLibrary()
+      getLibrary();
     }, 2000);
   }, []);
-
 
   // get Library (Saved Stories)
   const getLibrary = async () => {
@@ -161,7 +160,7 @@ const LibraryScreen = ({navigation}) => {
       ) : (
         ''
       )}
-     <ScrollView
+      <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>

@@ -5,7 +5,7 @@ Description: Renders the User Profile details
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useState, useEffect, useContext} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   TextInput,

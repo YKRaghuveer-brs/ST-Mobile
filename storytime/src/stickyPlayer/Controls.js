@@ -5,7 +5,6 @@ Description: contains the controls needed for the sticky player.
 (c) Copyright (c) by Nyros. 
 **/
 
-import React from 'react';
 import {View, StyleSheet, Image, Pressable} from 'react-native';
 
 const Controls = ({

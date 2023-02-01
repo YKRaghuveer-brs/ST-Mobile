@@ -5,7 +5,7 @@ Description: Renders the Sticky Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {View, Text, Pressable} from 'react-native';
 import AlbumArt from './AlbumArt';
 import SeekBar from './SeekBar';

@@ -5,7 +5,7 @@ Description: Renders the Registration Form to register a new user
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   TextInput,
   View,
@@ -19,6 +19,8 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from 'twrnc';
+import { HttpPost } from "../../context/httpHelpers";
+
 
 
 const RegisterScreen1 = ({ navigation }) => {
@@ -101,7 +103,8 @@ const RegisterScreen1 = ({ navigation }) => {
               setLoading(true);
 
               try {
-                const response = await axios.post("http://203.193.173.125:6969/register", values);
+                // const response = await axios.post("http://203.193.173.125:6969/register", values);
+                const response = await HttpPost("register", values);
                 if (response) {
                   Toast.success(response.data.message);
 
