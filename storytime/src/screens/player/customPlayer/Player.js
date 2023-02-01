@@ -53,17 +53,7 @@ const Player = ({ tracks, story,author }) => {
     }
   };
 
-  const [animatePress, setAnimatePress] = useState(new Animated.Value(1));
-  const animateIn = () => {
-    Animated.timing(animatePress, {
-      toValue: 0.5,
-      duration: 500,
-      useNativeDriver: false, // Add This line
-    }).start();
-  };
-
  
-
   const setDuration = (data) => {
     setTotalLength(Math.floor(data.duration));
   };

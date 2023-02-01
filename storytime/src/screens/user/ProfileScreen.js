@@ -28,13 +28,6 @@ const ProfileScreen1 = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const FirstRoute = () => (
-    <View style={[styles.scene, {backgroundColor: '#ff4081'}]} />
-  );
-  const SecondRoute = () => (
-    <View style={[styles.scene, {backgroundColor: '#673ab7'}]} />
-  );
-
   useEffect(() => {
     setLoading(true);
 
@@ -62,29 +55,6 @@ const ProfileScreen1 = ({navigation}) => {
     last_name: user.last_name,
   };
 
-  const handleSubmitPress = async () => {
-    const payload = {
-      email: 'nraju.nyros@gmail.com',
-      password: '123456',
-    };
-
-    const response = await ctx.HttpPost('login', payload);
-    if (response) {
-      const expirationTime = new Date(
-        new Date().getTime() + response.usertokenExp * 1000,
-      );
-      const spotifyExpirationTime = new Date(
-        new Date().getTime() + response.spotifytoken.expires_in * 1000,
-      );
-      ctx.login(
-        response.token,
-        expirationTime.toISOString(),
-        response.spotifytoken.access_token,
-        spotifyExpirationTime.toISOString(),
-      );
-      navigation.navigate('Home');
-    }
-  };
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>

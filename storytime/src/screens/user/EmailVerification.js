@@ -8,8 +8,6 @@ Description: Contains the email verification logic through OTP
 import { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, Image, Pressable, SafeAreaView } from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
-import axios from "axios";
-
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
 import { HttpPost } from "../../context/httpHelpers";
@@ -40,7 +38,6 @@ const EmailVerification = ({ route, navigation }) => {
 
   const handleSubmit = async () => {
     setLoading(true);
-
     const payload = {
       email: email,
       code: value,

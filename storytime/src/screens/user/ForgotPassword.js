@@ -7,7 +7,6 @@ Description: Renders forgot password logic
 
 import { useState, useEffect } from "react";
 import { StyleSheet, TextInput, View, Text, SafeAreaView, Image, Pressable } from "react-native";
-import axios from "axios";
 import * as yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
