@@ -17,12 +17,12 @@ import {
 import React, {useContext, useState, useEffect} from 'react';
 import tw from 'twrnc';
 import {AuthContext} from '../../context/AuthContext';
+import { HttpGet } from '../../context/httpHelpers';
 
 const categoriesBg = ['green', 'red', 'blue', 'magenta', 'violet', 'coral'];
 
 const CategoriesScreen = ({navigation}) => {
   const {
-    HttpGet,
     languages,
     selectLanguages,
   } = useContext(AuthContext);
@@ -133,7 +133,7 @@ const CategoriesScreen = ({navigation}) => {
               horizontal={false}
               numColumns={2}
               data={categories}
-              renderItem={({item, index}) => (
+              renderItem={({item}) => (
                 <View
                   style={{
                     width: 180,

@@ -5,20 +5,18 @@ Description: Renders the Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Dimensions,
   Animated,
 } from "react-native";
 import Player from "./customPlayer/Player";
-import { AuthContext } from '../../context/AuthContext';
+import { spotifyGet } from "../../context/httpHelpers";
 const { width, height } = Dimensions.get("window");
-
 
 const PlayerScreen = ({ route, navigation }) => {
   const scrollX = useRef(new Animated.Value(0).current);
-  const {spotifyGet} = useContext(AuthContext);
   const [episodeList, setEpisodeList] = useState([]);
   const { story } = route.params;
 

@@ -10,9 +10,10 @@ import {Text, View, FlatList, Image, Pressable} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import {truncateText} from '../../utils/common';
 import tw from 'twrnc';
+import { spotifyGet, spotifySearch } from '../../context/httpHelpers';
 
 const CategoryStoriesScreen = ({navigation, route}) => {
-  const {spotifySearch, selectedLanguages, setTracks, spotifyGet, setStory, stickyPlayer,
+  const { selectedLanguages, setTracks, setStory, stickyPlayer,
     setStickyPlayer} =
     useContext(AuthContext);
 

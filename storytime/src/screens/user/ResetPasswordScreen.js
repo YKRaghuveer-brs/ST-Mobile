@@ -5,7 +5,7 @@ Description: Renders the reset password logic
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -29,7 +29,6 @@ const ResetPasswordScreen = ({ route, navigation }) => {
     setTimeout(() => {
       setLoading(false);
     }, 3000);
-    // storeData()
   }, []);
 
   const initialValues = {
@@ -87,7 +86,8 @@ const ResetPasswordScreen = ({ route, navigation }) => {
             initialValues={initialValues}
             onSubmit={async (values) => {
               try {
-                const response = await axios.post("http://203.193.173.125:6969/resetPasswordFromMobile", values);
+                // const response = await axios.post("http://203.193.173.125:6969/resetPasswordFromMobile", values);
+                const response = await HttpPost("resetPasswordFromMobile", values);
                 if (response) {
                   Toast.success(response.data);
                   setTimeout(() => {

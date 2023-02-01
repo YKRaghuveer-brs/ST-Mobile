@@ -10,16 +10,13 @@ import {StyleSheet, View, Text, Image, Pressable, FlatList} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 import {truncateText} from '../../utils/common';
+import {spotifyGet, spotifySearch} from '../../context/httpHelpers';
 
 const AuthorStories = ({route, navigation}) => {
   const {publisher} = route.params;
-  const {spotifySearch, logout, setTracks, spotifyGet,setStory, stickyPlayer,
-    setStickyPlayer} =
+  const {setTracks, setStory, stickyPlayer, setStickyPlayer} =
     useContext(AuthContext);
-  const [author, setAuthor] = useState(publisher);
   const [authorStories, setAuthorStories] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  // const [story, setStory] = useState([]);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -58,11 +55,6 @@ const AuthorStories = ({route, navigation}) => {
     setLoading(false);
   };
 
-  // SideBarOpen
-  const onSetSidebarOpen = open => {
-    setSidebarOpen(open);
-  };
-
   const getEpisodeList = async story => {
     setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
@@ -86,8 +78,7 @@ const AuthorStories = ({route, navigation}) => {
     } else {
       return false;
     }
-            setStickyPlayer(true);
-
+    setStickyPlayer(true);
   };
 
   const loadMoreStories = () => {
@@ -102,8 +93,7 @@ const AuthorStories = ({route, navigation}) => {
   const renderItem = ({item}) => {
     return (
       <View style={{marginBottom: 15, paddingLeft: 13}}>
-        <Pressable
-          onPress={() => getEpisodeList(item)}>
+        <Pressable onPress={() => getEpisodeList(item)}>
           <Image
             source={{
               uri: item.images[1].url,
@@ -192,8 +182,7 @@ const AuthorStories = ({route, navigation}) => {
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
             <View>
-              <Pressable
-                onPress={() => getEpisodeList(item)}>
+              <Pressable onPress={() => getEpisodeList(item)}>
                 <Image
                   source={{uri: item.images[1].url}}
                   style={{

@@ -5,7 +5,7 @@ Description: To verify the user - to reset the password
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useState, useEffect} from 'react';
+import  {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -22,6 +22,7 @@ import {
 } from 'react-native-confirmation-code-field';
 import axios from 'axios';
 import ToastManager, {Toast} from 'toastify-react-native';
+import { HttpPost } from '../../context/httpHelpers';
 
 const CELL_COUNT = 4;
 
@@ -55,10 +56,11 @@ const ResetPasswordVerification = ({route, navigation}) => {
       code: value,
     };
     try {
-      const response = await axios.post(
-        'http://203.193.173.125:6969/resetPasswordCodeVerifyMobile',
-        payload,
-      );
+      // const response = await axios.post(
+      //   'http://203.193.173.125:6969/resetPasswordCodeVerifyMobile',
+      //   payload,
+      // );
+      const response = await HttpPost("resetPasswordCodeVerifyMobile", payload);
       if (response) {
         Toast.success(response.data);
         setTimeout(() => {
@@ -80,10 +82,11 @@ const ResetPasswordVerification = ({route, navigation}) => {
       email: email,
     };
     try {
-      const response = await axios.post(
-        'http://203.193.173.125:6969/resetPasswordEmailMobile',
-        payload,
-      );
+      // const response = await axios.post(
+      //   'http://203.193.173.125:6969/resetPasswordEmailMobile',
+      //   payload,
+      // );
+      const response = await HttpPost("resetPasswordEmailMobile", payload);
       if (response) {
         Toast.success(response.data);
         setCounter(59);

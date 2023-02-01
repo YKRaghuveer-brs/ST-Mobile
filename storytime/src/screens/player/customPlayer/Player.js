@@ -5,7 +5,7 @@ Description: Renders the Main Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import {
   View,
@@ -47,7 +47,7 @@ const Player = ({ tracks, story,author }) => {
 
   const upNextPress = (index) => {
     if (index === 0) {
-      console.log("Cancel");
+      
     } else {
       setSelectedTrack(index - 1);
     }

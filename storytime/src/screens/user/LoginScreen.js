@@ -6,7 +6,7 @@ Description: Renders the Login Screen for the user to enter email and password, 
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useState, useEffect, useContext} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {
   TextInput,
   View,
@@ -17,12 +17,12 @@ import {
 } from 'react-native';
 import * as yup from 'yup';
 import {Formik} from 'formik';
-import ToastManager, {Toast} from 'toastify-react-native';
+import ToastManager from 'toastify-react-native';
 import tw from 'twrnc';
 import {AuthContext} from '../../context/AuthContext';
 
 const LoginScreen1 = ({navigation}) => {
-  const {login, logout} = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -5,7 +5,6 @@ Description: Renders the Seek Bar of the main Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Slider from '@react-native-community/slider';
 

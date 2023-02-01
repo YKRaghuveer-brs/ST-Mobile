@@ -5,7 +5,7 @@ Description: Renders the list of Shows related to Authors
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -14,14 +14,12 @@ import {
   Pressable,
 } from "react-native";
 import tw from "twrnc";
-import { AuthContext } from "../../context/AuthContext";
+import { spotifySearch } from "../../context/httpHelpers";
 import { truncateText } from "../../utils/common";
 
 const AuthorsScreen = ({ navigation }) => {
-  const { spotifySearch } = useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
-
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(false);
 

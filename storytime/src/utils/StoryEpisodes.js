@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext';
+import { spotifyGet } from '../context/httpHelpers';
 
 const StoryEpisodes = async story => {
-  const {spotifyGet, setTracks, setStory, setStickyPlayer} =
+  const { setTracks, setStory, setStickyPlayer} =
     useContext(AuthContext);
 
   const queryParams = {limit: 50, market: 'IN'};

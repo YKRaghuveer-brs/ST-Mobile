@@ -5,8 +5,6 @@ Description: contains the controls needed for the main player.
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {Component} from 'react';
-
 import {View, StyleSheet, Image, Pressable} from 'react-native';
 
 const Controls = ({

@@ -10,13 +10,11 @@ import {StyleSheet, View, Text, Image, Pressable, FlatList} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 import {truncateText} from '../../utils/common';
+import { spotifyGet, spotifySearch } from '../../context/httpHelpers';
 
 const Search = ({route, navigation}) => {
   const {
-    spotifySearch,
     selectedLanguages,
-    logout,
-    spotifyGet,
     setTracks,
     setStory,
     setStickyPlayer,
@@ -24,14 +22,8 @@ const Search = ({route, navigation}) => {
   
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
-  const [popularShows, setPopularShows] = useState([]);
   const [storiesList, setStoriesList] = useState([]);
-  const [authorsList, setAuthorsList] = useState([]);
-  const [episodesList, setEpisodesList] = useState([]);
   const imagePerRow = 8;
-  const [nextShows, setNextShows] = useState(imagePerRow);
-  const [nextAuthors, setNextAuthors] = useState(imagePerRow);
-  const [nextEpisodes, setNextEpisodes] = useState(imagePerRow);
   const [loading, setLoading] = useState(true);
 
   const [languageCodeArr, setLanguageCodeAr] = useState([]);
@@ -132,8 +124,6 @@ const Search = ({route, navigation}) => {
 
   const getEpisodeList = async story => {
     setStory(story);
-    // setEpisodeList([]);
-    // setStickyPlayer(false);
     const queryParams = {limit: 50, market: 'IN'};
     const response = await spotifyGet(
       `shows/${story.id}/episodes`,
@@ -260,7 +250,6 @@ const Search = ({route, navigation}) => {
             renderItem={({item}) => (
               <View>
                 <Pressable
-                  // onPress={() => navigation.navigate("Player", { story: item })}
                   onPress={() => getEpisodeList(item)}>
                   <Image
                     source={{uri: item.images[1].url}}

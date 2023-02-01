@@ -5,13 +5,15 @@ Description: Renders forgot password logic
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, TextInput, View, Text, SafeAreaView, Image, Pressable } from "react-native";
 import axios from "axios";
 import * as yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
+import { HttpPost } from "../../context/httpHelpers";
+
 
 const ForgotPassword = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -64,7 +66,8 @@ const ForgotPassword = ({ navigation }) => {
             onSubmit={async (values) => {
               setLoading(true);
               try {
-                const response = await axios.post("http://203.193.173.125:6969/resetPasswordEmailMobile", values);
+                // const response = await axios.post("http://203.193.173.125:6969/resetPasswordEmailMobile", values);
+                const response = await HttpPost("resetPasswordEmailMobile", values);
                 if (response) {
                   Toast.success(response.data);
                   setTimeout(() => {

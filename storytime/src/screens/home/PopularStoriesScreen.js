@@ -10,9 +10,10 @@ import React, {useContext, useState, useEffect} from 'react';
 import {truncateText} from '../../utils/common';
 import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
+import { spotifyGet, spotifySearch } from '../../context/httpHelpers';
 
 const PopularStoriesScreen = ({navigation}) => {
-  const {spotifySearch, setTracks, spotifyGet, setStory} =
+  const { setTracks, setStory} =
     useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
