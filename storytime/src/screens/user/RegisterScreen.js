@@ -103,7 +103,6 @@ const RegisterScreen1 = ({ navigation }) => {
               setLoading(true);
 
               try {
-                // const response = await axios.post("http://203.193.173.125:6969/register", values);
                 const response = await HttpPost("register", values);
                 if (response) {
                   Toast.success(response.data.message);

@@ -13,7 +13,6 @@ import {
   StatusBar,
   Image,
   Pressable,
-  Animated,
 } from "react-native";
 import Header from "./Header";
 import AlbumArt from "./AlbumArt";
@@ -66,18 +65,14 @@ const Player = ({ tracks, story,author }) => {
   // this will be triggered whenever user will be updated
   if (currentPosition) {
     // connect to backend now
-      console.log('useEffect', currentPosition);
+  
 
   }
 }, [currentPosition]);
 
   const seek = (time) => {
     time = Math.round(time);
-        console.log("onChangeTIme",time)
-
     setCurrentPosition(time);
-
-    console.log("currentPosition",currentPosition)
     setPaused(false);
   };
 

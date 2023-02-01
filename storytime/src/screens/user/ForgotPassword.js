@@ -65,7 +65,6 @@ const ForgotPassword = ({ navigation }) => {
             onSubmit={async (values) => {
               setLoading(true);
               try {
-                // const response = await axios.post("http://203.193.173.125:6969/resetPasswordEmailMobile", values);
                 const response = await HttpPost("resetPasswordEmailMobile", values);
                 if (response) {
                   Toast.success(response.data);

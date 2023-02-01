@@ -43,7 +43,6 @@ const EmailVerification = ({ route, navigation }) => {
       code: value,
     };
     try {
-      // const response = await axios.post("http://203.193.173.125:6969/verifyEmailFromMobile", payload);
       const response = await HttpPost("verifyEmailFromMobile", payload);
       if (response) {
         Toast.success(response.data);
@@ -63,7 +62,6 @@ const EmailVerification = ({ route, navigation }) => {
     };
 
     try {
-      // const response = await axios.post("http://203.193.173.125:6969/resendVerificationCode", payload);
       const response = await HttpPost("resendVerificationCode", payload);
       if (response) {
         Toast.success(response.data);

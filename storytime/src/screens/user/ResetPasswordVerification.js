@@ -20,7 +20,6 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import axios from 'axios';
 import ToastManager, {Toast} from 'toastify-react-native';
 import { HttpPost } from '../../context/httpHelpers';
 
@@ -56,10 +55,6 @@ const ResetPasswordVerification = ({route, navigation}) => {
       code: value,
     };
     try {
-      // const response = await axios.post(
-      //   'http://203.193.173.125:6969/resetPasswordCodeVerifyMobile',
-      //   payload,
-      // );
       const response = await HttpPost("resetPasswordCodeVerifyMobile", payload);
       if (response) {
         Toast.success(response.data);
@@ -82,10 +77,6 @@ const ResetPasswordVerification = ({route, navigation}) => {
       email: email,
     };
     try {
-      // const response = await axios.post(
-      //   'http://203.193.173.125:6969/resetPasswordEmailMobile',
-      //   payload,
-      // );
       const response = await HttpPost("resetPasswordEmailMobile", payload);
       if (response) {
         Toast.success(response.data);

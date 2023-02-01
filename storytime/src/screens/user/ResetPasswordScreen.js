@@ -86,7 +86,6 @@ const ResetPasswordScreen = ({ route, navigation }) => {
             initialValues={initialValues}
             onSubmit={async (values) => {
               try {
-                // const response = await axios.post("http://203.193.173.125:6969/resetPasswordFromMobile", values);
                 const response = await HttpPost("resetPasswordFromMobile", values);
                 if (response) {
                   Toast.success(response.data);
