@@ -15,7 +15,6 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import axios from "axios";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
