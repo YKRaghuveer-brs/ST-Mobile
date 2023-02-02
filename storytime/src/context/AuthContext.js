@@ -8,8 +8,8 @@ Description: It provides the app context and HTTP methods
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {createContext, useState, useEffect, useCallback} from 'react';
 import {Toast} from 'toastify-react-native';
-import { HttpGet, HttpPost, refreshTokenHandler } from './httpHelpers';
-import { calculateRemainingExpirationTime } from '../utils/common';
+import {httpGet, httpPost, spotifyGet, spotifySearch} from './httpHelpers';
+import {calculateRemainingExpirationTime} from '../utils/common';
 
 let logoutTimer;
 let spotifyLogoutTimer;
@@ -62,12 +62,13 @@ export const AuthProvider = ({children}) => {
 
   const login = async (email, password) => {
     const payload = {
-      email,
-      password,
+      email: "gopinath.krm@nyros.com",
+      password: "123456",
     };
 
     try {
-      const response = await HttpPost('login', payload);
+      const response = await httpPost('login', payload);
+      console.log(response);
       if (response.status === 200) {
         Toast.success('Logged in successfully !');
         setUserToken(response.data.token);
@@ -122,6 +123,69 @@ export const AuthProvider = ({children}) => {
     setAllowedLanguages([]);
   };
 
+  // BACKEND HTTP METHODS
+  // GET HTTP CALL
+  const HttpGetHandler = async (path, params) => {
+    setIsLoading(true);
+    try {
+      return await httpGet(path, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
+
+  // GET HTTP CALL
+  const HttpPostHandler = async (path, params) => {
+    setIsLoading(true);
+    try {
+      return await httpPost(path, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
+
+  // To Refresh the SPotify Token after 1-Hr
+  const refreshTokenHandler = async () => {
+    const response = await httpGet('refreshtoken');
+    const newToken = response.data.spotifytoken.access_token;
+    const newExpTime = response.data.spotifytoken.expires_in;
+    const newSpotifyExpirationTime = new Date(
+      new Date().getTime() + newExpTime * 1000,
+    );
+    await AsyncStorage.setItem('spotifyToken', newToken);
+    await AsyncStorage.setItem(
+      'spotifytokenExp',
+      newSpotifyExpirationTime.toISOString(),
+    );
+  };
+
+  // SPOTIFY HTTP METHOD
+  const spotifyGetHandler = async (path, params) => {
+    setIsLoading(true);
+    try {
+      return await spotifyGet(path, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
+
+  const SpotifySearchHandler = async (search, params) => {
+    setIsLoading(true);
+    try {
+      return await spotifySearch(search, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
+
   // To update the Exp time when App is closed and opened
   useEffect(() => {
     async function updateTokenExpirationTime() {
@@ -164,7 +228,6 @@ export const AuthProvider = ({children}) => {
       userInfo = JSON.parse(userInfo);
       if (userInfo) {
         setUserToken(userToken);
-      
       }
       setIsLoading(false);
     } catch (error) {}
@@ -175,7 +238,7 @@ export const AuthProvider = ({children}) => {
   }, []);
 
   const getUserDetails = useCallback(async () => {
-    const user = await HttpGet('userDetails');
+    const user = await httpGet('userDetails');
     setUser(user);
   });
 
@@ -190,6 +253,10 @@ export const AuthProvider = ({children}) => {
       value={{
         login,
         logout,
+        HttpGet: HttpGetHandler,
+        HttpPost: HttpPostHandler,
+        SpotifyGet: spotifyGetHandler,
+        SpotifySearch: SpotifySearchHandler,
         selectedLanguages: selectedLang,
         selectLanguages: setSelectedLang,
         languages: allowedLangages,

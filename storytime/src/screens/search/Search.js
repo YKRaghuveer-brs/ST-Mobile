@@ -10,10 +10,13 @@ import {StyleSheet, View, Text, Image, Pressable, FlatList} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 import {truncateText} from '../../utils/common';
-import { spotifyGet, spotifySearch } from '../../context/httpHelpers';
+
 
 const Search = ({route, navigation}) => {
   const {
+    SpotifyGet,
+    isLoading,
+    SpotifySearch,
     selectedLanguages,
     setTracks,
     setStory,
@@ -24,7 +27,7 @@ const Search = ({route, navigation}) => {
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [storiesList, setStoriesList] = useState([]);
   const imagePerRow = 8;
-  const [loading, setLoading] = useState(true);
+
 
   const [languageCodeArr, setLanguageCodeAr] = useState([]);
   const [languageNameArr, setLanguageNameArr] = useState([]);
@@ -54,7 +57,7 @@ const Search = ({route, navigation}) => {
   }, [route.params.searchTerm, offset, languageNameArr]);
 
   const getShowsByCategory = async () => {
-    setLoading(true);
+    
     const languages = await languageNameArr.toString().replaceAll(',', '%20');
     const queryParams = {
       type: 'show',
@@ -69,7 +72,7 @@ const Search = ({route, navigation}) => {
       keywords: route.params.searchTerm,
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
       let res = [];
@@ -96,8 +99,6 @@ const Search = ({route, navigation}) => {
     } else {
       setHasMoreItems(false);
     }
-
-    setLoading(false);
   };
 
   const filteredStories = list => {
@@ -109,10 +110,7 @@ const Search = ({route, navigation}) => {
 
   const loadMoreStories = () => {
     if (hasMoreItem) {
-      setLoading(true);
       setOffset(offset + 30);
-    } else {
-      setLoading(false);
     }
   };
 
@@ -125,7 +123,7 @@ const Search = ({route, navigation}) => {
   const getEpisodeList = async story => {
     setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -183,7 +181,7 @@ const Search = ({route, navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4`}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
             position: 'absolute',

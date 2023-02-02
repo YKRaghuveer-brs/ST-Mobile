@@ -5,16 +5,17 @@ Description: Contains the email verification logic through OTP
 (c) Copyright (c) by Nyros. 
 **/
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Text, ScrollView, Image, Pressable, SafeAreaView } from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
-import { HttpPost } from "../../context/httpHelpers";
+import { AuthContext } from "../../context/AuthContext";
+
 
 const EmailVerification = ({ route, navigation }) => {
+  const {HttpPost, isLoading} = useContext(AuthContext)
   const { email } = route.params;
-  const [loading, setLoading] = useState(true);
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -32,12 +33,11 @@ const EmailVerification = ({ route, navigation }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      
     }, 2000);
   }, []);
 
   const handleSubmit = async () => {
-    setLoading(true);
     const payload = {
       email: email,
       code: value,
@@ -53,7 +53,6 @@ const EmailVerification = ({ route, navigation }) => {
     } catch (error) {
       Toast.error(error.response.data);
     }
-    setLoading(false);
   };
 
   const resendPassword = async () => {
@@ -76,7 +75,7 @@ const EmailVerification = ({ route, navigation }) => {
 
   return (
     <View style={tw`flex-1 justify-center bg-[#291F4E]`}>
-     {loading ? (
+     {isLoading ? (
           <View
             style={{
               position: "absolute",

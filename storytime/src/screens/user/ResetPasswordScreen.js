@@ -5,7 +5,7 @@ Description: Renders the reset password logic
 (c) Copyright (c) by Nyros. 
 **/
 
-import  { useState, useEffect } from "react";
+import  { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -19,14 +19,15 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
+import { AuthContext } from "../../context/AuthContext";
 
 const ResetPasswordScreen = ({ route, navigation }) => {
+  const {HttpPost, isLoading} = useContext(AuthContext)
   const { email } = route.params;
-
-  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      
     }, 3000);
   }, []);
 
@@ -49,7 +50,7 @@ const ResetPasswordScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.mainBody}>
-       {loading ? (
+       {isLoading ? (
           <View
             style={{
               position: "absolute",

@@ -5,17 +5,18 @@ Description: Renders the Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   StyleSheet,
   Dimensions,
   Animated,
 } from "react-native";
+import { AuthContext } from "../../context/AuthContext";
 import Player from "./customPlayer/Player";
-import { spotifyGet } from "../../context/httpHelpers";
 const { width, height } = Dimensions.get("window");
 
 const PlayerScreen = ({ route, navigation }) => {
+  const {SpotifyGet} = useContext(AuthContext);
   const scrollX = useRef(new Animated.Value(0).current);
   const [episodeList, setEpisodeList] = useState([]);
   const { story } = route.params;
@@ -26,7 +27,7 @@ const PlayerScreen = ({ route, navigation }) => {
 
   const getEpisodeList = async () => {
     const queryParams = { limit: 40, market: "IN" };
-    const response = await spotifyGet(`shows/${story.id}/episodes`, queryParams);
+    const response = await SpotifyGet(`shows/${story.id}/episodes`, queryParams);
     const episodes = [];
     if (response.items.length > 0 || response.next) {
       response.items.map((episode, index) => {

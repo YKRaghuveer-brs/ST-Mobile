@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext';
-import { spotifyGet } from '../context/httpHelpers';
+
 
 const StoryEpisodes = async story => {
-  const { setTracks, setStory, setStickyPlayer} =
+  const { SpotifyGet, setTracks, setStory, setStickyPlayer} =
     useContext(AuthContext);
 
   const queryParams = {limit: 50, market: 'IN'};
-  const response = await spotifyGet(`shows/${story.id}/episodes`, queryParams);
+  const response = await SpotifyGet(`shows/${story.id}/episodes`, queryParams);
   const episodes = [];
   if (response.items.length > 0 || response.next) {
     response.items.map((episode, index) => {

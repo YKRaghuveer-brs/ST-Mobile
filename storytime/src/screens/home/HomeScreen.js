@@ -24,27 +24,27 @@ import {
 import tw from "twrnc";
 import { truncateText } from "../../utils/common";
 import { AuthContext } from "../../context/AuthContext";
-import { HttpGet, spotifyGet, spotifySearch } from '../../context/httpHelpers';
+
 
 export default function HomeScreeen({navigation}) {
   const {
     logout,
+    SpotifyGet,
+    SpotifySearch,
     languages,
     selectLanguages,
     setTracks,
     setStory,
-    stickyPlayer,
     setStickyPlayer,
+    isLoading
   } = useContext(AuthContext);
 
   const [popularStories, setPopularStories] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerms, setSearchTerms] = useState([]);
   const [value, setValue] = useState('');
 
   const getPopularShows = async () => {
-    setLoading(true);
     const searchQuery = 'popular-stories';
     const queryParams = {
       type: 'show',
@@ -55,9 +55,8 @@ export default function HomeScreeen({navigation}) {
     const search = {
       q: searchQuery,
     };
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
     setPopularStories(response.shows.items);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -82,7 +81,7 @@ export default function HomeScreeen({navigation}) {
 
   const getEpisodeList = async story => {
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -384,7 +383,7 @@ export default function HomeScreeen({navigation}) {
           </TouchableOpacity>
         </View>
 
-        {loading ? (
+        {isLoading ? (
           <View
             style={{
               position: 'absolute',

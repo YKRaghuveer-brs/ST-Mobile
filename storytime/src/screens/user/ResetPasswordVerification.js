@@ -5,7 +5,7 @@ Description: To verify the user - to reset the password
 (c) Copyright (c) by Nyros. 
 **/
 
-import  {useState, useEffect} from 'react';
+import  {useState, useEffect, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -21,11 +21,13 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import ToastManager, {Toast} from 'toastify-react-native';
-import { HttpPost } from '../../context/httpHelpers';
+import { AuthContext } from '../../context/AuthContext';
+
 
 const CELL_COUNT = 4;
 
 const ResetPasswordVerification = ({route, navigation}) => {
+  const {HttpPost, isLoading} = useContext(AuthContext)
   const {email} = route.params;
   const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
@@ -34,11 +36,10 @@ const ResetPasswordVerification = ({route, navigation}) => {
     setValue,
   });
   const [counter, setCounter] = React.useState(59);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      
     }, 3000);
   }, []);
 
@@ -49,7 +50,7 @@ const ResetPasswordVerification = ({route, navigation}) => {
   }, [counter]);
 
   const handleSubmit = async () => {
-    setLoading(true);
+    
     const payload = {
       email: email,
       code: value,
@@ -68,11 +69,11 @@ const ResetPasswordVerification = ({route, navigation}) => {
       Toast.error(error.response.data);
       console.error(error);
     }
-    setLoading(false);
+    
   };
 
   const resendPassword = async () => {
-    setLoading(true);
+    
     const payload = {
       email: email,
     };
@@ -87,8 +88,6 @@ const ResetPasswordVerification = ({route, navigation}) => {
       Toast.error(error.response.data);
       console.error(error);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -101,7 +100,7 @@ const ResetPasswordVerification = ({route, navigation}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        {loading ? (
+        {isLoading ? (
           <View
             style={{
               position: 'absolute',
