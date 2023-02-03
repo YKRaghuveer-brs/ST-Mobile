@@ -5,7 +5,7 @@ Description: Renders the Registration Form to register a new user
 (c) Copyright (c) by Nyros. 
 **/
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   TextInput,
   View,
@@ -14,21 +14,19 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import axios from "axios";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from 'twrnc';
-import { HttpPost } from "../../context/httpHelpers";
-
+import { AuthContext } from "../../context/AuthContext";
 
 
 const RegisterScreen1 = ({ navigation }) => {
-  const [loading, setLoading] = useState(false);
+  const {HttpPost, isLoading} = useContext(AuthContext)
   useEffect(() => {
-    setLoading(true);
+    
     setTimeout(() => {
-      setLoading(false);
+    
     }, 1000);
   }, []);
 
@@ -65,7 +63,7 @@ const RegisterScreen1 = ({ navigation }) => {
 
   return (
     <View style={tw`flex-1 justify-center bg-[#291F4E]`}>
-     {loading ? (
+     {isLoading ? (
         <View
           style={{
              position: "absolute",
@@ -100,10 +98,7 @@ const RegisterScreen1 = ({ navigation }) => {
             validationSchema={validateSchema}
             initialValues={initialValues}
             onSubmit={async (values) => {
-              setLoading(true);
-
               try {
-                // const response = await axios.post("http://203.193.173.125:6969/register", values);
                 const response = await HttpPost("register", values);
                 if (response) {
                   Toast.success(response.data.message);
@@ -117,7 +112,6 @@ const RegisterScreen1 = ({ navigation }) => {
               } catch (error) {
                 Toast.error(error.response.data);
               }
-              setLoading(false);
             }}
           >
             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid }) => (

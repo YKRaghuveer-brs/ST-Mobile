@@ -24,15 +24,12 @@ import tw from 'twrnc';
 import {BASE_URL} from '../../config';
 
 const ProfileScreen1 = ({navigation}) => {
-  const {user} = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const {user,isLoading} = useContext(AuthContext);
   const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-
     setTimeout(() => {
-      setLoading(false);
+
     }, 1000);
   }, []);
 
@@ -58,7 +55,7 @@ const ProfileScreen1 = ({navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
-      {loading && (
+      {isLoading && (
         <View
           style={{
             position: 'absolute',

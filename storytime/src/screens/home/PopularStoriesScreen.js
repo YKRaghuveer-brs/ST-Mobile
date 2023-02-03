@@ -10,18 +10,15 @@ import React, {useContext, useState, useEffect} from 'react';
 import {truncateText} from '../../utils/common';
 import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
-import { spotifyGet, spotifySearch } from '../../context/httpHelpers';
 
 const PopularStoriesScreen = ({navigation}) => {
-  const { setTracks, setStory} =
+  const {SpotifySearch,isLoading,  SpotifyGet, setTracks, setStory} =
     useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [popularStories, setPopularStories] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const getAllPopularShows = async () => {
-    setLoading(true);
     const searchQuery = 'popular-stories-podcasts';
     const queryParams = {
       type: 'show',
@@ -35,7 +32,7 @@ const PopularStoriesScreen = ({navigation}) => {
       q: searchQuery,
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
 
     const removeExplicitStories = response.shows.items.filter(
       story => !story.explicit,
@@ -46,7 +43,6 @@ const PopularStoriesScreen = ({navigation}) => {
       setHasMoreItems(false);
       return false;
     }
-    setLoading(false);
   };
 
   const filteredStories = list => {
@@ -69,7 +65,7 @@ const PopularStoriesScreen = ({navigation}) => {
   const getEpisodeList = async story => {
     setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -93,7 +89,7 @@ const PopularStoriesScreen = ({navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
             position: 'absolute',

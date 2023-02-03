@@ -22,12 +22,10 @@ import tw from 'twrnc';
 import {AuthContext} from '../../context/AuthContext';
 
 const LoginScreen1 = ({navigation}) => {
-  const {login} = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  const {login, isLoading} = useContext(AuthContext);
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
     }, 2000);
   }, []);
 
@@ -44,7 +42,7 @@ const LoginScreen1 = ({navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] text-white`}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
             position: 'absolute',

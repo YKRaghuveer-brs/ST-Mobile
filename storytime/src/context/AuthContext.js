@@ -5,11 +5,17 @@ Description: It provides the app context and HTTP methods
 (c) Copyright (c) by Nyros. 
 **/
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { Toast } from "toastify-react-native";
 import { HttpGet, HttpPost, refreshTokenHandler } from "./httpHelpers";
 import { calculateRemainingExpirationTime } from "../utils/common";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {createContext, useState, useEffect, useCallback} from 'react';
+import {Toast} from 'toastify-react-native';
+import {httpGet, httpPost, spotifyGet, spotifySearch} from './httpHelpers';
+import {calculateRemainingExpirationTime} from '../utils/common';
+import {Text, Image, View} from 'react-native';
+import LoadingSpinner from '../utils/LoadingSpinner';
 
 let logoutTimer;
 let spotifyLogoutTimer;
@@ -67,8 +73,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const payload = {
-      email,
-      password,
+      email: 'gopinath.krm@nyros.com',
+      password: '123456',
     };
 
     try {
@@ -76,7 +82,8 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         Toast.success("Logged in successfully !");
         setUserToken(response.data.token);
-
+       
+        // response is in seconds, we need to convert to milliseconds
         const expirationTime = new Date(
           new Date().getTime() + response.data.usertokenExp * 1000
         );
@@ -120,9 +127,11 @@ export const AuthProvider = ({ children }) => {
     setSelectedLang([]);
     setIsLoading(true);
     setUserToken(null);
-    AsyncStorage.removeItem("userInfo");
-    AsyncStorage.removeItem("userToken");
-    AsyncStorage.removeItem("userExpTime");
+   
+    AsyncStorage.removeItem('userInfo');
+    AsyncStorage.removeItem('userToken');
+    AsyncStorage.removeItem('userExpTime');
+    clearInterval(spotifyLogoutTimer);
     setIsLoading(false);
     setAllowedLanguages([]);
   };
@@ -141,18 +150,80 @@ export const AuthProvider = ({ children }) => {
     setSelectedTrack(JSON.parse(savedSelectedTrack))
     setStickyPlayer(true)
     setPaused(true)
-
-
-
-
     }
     playerDataUpdate();
   }, []);
 
 
+  // BACKEND HTTP METHODS
+  // GET HTTP CALL
+  const HttpGetHandler = async (path, params) => {
+    setIsLoading(true);
+    try {
+      return await httpGet(path, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
+
+  // GET HTTP CALL
+  const HttpPostHandler = async (path, params) => {
+    setIsLoading(true);
+    try {
+      return await httpPost(path, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
+
+  // To Refresh the SPotify Token after 1-Hr
+  const refreshTokenHandler = async () => {
+    
+    const response = await httpGet('refreshtoken');
+   
+    const newToken = response.spotifytoken.access_token;
+    const newExpTime = response.spotifytoken.expires_in;
+  
+    const newSpotifyExpirationTime = new Date(
+      new Date().getTime() + newExpTime * 1000,
+    );
+    await AsyncStorage.setItem('spotifyToken', newToken);
+    await AsyncStorage.setItem(
+      'spotifytokenExp',
+      newSpotifyExpirationTime.toISOString(),
+    );
+  };
+
+  // SPOTIFY HTTP METHOD
+  const spotifyGetHandler = async (path, params) => {
+    setIsLoading(true);
+    try {
+      return await spotifyGet(path, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
+
+  const SpotifySearchHandler = async (search, params) => {
+    setIsLoading(true);
+    try {
+      return await spotifySearch(search, params);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+    return false;
+  };
 
   // To update the Exp time when App is closed and opened
   useEffect(() => {
+    
     async function updateTokenExpirationTime() {
       if (userToken) {
         const newList = JSON.parse(JSON.stringify(languagesList));
@@ -174,13 +245,20 @@ export const AuthProvider = ({ children }) => {
           storedSpotifyExpirationDate
         );
 
+        
+       
         if (remainingSpotifyTime <= 60000) {
+          
           //less than or equal to 1 min (60000 seconds)
           await refreshTokenHandler();
-        }
+        } 
       }
     }
     updateTokenExpirationTime();
+    return () => {
+      
+      clearInterval(spotifyLogoutTimer);
+    };
   }, [userToken]);
 
   // Checks user is logged in or not when app is closed and opened
@@ -213,35 +291,44 @@ export const AuthProvider = ({ children }) => {
     }
   }, [userToken]);
 
+  const contextValue = {
+    login,
+    logout,
+    HttpGet: HttpGetHandler,
+    HttpPost: HttpPostHandler,
+    SpotifyGet: spotifyGetHandler,
+    SpotifySearch: SpotifySearchHandler,
+    selectedLanguages: selectedLang,
+    selectLanguages: setSelectedLang,
+    languages: allowedLangages,
+    isLoading,
+    userToken,
+    user,
+    stickyPlayer,
+    setStickyPlayer,
+    story,
+    setStory,
+    tracks,
+    setTracks,
+    paused,
+    setPaused,
+    currentPosition,
+    setCurrentPosition,
+    totalLength,
+    setTotalLength,
+    selectedTrack,
+    setSelectedTrack,
+    repeatOn,
+    setRepeatOn,    
+  };
+
+
+
+
   return (
-    <AuthContext.Provider
-      value={{
-        login,
-        logout,
-        selectedLanguages: selectedLang,
-        selectLanguages: setSelectedLang,
-        languages: allowedLangages,
-        isLoading,
-        userToken,
-        user,
-        story,
-        setStory,
-        tracks,
-        setTracks,
-        paused,
-        setPaused,
-        currentPosition,
-        setCurrentPosition,
-        totalLength,
-        setTotalLength,
-        selectedTrack,
-        setSelectedTrack,
-        repeatOn,
-        setRepeatOn,
-        stickyPlayer,
-        setStickyPlayer,
-      }}
-    >
+   
+    <AuthContext.Provider value={contextValue}>
+      { isLoading ?  <LoadingSpinner /> : ""  }
       {children}
     </AuthContext.Provider>
   );

@@ -5,7 +5,7 @@ Description: Renders the list of Shows related to Authors
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Text,
   View,
@@ -14,18 +14,16 @@ import {
   Pressable,
 } from "react-native";
 import tw from "twrnc";
-import { spotifySearch } from "../../context/httpHelpers";
+import { AuthContext } from "../../context/AuthContext";
 import { truncateText } from "../../utils/common";
 
 const AuthorsScreen = ({ navigation }) => {
+  const { SpotifySearch, isLoading } = useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [shows, setShows] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const getShowsByCategory = async () => {
-    setLoading(true);
-
     const queryParams = {
       type: "show",
       include_external: "audio",
@@ -38,18 +36,16 @@ const AuthorsScreen = ({ navigation }) => {
       q: "popular stories podcasts",
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
     if (response.shows.items.length > 0 || response.shows.next) {
       const removeExplicitStories = response.shows.items.filter(
         (story) => !story.explicit
       );
       setShows([...shows, ...removeExplicitStories]);
     } else {
-      setLoading(false);
       setHasMoreItems(false);
       return false;
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -58,16 +54,13 @@ const AuthorsScreen = ({ navigation }) => {
 
   const loadMoreStories = () => {
     if (hasMoreItem) {
-      setLoading(true);
       setOffset(offset + 30);
-    } else {
-      setLoading(false);
     }
   };
 
   return (
     <View style={tw`flex-1 bg-[#291F4E]`}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
             position: "absolute",

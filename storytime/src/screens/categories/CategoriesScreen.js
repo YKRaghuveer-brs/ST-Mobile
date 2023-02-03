@@ -17,7 +17,7 @@ import {
 import React, {useContext, useState, useEffect} from 'react';
 import tw from 'twrnc';
 import {AuthContext} from '../../context/AuthContext';
-import { HttpGet } from '../../context/httpHelpers';
+
 
 const categoriesBg = ['green', 'red', 'blue', 'magenta', 'violet', 'coral'];
 
@@ -25,19 +25,18 @@ const CategoriesScreen = ({navigation}) => {
   const {
     languages,
     selectLanguages,
+    HttpGet,
+    isLoading
   } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
 
   // to get the category list
   const getCategories = async () => {
-    setLoading(true);
     const response = await HttpGet('categories');
     const uddatedResponse = response.map((item, index) => {
       return {...item, background: categoriesBg[index]};
     });
     setCategories(uddatedResponse);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -101,7 +100,7 @@ const CategoriesScreen = ({navigation}) => {
           alignItems: 'center',
           marginTop: 25,
         }}>
-        {loading ? (
+        {isLoading ? (
           <View
             style={{
               position: 'absolute',

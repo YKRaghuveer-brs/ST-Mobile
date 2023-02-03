@@ -36,16 +36,8 @@ const SeekBar = ({trackLength, currentPosition, onSeek, onSlidingStart}) => {
         maximumValue={Math.max(trackLength, 1, currentPosition + 1)}
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#F2F2F2"
-//         onSlidingComplete={(a)=>{
-// console.log("onSlidingComplete", a)
-// }}
-// onSlidingStart={(a)=>{
-// console.log("onSlidingStart", a)
-// }}
-         onSlidingStart={onSlidingStart}
+        onSlidingStart={onSlidingStart}
         onSlidingComplete={(time) => onSeek(time )}
-
-
         step={1}
       />
     </View>

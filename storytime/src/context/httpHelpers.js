@@ -50,7 +50,7 @@ const makeSpotifyUrl = async (path, params) => {
 };
 
 // Backend HTTP GET method
-export const HttpGet = async (path, params) => {
+export const httpGet = async (path, params) => {
   const URL = await makeURL(path, params);
   const headers = await makeHeaders();
   try {
@@ -62,7 +62,7 @@ export const HttpGet = async (path, params) => {
 };
 
 // Backend HTTP GET method
-export const HttpPost = async (path, payload) => {
+export const httpPost = async (path, payload) => {
   const URL = await makeURL(path);
   try {
     const response = await axios.post(URL, payload);
@@ -70,21 +70,6 @@ export const HttpPost = async (path, payload) => {
   } catch (error) {
   } finally {
   }
-};
-
-// To Refresh the SPotify Token after 1-Hr
-export const refreshTokenHandler = async () => {
-  const response = await HttpGet('refreshtoken');
-  const newToken = response.data.spotifytoken.access_token;
-  const newExpTime = response.data.spotifytoken.expires_in;
-  const newSpotifyExpirationTime = new Date(
-    new Date().getTime() + newExpTime * 1000,
-  );
-  await AsyncStorage.setItem('spotifyToken', newToken);
-  await AsyncStorage.setItem(
-    'spotifytokenExp',
-    newSpotifyExpirationTime.toISOString(),
-  );
 };
 
 // Function that constructs Spotify URL based on search params passed
@@ -117,7 +102,6 @@ export const spotifyGet = async (path, params) => {
 //Spotify Search method
 export const spotifySearch = async (search, params) => {
   const URL = await makeSpotifySearchURL(search, params);
-
   try {
     const response = await axios.get(URL, {
       headers: await makeSpotifyHeaders(),

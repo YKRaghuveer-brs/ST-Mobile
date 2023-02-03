@@ -9,5 +9,5 @@ export const calculateRemainingExpirationTime = expirationTime => {
   const currentTime = new Date().getTime();
   const newExpirationTime = new Date(expirationTime).getTime(); //0 incase expTime is empty & we get -ve value
   const remainingTime = newExpirationTime - currentTime;
-  return remainingTime;
+  return remainingTime; // in milliseconds
 };

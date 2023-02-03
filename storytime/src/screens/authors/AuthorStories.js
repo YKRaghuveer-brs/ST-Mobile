@@ -10,16 +10,16 @@ import {StyleSheet, View, Text, Image, Pressable, FlatList} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 import {truncateText} from '../../utils/common';
-import {spotifyGet, spotifySearch} from '../../context/httpHelpers';
+
 
 const AuthorStories = ({route, navigation}) => {
   const {publisher} = route.params;
-  const {setTracks, setStory, stickyPlayer, setStickyPlayer} =
+  const {SpotifySearch, isLoading, SpotifyGet, setTracks, setStory, stickyPlayer, setStickyPlayer} =
     useContext(AuthContext);
   const [authorStories, setAuthorStories] = useState([]);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [offset, setOffset] = useState(0);
-  const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     getAuthorStories();
@@ -38,7 +38,7 @@ const AuthorStories = ({route, navigation}) => {
       q: publisher,
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
     if (response.shows.items.length > 0 || response.shows.next) {
       const publisherShows = response.shows.items.filter(obj => {
         return obj.publisher === publisher;
@@ -48,17 +48,15 @@ const AuthorStories = ({route, navigation}) => {
       );
       setAuthorStories([...authorStories, ...removeExplicitStories]);
     } else {
-      setLoading(false);
       setHasMoreItems(false);
       return false;
     }
-    setLoading(false);
   };
 
   const getEpisodeList = async story => {
     setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -83,10 +81,7 @@ const AuthorStories = ({route, navigation}) => {
 
   const loadMoreStories = () => {
     if (hasMoreItem) {
-      setLoading(true);
       setOffset(offset + 30);
-    } else {
-      setLoading(false);
     }
   };
 
@@ -126,7 +121,7 @@ const AuthorStories = ({route, navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
             position: 'absolute',

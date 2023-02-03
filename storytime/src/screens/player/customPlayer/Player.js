@@ -99,6 +99,9 @@ const Player = () => {
 
   //   setCurrentPosition(time);
 
+    // connect to backend now
+  
+
   //   console.log("currentPosition",currentPosition)
   //   setPaused(false);
   // };

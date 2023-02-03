@@ -10,17 +10,15 @@ import {Text, View, FlatList, Image, Pressable} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import {truncateText} from '../../utils/common';
 import tw from 'twrnc';
-import { spotifyGet, spotifySearch } from '../../context/httpHelpers';
 
 const CategoryStoriesScreen = ({navigation, route}) => {
-  const { selectedLanguages, setTracks, setStory, stickyPlayer,
+  const {SpotifySearch, isLoading, SpotifyGet, selectedLanguages, setTracks, setStory, stickyPlayer,
     setStickyPlayer} =
     useContext(AuthContext);
 
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(false);
   const [shows, setShows] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [languageCodeArr, setLanguageCodeAr] = useState([]);
   const [languageNameArr, setLanguageNameArr] = useState([]);
 
@@ -35,7 +33,6 @@ const CategoryStoriesScreen = ({navigation, route}) => {
   };
 
   const getShowsByCategory = async () => {
-    setLoading(true);
     const languages = await languageNameArr.toString().replaceAll(',', '%20');
     const queryParams = {
       type: 'show',
@@ -50,7 +47,7 @@ const CategoryStoriesScreen = ({navigation, route}) => {
       keywords: route.params?.item.keywords,
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
 
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
@@ -78,7 +75,6 @@ const CategoryStoriesScreen = ({navigation, route}) => {
     } else {
       setHasMoreItems(false);
     }
-    setLoading(false);
   };
 
   const loadMoreStories = () => {
@@ -90,7 +86,7 @@ const CategoryStoriesScreen = ({navigation, route}) => {
   const getEpisodeList = async story => {
     setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -130,7 +126,7 @@ const CategoryStoriesScreen = ({navigation, route}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E]`}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
             position: 'absolute',
