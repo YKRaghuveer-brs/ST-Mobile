@@ -24,11 +24,8 @@ import {
 import tw from "twrnc";
 import { truncateText } from "../../utils/common";
 import { AuthContext } from "../../context/AuthContext";
-<<<<<<< HEAD
 import { HttpGet, spotifyGet, spotifySearch } from "../../context/httpHelpers";
-=======
 
->>>>>>> db818357ed6801e62234f14a33fa9b391a74c571
 
 export default function HomeScreeen({ navigation }) {
   const {

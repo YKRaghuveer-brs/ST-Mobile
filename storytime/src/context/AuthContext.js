@@ -8,10 +8,7 @@ Description: It provides the app context and HTTP methods
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { Toast } from "toastify-react-native";
 import { HttpGet, HttpPost, refreshTokenHandler } from "./httpHelpers";
-import { calculateRemainingExpirationTime } from "../utils/common";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {createContext, useState, useEffect, useCallback} from 'react';
-import {Toast} from 'toastify-react-native';
 import {httpGet, httpPost, spotifyGet, spotifySearch} from './httpHelpers';
 import {calculateRemainingExpirationTime} from '../utils/common';
 import {Text, Image, View} from 'react-native';
