@@ -1,15 +1,19 @@
-import React from "react";
+import {Image, View, Text} from 'react-native';
+import { windowHeight, windowWidth } from './Dimensions';
+
 const LoadingSpinner = () => {
   return (
     <>
-      <div className="spinner">
-        <img
-          className="hidden lg:block w-40 h-40"
-          src="/images/Spiral_logo_loader.gif"
-          alt="Workflow"
-        />
-     
-      </div>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "coral"
+        }}>
+        <Image
+          style={{width: 100, height: 100}}
+          source={require('../assets/images/Spiral_logo_loader.gif')}></Image>
+      </View>
     </>
   );
 };

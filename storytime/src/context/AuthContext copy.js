@@ -7,11 +7,9 @@ Description: It provides the app context and HTTP methods
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {createContext, useState, useEffect, useCallback} from 'react';
+import axios from 'axios';
+import queryString from 'query-string';
 import {Toast} from 'toastify-react-native';
-import {httpGet, httpPost, spotifyGet, spotifySearch} from './httpHelpers';
-import {calculateRemainingExpirationTime} from '../utils/common';
-import {Text, Image, View} from 'react-native';
-import LoadingSpinner from '../utils/LoadingSpinner';
 
 let logoutTimer;
 let spotifyLogoutTimer;
@@ -48,41 +46,113 @@ const languagesList = [
   },
 ];
 
+// function to calculate remaining expiration time 
+const calculateRemainingExpirationTime = expirationTime => {
+  const currentTime = new Date().getTime();
+  const newExpirationTime = new Date(expirationTime).getTime(); //0 incase expTime is empty & we get -ve value
+  const remainingTime = newExpirationTime - currentTime;
+  return remainingTime;
+};
+
 export const AuthContext = createContext();
+
+const spotifyURL = 'https://api.spotify.com/v1/';
+const backendURL = 'http://203.193.173.125:6969/';
 
 // context provider
 export const AuthProvider = ({children}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const [selectedLang, setSelectedLang] = useState([]);
   const [allowedLangages, setAllowedLanguages] = useState([]);
   const [user, setUser] = useState([]);
 
-  const [tracks, setTracks] = useState([]);
-  const [stickyPlayer, setStickyPlayer] = useState(false);
-  const [story, setStory] = useState({});
+  // Function to create Backend Headers
+  const makeHeaders = async () => {
+    let token = await AsyncStorage.getItem('userToken');
+    let header = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+    return header;
+  };
+
+  // Function to create Spotify Headers
+  const makeSpotifyHeaders = async () => {
+    let spotifyToken = await AsyncStorage.getItem('spotifyToken');
+    let header = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${spotifyToken}`,
+    };
+    return header;
+  };
+
+  // Function that constructs Spotify URL based on search params passed
+  const makeSpotifySearchURL = async (search, params) => {
+    let URL = spotifyURL;
+    if (search.q && search.keywords) {
+      URL += `search?q=${search.q}%20${search.keywords}&`;
+    } else {
+      URL += `search?q=${search.q}&`;
+    }
+    if (params) {
+      params = queryString.stringify(params);
+      URL += params;
+    }
+
+    return URL;
+  };
+
+  // Function that constructs Spotify URL based on params/path passed
+  const makeSpotifyUrl = async (path, params) => {
+    let URL = spotifyURL;
+    if (path) {
+      URL += path;
+    }
+    if (params) {
+      URL += '?' + queryString.stringify(params);
+    }
+    return URL;
+  };
+
+    // Function that constructs Backend URL based on params/path passed
+  const makeURL = async (path, params) => {
+    let URL = backendURL;
+    if (path) {
+      URL += path;
+    }
+    if (params) {
+      URL += '?' + queryString.stringify(params);
+    }
+    return URL;
+  };
 
   const login = async (email, password) => {
     const payload = {
-      email: 'gopinath.krm@nyros.com',
-      password: '123456',
+      email,
+      password,
     };
 
     try {
-      const response = await httpPost('login', payload);
+      const response = await axios.post(
+        'http://203.193.173.125:6969/login',
+        payload,
+      );
+
       if (response.status === 200) {
         Toast.success('Logged in successfully !');
+        setUserInfo(response.data);
         setUserToken(response.data.token);
-       
-        // response is in seconds, we need to convert to milliseconds
+
         const expirationTime = new Date(
           new Date().getTime() + response.data.usertokenExp * 1000,
         );
         const spotifyExpirationTime = new Date(
           new Date().getTime() + response.data.spotifytoken.expires_in * 1000,
         );
-
-        
 
         AsyncStorage.setItem('userToken', response.data.token);
         AsyncStorage.setItem('userExpTime', expirationTime.toISOString());
@@ -123,44 +193,16 @@ export const AuthProvider = ({children}) => {
     AsyncStorage.removeItem('userInfo');
     AsyncStorage.removeItem('userToken');
     AsyncStorage.removeItem('userExpTime');
-    clearInterval(spotifyLogoutTimer);
     setIsLoading(false);
     setAllowedLanguages([]);
   };
 
-  // BACKEND HTTP METHODS
-  // GET HTTP CALL
-  const HttpGetHandler = async (path, params) => {
-    setIsLoading(true);
-    try {
-      return await httpGet(path, params);
-    } catch (e) {
-    } finally {
-      setIsLoading(false);
-    }
-    return false;
-  };
-
-  // GET HTTP CALL
-  const HttpPostHandler = async (path, params) => {
-    setIsLoading(true);
-    try {
-      return await httpPost(path, params);
-    } catch (e) {
-    } finally {
-      setIsLoading(false);
-    }
-    return false;
-  };
-
   // To Refresh the SPotify Token after 1-Hr
   const refreshTokenHandler = async () => {
-    
-    const response = await httpGet('refreshtoken');
-   
-    const newToken = response.spotifytoken.access_token;
-    const newExpTime = response.spotifytoken.expires_in;
-  
+    const response = await HttpGet('refreshtoken');
+    const newToken = response.data.spotifytoken.access_token;
+    const newExpTime = response.data.spotifytoken.expires_in;
+
     const newSpotifyExpirationTime = new Date(
       new Date().getTime() + newExpTime * 1000,
     );
@@ -171,32 +213,8 @@ export const AuthProvider = ({children}) => {
     );
   };
 
-  // SPOTIFY HTTP METHOD
-  const spotifyGetHandler = async (path, params) => {
-    setIsLoading(true);
-    try {
-      return await spotifyGet(path, params);
-    } catch (e) {
-    } finally {
-      setIsLoading(false);
-    }
-    return false;
-  };
-
-  const SpotifySearchHandler = async (search, params) => {
-    setIsLoading(true);
-    try {
-      return await spotifySearch(search, params);
-    } catch (e) {
-    } finally {
-      setIsLoading(false);
-    }
-    return false;
-  };
-
   // To update the Exp time when App is closed and opened
   useEffect(() => {
-    
     async function updateTokenExpirationTime() {
       if (userToken) {
         const newList = JSON.parse(JSON.stringify(languagesList));
@@ -218,21 +236,48 @@ export const AuthProvider = ({children}) => {
           storedSpotifyExpirationDate,
         );
 
-        
-       
         if (remainingSpotifyTime <= 60000) {
-          
           //less than or equal to 1 min (60000 seconds)
           await refreshTokenHandler();
-        } 
+        }
       }
     }
     updateTokenExpirationTime();
-    return () => {
-      
-      clearInterval(spotifyLogoutTimer);
-    };
   }, [userToken]);
+
+  // SPOTIFY HTTP GET METHOD
+  const spotifyGet = async (path, params) => {
+    const URL = await makeSpotifyUrl(path, params);
+    try {
+      const response = await axios.get(URL, {
+        headers: await makeSpotifyHeaders(),
+      });
+      return response.data;
+    } catch (error) {}
+  };
+
+  //Spotify Search method
+  const spotifySearch = async (search, params) => {
+    const URL = await makeSpotifySearchURL(search, params);
+
+    try {
+      const response = await axios.get(URL, {
+        headers: await makeSpotifyHeaders(),
+      });
+      return response.data;
+    } catch (error) {}
+  };
+
+  // Backend HTTP GET method
+  const HttpGet = async (path, params) => {
+    const URL = await makeURL(path, params);
+
+    const headers = await makeHeaders();
+    try {
+      const response = await axios.get(URL, {headers: headers});
+      return response.data;
+    } catch (error) {}
+  };
 
   // Checks user is logged in or not when app is closed and opened
   const isLoggedIn = async () => {
@@ -244,6 +289,7 @@ export const AuthProvider = ({children}) => {
       userInfo = JSON.parse(userInfo);
       if (userInfo) {
         setUserToken(userToken);
+        setUserInfo(userInfo);
       }
       setIsLoading(false);
     } catch (error) {}
@@ -254,7 +300,7 @@ export const AuthProvider = ({children}) => {
   }, []);
 
   const getUserDetails = useCallback(async () => {
-    const user = await httpGet('userDetails');
+    const user = await HttpGet('userDetails');
     setUser(user);
   });
 
@@ -264,29 +310,31 @@ export const AuthProvider = ({children}) => {
     }
   }, [userToken]);
 
-  const contextValue = {
-    login,
-    logout,
-    HttpGet: HttpGetHandler,
-    HttpPost: HttpPostHandler,
-    SpotifyGet: spotifyGetHandler,
-    SpotifySearch: SpotifySearchHandler,
-    selectedLanguages: selectedLang,
-    selectLanguages: setSelectedLang,
-    languages: allowedLangages,
-    isLoading,
-    userToken,
-    user,
-    minPlayerTracks: tracks,
-    setTracks,
-    minPlayerStory: story,
-    setStory,
-    stickyPlayer,
-    setStickyPlayer,
-  };
+  const [tracks, setTracks] = useState([]);
+  const [stickyPlayer, setStickyPlayer] = useState(false);
+  const [story, setStory] = useState({});
+
   return (
-    <AuthContext.Provider value={contextValue}>
-      { isLoading ?  <LoadingSpinner /> : ""  }
+    <AuthContext.Provider
+      value={{
+        login,
+        logout,
+        spotifySearch,
+        spotifyGet,
+        HttpGet,
+        selectedLanguages: selectedLang,
+        selectLanguages: setSelectedLang,
+        languages: allowedLangages,
+        isLoading,
+        userToken,
+        user,
+        minPlayerTracks: tracks,
+        setTracks,
+        minPlayerStory: story,
+        setStory,
+        stickyPlayer,
+        setStickyPlayer,
+      }}>
       {children}
     </AuthContext.Provider>
   );

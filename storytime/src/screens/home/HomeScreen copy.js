@@ -31,20 +31,23 @@ export default function HomeScreeen({navigation}) {
     logout,
     SpotifyGet,
     SpotifySearch,
+    HttpGet,
     languages,
     selectLanguages,
     setTracks,
     setStory,
+    stickyPlayer,
     setStickyPlayer,
-    isLoading
   } = useContext(AuthContext);
 
   const [popularStories, setPopularStories] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerms, setSearchTerms] = useState([]);
   const [value, setValue] = useState('');
 
   const getPopularShows = async () => {
+    setLoading(true);
     const searchQuery = 'popular-stories';
     const queryParams = {
       type: 'show',
@@ -57,6 +60,7 @@ export default function HomeScreeen({navigation}) {
     };
     const response = await SpotifySearch(search, queryParams);
     setPopularStories(response.shows.items);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -108,7 +112,7 @@ export default function HomeScreeen({navigation}) {
 
   const renderItem = ({item, index}) => {
     return (
-      <View className="flex" style={{flex: 1, marginBottom: 15}}>
+      <View style={{flex: 1, marginBottom: 15}}>
         <Pressable
           onPress={() => getEpisodeList(item)}>
           <Image
@@ -383,7 +387,8 @@ export default function HomeScreeen({navigation}) {
           </TouchableOpacity>
         </View>
 
-        {/* {isLoading ? (
+        
+        {loading ? (
           <View
             style={{
               position: 'absolute',
@@ -398,6 +403,7 @@ export default function HomeScreeen({navigation}) {
             <Image
               style={{width: 100, height: 100}}
               source={require('../../assets/images/Spiral_logo_loader.gif')}
+              
             />
           </View>
         ) : (
@@ -409,16 +415,8 @@ export default function HomeScreeen({navigation}) {
               renderItem={(item, index) => renderItem(item, index)}
             />
           </View>
-        )} */}
-
-<View style={{marginBottom: 20}}>
-            <FlatList
-              numColumns={3}
-              keyExtractor={item => item.id}
-              data={popularStories}
-              renderItem={(item, index) => renderItem(item, index)}
-            />
-          </View>
+        )}
+        
       </View>
     </SafeAreaView>
   );

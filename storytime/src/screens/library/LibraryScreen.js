@@ -148,10 +148,10 @@ const LibraryScreen = ({navigation}) => {
     <View style={tw`flex-1 bg-[#291F4E] text-white`}>
       {isLoading ? (
         <View style={styles.loader}>
-          <Image
+          {/* <Image
             style={{width: 100, height: 100}}
             source={require('../../assets/images/Spiral_logo_loader.gif')}
-          />
+          /> */}
         </View>
       ) : (
         ''
@@ -230,6 +230,11 @@ const LibraryScreen = ({navigation}) => {
                 Go To Popular Stories
               </Text>
             </Pressable>
+            <Text
+              style={{color: 'white', fontSize: 20, marginTop: 100}}
+              onPress={getLibrary}>
+              LOAD DATA
+            </Text>
           </View>
         )}
       </ScrollView>
