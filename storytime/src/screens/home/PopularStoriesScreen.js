@@ -12,8 +12,7 @@ import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 
 const PopularStoriesScreen = ({navigation}) => {
-  const {SpotifySearch,isLoading,  SpotifyGet, setTracks, setStory} =
-    useContext(AuthContext);
+  const {SpotifySearch,isLoading,  SpotifyGet, setTracks, setStory} = useContext(AuthContext);
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [popularStories, setPopularStories] = useState([]);
@@ -89,7 +88,7 @@ const PopularStoriesScreen = ({navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
-      {isLoading ? (
+     {/* {isLoading ? (
         <View
           style={{
             position: 'absolute',
@@ -108,7 +107,7 @@ const PopularStoriesScreen = ({navigation}) => {
         </View>
       ) : (
         ''
-      )}
+      )}*/}
 
       <View style={styles.navBar}>
         <View style={styles.leftContainer}>

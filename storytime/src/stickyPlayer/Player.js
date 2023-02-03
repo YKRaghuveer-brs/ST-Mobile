@@ -17,11 +17,6 @@ import TextTicker from "react-native-text-ticker";
 import * as RootNavigation from "../navigation/RootNavigation.js";
 
 const Player = () => {
-  // const [paused, setPaused] = useState(true);
-  // const [totalLength, setTotalLength] = useState(1);
-  // const [currentPosition, setCurrentPosition] = useState(0);
-  // const [selectedTrack, setSelectedTrack] = useState(0);
-  // const [repeatOn, setRepeatOn] = useState(false);
   const [shuffleOn, setShuffleOn] = useState(false);
   const [isChanging, setIsChanging] = useState(false);
   const {
@@ -61,11 +56,9 @@ const Player = () => {
   };
 
   useEffect(() => {
-    console.log("Hiii");
+    AsyncStorage.setItem("stickyPlayer", JSON.stringify(true));
     AsyncStorage.setItem("story", JSON.stringify(story));
-
     AsyncStorage.setItem("tracks", JSON.stringify(tracks));
-
     AsyncStorage.setItem("selectedTrack", JSON.stringify(selectedTrack));
   }, []);
 
@@ -117,15 +110,19 @@ const Player = () => {
   );
 
   const openPlayer = () => {
-    console.log("story", story);
     setStickyPlayer(false);
     RootNavigation.navigate("Player");
   };
 
+  const closePlayer = () => {
+    setStickyPlayer(false)
+    AsyncStorage.setItem("stickyPlayer", JSON.stringify(false));
+  }
+
   return (
     <View style={styles.container}>
       <View>
-        <Pressable onPress={() => setStickyPlayer(false)}>
+        <Pressable onPress={() => closePlayer()}>
           <Text style={{ textAlign: "right" }}>Close</Text>
         </Pressable>
       </View>
@@ -133,10 +130,7 @@ const Player = () => {
         <AlbumArt url={track.albumArtUrl} />
         <Pressable onPress={() => openPlayer()}>
           <View style={{ paddingLeft: 10, paddingTop: 14 }}>
-            <Text style={{ color: "#fff", fontSize: 14 }}>
-              {truncateText(story.name, 14)}
-            </Text>
-
+            <Text style={{ color: "#fff", fontSize: 14 }}>{truncateText(story.name, 14)}</Text>
             {/* <TextTicker
               style={{fontSize: 12, color: '#fff', width: 100}}
               duration={3000}
@@ -146,11 +140,7 @@ const Player = () => {
               marqueeDelay={1000}>
               {track.title}
             </TextTicker>*/}
-            <TextTicker
-              style={{ fontSize: 12, color: "#fff", width: 100 }}
-              duration={3000}
-              marqueeDelay={3000}
-            >
+            <TextTicker style={{ fontSize: 12, color: "#fff", width: 100 }} duration={3000} marqueeDelay={3000}>
               {track.title}
             </TextTicker>
           </View>

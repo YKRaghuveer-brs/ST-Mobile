@@ -24,7 +24,6 @@ import {
 import tw from "twrnc";
 import { truncateText } from "../../utils/common";
 import { AuthContext } from "../../context/AuthContext";
-import { HttpGet, spotifyGet, spotifySearch } from "../../context/httpHelpers";
 
 
 export default function HomeScreeen({ navigation }) {
@@ -48,7 +47,7 @@ export default function HomeScreeen({ navigation }) {
   const [value, setValue] = useState("");
 
   const getPopularShows = async () => {
-    setLoading(true);
+    // setLoading(true);
     const searchQuery = "popular-stories";
     const queryParams = {
       type: "show",

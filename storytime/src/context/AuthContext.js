@@ -7,12 +7,12 @@ Description: It provides the app context and HTTP methods
 
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { Toast } from "toastify-react-native";
-import { HttpGet, HttpPost, refreshTokenHandler } from "./httpHelpers";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {httpGet, httpPost, spotifyGet, spotifySearch} from './httpHelpers';
-import {calculateRemainingExpirationTime} from '../utils/common';
-import {Text, Image, View} from 'react-native';
-import LoadingSpinner from '../utils/LoadingSpinner';
+// import { HttpGet, HttpPost, refreshTokenHandler } from "./httpHelpers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { httpGet, httpPost, spotifyGet, spotifySearch } from "./httpHelpers";
+import { calculateRemainingExpirationTime } from "../utils/common";
+import { Text, Image, View } from "react-native";
+import LoadingSpinner from "../utils/LoadingSpinner";
 
 let logoutTimer;
 let spotifyLogoutTimer;
@@ -69,24 +69,21 @@ export const AuthProvider = ({ children }) => {
   const [totalLength, setTotalLength] = useState(0);
 
   const login = async (email, password) => {
+    console.log("email", email);
     const payload = {
-      email: 'gopinath.krm@nyros.com',
-      password: '123456',
+      email,
+      password,
     };
 
     try {
-      const response = await HttpPost("login", payload);
+      const response = await httpPost("login", payload);
       if (response.status === 200) {
         Toast.success("Logged in successfully !");
         setUserToken(response.data.token);
-       
+
         // response is in seconds, we need to convert to milliseconds
-        const expirationTime = new Date(
-          new Date().getTime() + response.data.usertokenExp * 1000
-        );
-        const spotifyExpirationTime = new Date(
-          new Date().getTime() + response.data.spotifytoken.expires_in * 1000
-        );
+        const expirationTime = new Date(new Date().getTime() + response.data.usertokenExp * 1000);
+        const spotifyExpirationTime = new Date(new Date().getTime() + response.data.spotifytoken.expires_in * 1000);
 
         AsyncStorage.setItem("userToken", response.data.token);
         AsyncStorage.setItem("userExpTime", expirationTime.toISOString());
@@ -95,22 +92,11 @@ export const AuthProvider = ({ children }) => {
 
         logoutTimer = setTimeout(logout, remainingTime);
 
-        const remainingSpotifyTime = calculateRemainingExpirationTime(
-          spotifyExpirationTime
-        );
-        spotifyLogoutTimer = setInterval(
-          refreshTokenHandler,
-          remainingSpotifyTime
-        );
+        const remainingSpotifyTime = calculateRemainingExpirationTime(spotifyExpirationTime);
+        spotifyLogoutTimer = setInterval(refreshTokenHandler, remainingSpotifyTime);
 
-        AsyncStorage.setItem(
-          "spotifyToken",
-          response.data.spotifytoken.access_token
-        );
-        AsyncStorage.setItem(
-          "spotifytokenExp",
-          spotifyExpirationTime.toISOString()
-        );
+        AsyncStorage.setItem("spotifyToken", response.data.spotifytoken.access_token);
+        AsyncStorage.setItem("spotifytokenExp", spotifyExpirationTime.toISOString());
 
         AsyncStorage.setItem("userInfo", JSON.stringify(response.data));
       }
@@ -124,33 +110,33 @@ export const AuthProvider = ({ children }) => {
     setSelectedLang([]);
     setIsLoading(true);
     setUserToken(null);
-   
-    AsyncStorage.removeItem('userInfo');
-    AsyncStorage.removeItem('userToken');
-    AsyncStorage.removeItem('userExpTime');
+
+    AsyncStorage.removeItem("userInfo");
+    AsyncStorage.removeItem("userToken");
+    AsyncStorage.removeItem("userExpTime");
     clearInterval(spotifyLogoutTimer);
     setIsLoading(false);
     setAllowedLanguages([]);
   };
 
-
-
-   // To update the Exp time when App is closed and opened
+  // To update the Exp time when App is closed and opened
   useEffect(() => {
     async function playerDataUpdate() {
-    const savedStory = await AsyncStorage.getItem("story");
-    const savedTracks = await AsyncStorage.getItem("tracks");
-    const savedSelectedTrack = await AsyncStorage.getItem("selectedTrack");
+      const savedStory = await AsyncStorage.getItem("story");
+      const savedTracks = await AsyncStorage.getItem("tracks");
+      const savedSelectedTrack = await AsyncStorage.getItem("selectedTrack");
+      const stickyPlayerStatus = await AsyncStorage.getItem("stickyPlayer");
 
-    setStory(JSON.parse(savedStory))
-    setTracks(JSON.parse(savedTracks))
-    setSelectedTrack(JSON.parse(savedSelectedTrack))
-    setStickyPlayer(true)
-    setPaused(true)
+      if(JSON.parse(stickyPlayerStatus)){
+        setStory(JSON.parse(savedStory));
+        setTracks(JSON.parse(savedTracks));
+        setSelectedTrack(JSON.parse(savedSelectedTrack));
+        setStickyPlayer(true);
+        setPaused(true);
+      }
     }
     playerDataUpdate();
   }, []);
-
 
   // BACKEND HTTP METHODS
   // GET HTTP CALL
@@ -167,6 +153,7 @@ export const AuthProvider = ({ children }) => {
 
   // GET HTTP CALL
   const HttpPostHandler = async (path, params) => {
+    console.log("path", path);
     setIsLoading(true);
     try {
       return await httpPost(path, params);
@@ -179,20 +166,14 @@ export const AuthProvider = ({ children }) => {
 
   // To Refresh the SPotify Token after 1-Hr
   const refreshTokenHandler = async () => {
-    
-    const response = await httpGet('refreshtoken');
-   
+    const response = await httpGet("refreshtoken");
+
     const newToken = response.spotifytoken.access_token;
     const newExpTime = response.spotifytoken.expires_in;
-  
-    const newSpotifyExpirationTime = new Date(
-      new Date().getTime() + newExpTime * 1000,
-    );
-    await AsyncStorage.setItem('spotifyToken', newToken);
-    await AsyncStorage.setItem(
-      'spotifytokenExp',
-      newSpotifyExpirationTime.toISOString(),
-    );
+
+    const newSpotifyExpirationTime = new Date(new Date().getTime() + newExpTime * 1000);
+    await AsyncStorage.setItem("spotifyToken", newToken);
+    await AsyncStorage.setItem("spotifytokenExp", newSpotifyExpirationTime.toISOString());
   };
 
   // SPOTIFY HTTP METHOD
@@ -220,40 +201,30 @@ export const AuthProvider = ({ children }) => {
 
   // To update the Exp time when App is closed and opened
   useEffect(() => {
-    
     async function updateTokenExpirationTime() {
       if (userToken) {
         const newList = JSON.parse(JSON.stringify(languagesList));
         setAllowedLanguages(newList);
 
         const storedExpirationDate = await AsyncStorage.getItem("userExpTime");
-        const remainingTime =
-          calculateRemainingExpirationTime(storedExpirationDate);
+        const remainingTime = calculateRemainingExpirationTime(storedExpirationDate);
 
         if (remainingTime <= 60000) {
           //less than or equal to 1 min (60000 seconds)
           logout();
         }
 
-        const storedSpotifyExpirationDate = await AsyncStorage.getItem(
-          "spotifytokenExp"
-        );
-        const remainingSpotifyTime = calculateRemainingExpirationTime(
-          storedSpotifyExpirationDate
-        );
+        const storedSpotifyExpirationDate = await AsyncStorage.getItem("spotifytokenExp");
+        const remainingSpotifyTime = calculateRemainingExpirationTime(storedSpotifyExpirationDate);
 
-        
-       
         if (remainingSpotifyTime <= 60000) {
-          
           //less than or equal to 1 min (60000 seconds)
           await refreshTokenHandler();
-        } 
+        }
       }
     }
     updateTokenExpirationTime();
     return () => {
-      
       clearInterval(spotifyLogoutTimer);
     };
   }, [userToken]);
@@ -278,7 +249,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const getUserDetails = useCallback(async () => {
-    const user = await HttpGet("userDetails");
+    const user = await httpGet("userDetails");
     setUser(user);
   });
 
@@ -316,17 +287,8 @@ export const AuthProvider = ({ children }) => {
     selectedTrack,
     setSelectedTrack,
     repeatOn,
-    setRepeatOn,    
+    setRepeatOn,
   };
 
-
-
-
-  return (
-   
-    <AuthContext.Provider value={contextValue}>
-      { isLoading ?  <LoadingSpinner /> : ""  }
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };

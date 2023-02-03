@@ -146,16 +146,6 @@ const LibraryScreen = ({navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] text-white`}>
-      {isLoading ? (
-        <View style={styles.loader}>
-          {/* <Image
-            style={{width: 100, height: 100}}
-            source={require('../../assets/images/Spiral_logo_loader.gif')}
-          /> */}
-        </View>
-      ) : (
-        ''
-      )}
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -172,7 +162,6 @@ const LibraryScreen = ({navigation}) => {
           <View style={styles.rightContainer}></View>
         </View>
 
-        {libraryIdList && libraryIdList.length > 0 && !isLoading && (
           <View
             style={{
               marginTop: 10,
@@ -187,24 +176,8 @@ const LibraryScreen = ({navigation}) => {
               estimatedItemSize={100}
             />
           </View>
-        )}
+        
 
-        {libraryIdList && libraryIdList.length > 0 && !isLoading && (
-          <View
-            style={{
-              marginTop: 10,
-              height: '100%',
-              marginTop: 10,
-              width: Dimensions.get('screen').width,
-            }}>
-            <FlatList
-              numColumns={2}
-              data={updatedLibraryList}
-              renderItem={item => renderItem(item)}
-              estimatedItemSize={100}
-            />
-          </View>
-        )}
 
         {libraryIdList.length === 0 && !isLoading && (
           <View
