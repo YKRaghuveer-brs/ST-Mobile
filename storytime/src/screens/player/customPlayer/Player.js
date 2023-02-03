@@ -5,7 +5,13 @@ Description: Renders the Main Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useImperativeHandle,
+  useEffect,
+  useRef,
+  useContext,
+} from "react";
 import axios from "axios";
 import {
   View,
@@ -14,6 +20,8 @@ import {
   Image,
   Pressable,
   Animated,
+  BackHandler,
+  Alert,
 } from "react-native";
 import Header from "./Header";
 import AlbumArt from "./AlbumArt";
@@ -23,21 +31,46 @@ import Controls from "./Controls";
 import Video from "react-native-video";
 import { ActionSheetCustom as ActionSheet } from "react-native-actionsheet";
 import ToastManager, { Toast } from "toastify-react-native";
+import { AuthContext } from "../../../context/AuthContext";
+import * as RootNavigation from "../../../navigation/RootNavigation.js";
 
 const options = ["Close"];
 
-const Player = ({ tracks, story,author }) => {
-  const [paused, setPaused] = useState(true);
-  const [totalLength, setTotalLength] = useState(1);
-  const [currentPosition, setCurrentPosition] = useState(0);
-  const [selectedTrack, setSelectedTrack] = useState(0);
-  const [repeatOn, setRepeatOn] = useState(false);
+const Player = () => {
+  const {
+    story,
+    setStory,
+    tracks,
+    setTracks,
+    paused,
+    setPaused,
+    currentPosition,
+    setCurrentPosition,
+    selectedTrack,
+    setSelectedTrack,
+    totalLength,
+    setTotalLength,
+    repeatOn,
+    setRepeatOn,
+    stickyPlayer,
+    setStickyPlayer,
+  } = useContext(AuthContext);
+
+  // const [paused, setPaused] = useState(true);
+  // const [totalLength, setTotalLength] = useState(1);
+  // const [currentPosition, setCurrentPosition] = useState(0);
+  // const [selectedTrack, setSelectedTrack] = useState(0);
+  // const [repeatOn, setRepeatOn] = useState(false);
   const [shuffleOn, setShuffleOn] = useState(false);
   const [isChanging, setIsChanging] = useState(false);
   const [episodes, setEpisodes] = [options];
   const [userStories, setUserStories] = useState([]);
 
   const refActionSheet = useRef(null);
+  const audioElement = useRef(null);
+
+  console.log("selectedTrack1111",selectedTrack,totalLength,currentPosition)
+
 
   showActionSheet = () => {
     if (refActionSheet.current) {
@@ -47,13 +80,11 @@ const Player = ({ tracks, story,author }) => {
 
   const upNextPress = (index) => {
     if (index === 0) {
-      
     } else {
       setSelectedTrack(index - 1);
     }
   };
 
- 
   const setDuration = (data) => {
     setTotalLength(Math.floor(data.duration));
   };
@@ -62,24 +93,57 @@ const Player = ({ tracks, story,author }) => {
     setCurrentPosition(Math.floor(data.currentTime));
   };
 
-  useEffect(() => {
-  // this will be triggered whenever user will be updated
-  if (currentPosition) {
-    // connect to backend now
-      console.log('useEffect', currentPosition);
+  // const seek = (time) => {
+  //   time = Math.round(time);
+  //       console.log("onChangeTIme",time)
 
-  }
-}, [currentPosition]);
+  //   setCurrentPosition(time);
+
+  //   console.log("currentPosition",currentPosition)
+  //   setPaused(false);
+  // };
 
   const seek = (time) => {
     time = Math.round(time);
-        console.log("onChangeTIme",time)
-
+    audioElement && audioElement.current.seek(time);
     setCurrentPosition(time);
-
-    console.log("currentPosition",currentPosition)
     setPaused(false);
   };
+
+  const episodeRepeat = (status) => {
+    console.log("Status", status);
+    if (status === false) {
+      setRepeatOn(true);
+    } else if (status === true) {
+      setRepeatOn("all");
+    } else {
+      setRepeatOn(false);
+    }
+  };
+
+  const loadStart = () => {};
+
+  const openStickyPlayer = () => {
+    setTracks(tracks);
+    setStory(story);
+    // console.log("tracks",story)
+
+    setStickyPlayer(true);
+    RootNavigation.navigate("Home");
+  };
+
+  useEffect(() => {
+    const backAction = () => {
+      setStickyPlayer(true);
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const onBack = () => {
     if (currentPosition < 10 && selectedTrack > 0) {
@@ -93,6 +157,14 @@ const Player = ({ tracks, story,author }) => {
       }, 0);
     } else {
       setCurrentPosition(0);
+    }
+  };
+
+  const onEnd = () => {
+    if (repeatOn === "all") {
+      onForward();
+    } else if (repeatOn === false) {
+      setPaused(true);
     }
   };
 
@@ -110,6 +182,8 @@ const Player = ({ tracks, story,author }) => {
   };
 
   useEffect(() => {
+    audioElement && audioElement.current.seek(currentPosition);
+
     getEpisodeList();
   }, []);
   const getEpisodeList = async () => {
@@ -133,28 +207,41 @@ const Player = ({ tracks, story,author }) => {
   const track = tracks[selectedTrack];
   const video = isChanging ? null : (
     <Video
+      // source={{ uri: track.audioUrl }} // Can be a URL or a local file.
+      //         ref={audioElement}
+
+      // paused={paused} // Pauses playback entirely.
+      // resizeMode="cover" // Fill the whole screen at aspect ratio.
+      // repeat={repeatOn} // Repeat forever.
+      // onLoad={(data) => setDuration(data)} // Callback when video loads
+      //         onLoadStart={loadStart} // new added
+
+      // onProgress={(data) => setTime(data)} // Callback every ~250ms with currentTime
+
+      // style={styles.audioElement}
+
       source={{ uri: track.audioUrl }} // Can be a URL or a local file.
+      ref={audioElement}
       paused={paused} // Pauses playback entirely.
       resizeMode="cover" // Fill the whole screen at aspect ratio.
-      repeat={repeatOn} // Repeat forever.
+      repeat={repeatOn === "all" ? false : repeatOn} // Repeat forever.
+      onLoadStart={loadStart} // Callback when video starts to load
       onLoad={(data) => setDuration(data)} // Callback when video loads
       onProgress={(data) => setTime(data)} // Callback every ~250ms with currentTime
-    
+      onEnd={onEnd} // Callback when playback finishes
+      onError={this.videoError} // Callback when video cannot be loaded
       style={styles.audioElement}
-      
-       
-
     />
   );
 
-  // User Saves & remove story from savedStories
-  const saveStory = (story) => {
+  // User Saves & remove story.id from savedStories
+  const saveStory = (story_id) => {
     const user_stories = userStories;
-    const index = user_stories.indexOf(story);
+    const index = user_stories.indexOf(story_id);
     if (index > -1) {
       user_stories.splice(index, 1);
     } else {
-      user_stories.push(story);
+      user_stories.push(story_id);
     }
     setUserStories(user_stories);
     const obj = {};
@@ -183,9 +270,9 @@ const Player = ({ tracks, story,author }) => {
       <ToastManager duration={3000} style={{ fontSize: 10 }} />
 
       <StatusBar hidden={true} />
-      <Header message="Now Playing" />
+      <Header message="Now Playing" onDownPress={openStickyPlayer} />
       <AlbumArt url={track.albumArtUrl} />
-      <TrackDetails title={track.title} artist={author}/>
+      <TrackDetails title={track.title} artist={story.publisher} />
 
       <SeekBar
         onSeek={(time) => seek(time)}
@@ -193,18 +280,16 @@ const Player = ({ tracks, story,author }) => {
         onSlidingStart={() => setPaused(true)}
         currentPosition={currentPosition}
 
-
         // onSeek={this.seek.bind(this)}
         //   trackLength={this.state.totalLength}
         //   onSlidingStart={() => this.setState({paused: true})}
         //   currentPosition={this.state.currentPosition}
       />
       <Controls
-        onPressRepeat={() => setRepeatOn(!repeatOn)}
+        onPressRepeat={(status) => episodeRepeat(status)}
         repeatOn={repeatOn}
         shuffleOn={shuffleOn}
         forwardDisabled={selectedTrack === tracks.length - 1}
-        onPressShuffle={() => setShuffleOn(!shuffleOn)}
         onPressPlay={() => setPaused(false)}
         onPressPause={() => setPaused(true)}
         onBack={onBack}
@@ -214,9 +299,9 @@ const Player = ({ tracks, story,author }) => {
       {video}
 
       <View>
-        <Pressable onPress={() => saveStory(story)}>
+        <Pressable onPress={() => saveStory(story.id)}>
           <Text style={{ color: "#fff", paddingLeft: 20 }}>
-            {userStories.includes(story) ? "Saved" : "Save"}
+            {userStories.includes(story.id) ? "Saved" : "Save"}
           </Text>
         </Pressable>
       </View>
@@ -257,8 +342,6 @@ const styles = {
     width: 0,
   },
 };
-
-
 
 // import React, { useState } from 'react';
 

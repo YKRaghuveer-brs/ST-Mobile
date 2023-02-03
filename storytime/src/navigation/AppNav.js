@@ -15,7 +15,7 @@ import AppStack from './AppStack';
 import {AuthContext} from '../context/AuthContext';
 
 const AppNav = () => {
-  const {userToken, stickyPlayer, minPlayerTracks, minPlayerStory} =
+  const {userToken, stickyPlayer, tracks, story} =
     useContext(AuthContext);
 
   return (
@@ -30,7 +30,7 @@ const AppNav = () => {
             bottom: 50,
             paddingLeft: 10,
           }}>
-          <Player tracks={minPlayerTracks} story={minPlayerStory} />
+          <Player tracks={tracks} story={story} />
         </View>
       ) : null}
     </NavigationContainer>
