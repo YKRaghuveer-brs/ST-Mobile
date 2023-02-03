@@ -1,11 +1,11 @@
 /** 
 Created: 23.01.2022
 Component: SeekBar
-Description: Renders the Seek Bar of the sticky Player
+Description: Renders the Seek Bar of the main Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import {View, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Slider from '@react-native-community/slider';
 
 function pad(n, width, z = 0) {
@@ -23,12 +23,21 @@ const SeekBar = ({trackLength, currentPosition, onSeek, onSlidingStart}) => {
   const remaining = minutesAndSeconds(trackLength - currentPosition);
   return (
     <View style={styles.container}>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={styles.text}>{elapsed[0] + ':' + elapsed[1]}</Text>
+        <View style={{flex: 1}} />
+        <Text style={[styles.text, {width: 40}]}>
+          {trackLength > 1 && '-' + remaining[0] + ':' + remaining[1]}
+        </Text>
+      </View>
       <Slider
         minimumValue={0}
         value={currentPosition}
         maximumValue={Math.max(trackLength, 1, currentPosition + 1)}
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#F2F2F2"
+        onSlidingStart={onSlidingStart}
+        onSlidingComplete={(time) => onSeek(time )}
         step={1}
       />
     </View>
@@ -41,8 +50,9 @@ const styles = StyleSheet.create({
     marginTop: -12,
   },
   container: {
-    paddingLeft: 1,
-    paddingRight: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
   },
   track: {
     height: 2,

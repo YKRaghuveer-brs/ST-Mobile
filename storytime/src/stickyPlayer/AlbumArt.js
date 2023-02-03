@@ -4,11 +4,7 @@ Component: Album Art
 Description: Renders the Album Image of the sticky player
 (c) Copyright (c) by Nyros. 
 **/
-
-import React from 'react';
-
 import {View, StyleSheet, Image, Pressable, Dimensions} from 'react-native';
-
 const AlbumArt = ({url, onPress}) => (
   <View style={styles.container}>
     <Pressable onPress={onPress}>

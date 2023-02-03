@@ -5,7 +5,7 @@ Description: Renders the reset password logic
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -15,21 +15,20 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import axios from "axios";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
+import { AuthContext } from "../../context/AuthContext";
 
 const ResetPasswordScreen = ({ route, navigation }) => {
+  const {HttpPost, isLoading} = useContext(AuthContext)
   const { email } = route.params;
-
-  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      
     }, 3000);
-    // storeData()
   }, []);
 
   const initialValues = {
@@ -51,7 +50,7 @@ const ResetPasswordScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.mainBody}>
-       {loading ? (
+       {isLoading ? (
           <View
             style={{
               position: "absolute",
@@ -66,7 +65,7 @@ const ResetPasswordScreen = ({ route, navigation }) => {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              source={require("../../../assets/Images/Spiral_logo_loader.gif")}
+              source={require("../../assets/images/Spiral_logo_loader.gif")}
             />
           </View>
         ) : (
@@ -87,7 +86,7 @@ const ResetPasswordScreen = ({ route, navigation }) => {
             initialValues={initialValues}
             onSubmit={async (values) => {
               try {
-                const response = await axios.post("http://203.193.173.125:6969/resetPasswordFromMobile", values);
+                const response = await HttpPost("resetPasswordFromMobile", values);
                 if (response) {
                   Toast.success(response.data);
                   setTimeout(() => {

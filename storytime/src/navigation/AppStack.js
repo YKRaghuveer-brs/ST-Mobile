@@ -1,43 +1,33 @@
 /** 
 Created: 23.01.2023
 Component: App Stack component
-Description: If the User is logged in then this component is rendered.
+Description: If the User is logged in then this component is rendered. This component has the navigation control
 (c) Copyright (c) by Nyros. 
 **/
 
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import CustomDrawer from '../screens/CustomDrawer';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
+import PopularStoriesScreen from '../screens/home/PopularStoriesScreen';
+import PlayerScreen from '../screens/player//PlayerScreen';
+import CategoryStoriesScreen from '../screens/categories/CategoryStoriesScreen';
+import ProfileScreen from '../screens/user/ProfileScreen';
+import Search from '../screens/search/Search';
+import AuthorStories from '../screens/authors/AuthorStories';
 
-const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
-const AppStack = () => {
+const AuthStack = () => {
   return (
-    <Drawer.Navigator
-      drawerContent={props => <CustomDrawer {...props} />}
-      screenOptions={{
-        hederShown: false,
-        drawerActiveBackgroundColor: '#aa18ea',
-        drawerActiveTintColor: '#fff',
-        drawerInactiveTintColor: '#333',
-        drawerLabelStyle: {
-          marginLeft: -20,
-          fontFamily: 'Roboto-Medium',
-          fontSize: 15,
-        },
-      }}>
-      <Drawer.Screen
-        component={TabNavigator}
-        name="Home"
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="home-outline" size={22} color={color} />
-          ),
-        }}
-      />
-    </Drawer.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Home" component={TabNavigator} />
+      <Stack.Screen name="Popular" component={PopularStoriesScreen} />
+      <Stack.Screen name="Player" component={PlayerScreen} />
+      <Stack.Screen name="CategoryStories" component={CategoryStoriesScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="AuthorStories" component={AuthorStories} />
+    </Stack.Navigator>
   );
 };
 
-export default AppStack;
+export default AuthStack;

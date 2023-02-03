@@ -7,9 +7,9 @@ Description: Renders the bottom navigator
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home/HomeScreen';
-import AuthorsScreen from './AuthorsScreen';
-import CategoriesScreen from './CategoriesScreen';
-import LibraryScreen from './LibraryScreen';
+import AuthorsScreen from '../screens/authors/AuthorsScreen';
+import CategoriesScreen from '../screens/categories/CategoriesScreen';
+import LibraryScreen from '../screens/library/LibraryScreen';
 import {Image} from 'react-native';
 
 const Tab = createBottomTabNavigator();
@@ -30,8 +30,8 @@ const TabNavigator = () => {
           tabBarLabel: 'Explore',
           tabBarIcon: ({focused}) => {
             const image = focused
-              ? require('../../assets/Images/storytime.png')
-              : require('../../assets/Images/storytime.png');
+              ? require('../assets/images/storytime.png')
+              : require('../assets/images/storytime.png');
             return (
               <Image
                 source={image}
@@ -48,8 +48,8 @@ const TabNavigator = () => {
           tabBarLabel: 'Categories',
           tabBarIcon: ({focused}) => {
             const image = focused
-              ? require('../../assets/Images/category.png')
-              : require('../../assets/Images/category.png');
+              ? require('../assets/images/category.png')
+              : require('../assets/images/category.png');
             return <Image source={image} style={{height: 23, width: 23}} />;
           },
         }}
@@ -61,8 +61,8 @@ const TabNavigator = () => {
           tabBarLabel: 'Authors',
           tabBarIcon: ({focused}) => {
             const image = focused
-              ? require('../../assets/Images/Author1.png')
-              : require('../../assets/Images/Author1.png');
+              ? require('../assets/images/Author1.png')
+              : require('../assets/images/Author1.png');
             return <Image source={image} style={{height: 23, width: 23}} />;
           },
         }}
@@ -75,8 +75,8 @@ const TabNavigator = () => {
           tabBarLabel: 'Library',
           tabBarIcon: ({focused}) => {
             const image = focused
-              ? require('../../assets/Images/Library1.png')
-              : require('../../assets/Images/Library1.png');
+              ? require('../assets/images/Library1.png')
+              : require('../assets/images/Library1.png');
             return <Image source={image} style={{height: 23, width: 23}} />;
           },
         }}

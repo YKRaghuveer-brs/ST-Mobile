@@ -11,7 +11,7 @@ import {navigationRef} from './RootNavigation';
 import AuthStack from './AuthStack';
 import Player from '../stickyPlayer/Player';
 import {View} from 'react-native';
-import AppStack2 from './AppStack2';
+import AppStack from './AppStack';
 import {AuthContext} from '../context/AuthContext';
 
 const AppNav = () => {
@@ -20,7 +20,7 @@ const AppNav = () => {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {userToken !== null ? <AppStack2 /> : <AuthStack />}
+      {userToken !== null ? <AppStack /> : <AuthStack />}
       {stickyPlayer ? (
         <View
           style={{

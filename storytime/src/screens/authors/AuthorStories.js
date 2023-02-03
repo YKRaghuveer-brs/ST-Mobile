@@ -11,17 +11,15 @@ import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 import {truncateText} from '../../utils/common';
 
+
 const AuthorStories = ({route, navigation}) => {
   const {publisher} = route.params;
-  const {spotifySearch, logout, setTracks, spotifyGet} =
+  const {SpotifySearch, isLoading, SpotifyGet, setTracks, setStory, stickyPlayer, setStickyPlayer} =
     useContext(AuthContext);
-  const [author, setAuthor] = useState(publisher);
   const [authorStories, setAuthorStories] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [story, setStory] = useState([]);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [offset, setOffset] = useState(0);
-  const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     getAuthorStories();
@@ -40,7 +38,7 @@ const AuthorStories = ({route, navigation}) => {
       q: publisher,
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
     if (response.shows.items.length > 0 || response.shows.next) {
       const publisherShows = response.shows.items.filter(obj => {
         return obj.publisher === publisher;
@@ -50,21 +48,15 @@ const AuthorStories = ({route, navigation}) => {
       );
       setAuthorStories([...authorStories, ...removeExplicitStories]);
     } else {
-      setLoading(false);
       setHasMoreItems(false);
       return false;
     }
-    setLoading(false);
-  };
-
-  // SideBarOpen
-  const onSetSidebarOpen = open => {
-    setSidebarOpen(open);
   };
 
   const getEpisodeList = async story => {
+    setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -84,22 +76,19 @@ const AuthorStories = ({route, navigation}) => {
     } else {
       return false;
     }
+    setStickyPlayer(true);
   };
 
   const loadMoreStories = () => {
     if (hasMoreItem) {
-      setLoading(true);
       setOffset(offset + 30);
-    } else {
-      setLoading(false);
     }
   };
 
   const renderItem = ({item}) => {
     return (
       <View style={{marginBottom: 15, paddingLeft: 13}}>
-        <Pressable
-          onPress={() => getEpisodeList(item)}>
+        <Pressable onPress={() => getEpisodeList(item)}>
           <Image
             source={{
               uri: item.images[1].url,
@@ -132,7 +121,7 @@ const AuthorStories = ({route, navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
             position: 'absolute',
@@ -146,7 +135,7 @@ const AuthorStories = ({route, navigation}) => {
           }}>
           <Image
             style={{width: 100, height: 100}}
-            source={require('../../../assets/Images/Spiral_logo_loader.gif')}
+            source={require('../../assets/images/Spiral_logo_loader.gif')}
           />
         </View>
       ) : (
@@ -188,8 +177,7 @@ const AuthorStories = ({route, navigation}) => {
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
             <View>
-              <Pressable
-                onPress={() => getEpisodeList(item)}>
+              <Pressable onPress={() => getEpisodeList(item)}>
                 <Image
                   source={{uri: item.images[1].url}}
                   style={{

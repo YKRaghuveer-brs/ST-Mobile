@@ -5,16 +5,17 @@ Description: Contains the email verification logic through OTP
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Text, ScrollView, Image, Pressable, SafeAreaView } from "react-native";
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
-import axios from "axios";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
+import { AuthContext } from "../../context/AuthContext";
+
 
 const EmailVerification = ({ route, navigation }) => {
+  const {HttpPost, isLoading} = useContext(AuthContext)
   const { email } = route.params;
-  const [loading, setLoading] = useState(true);
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -32,19 +33,17 @@ const EmailVerification = ({ route, navigation }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      
     }, 2000);
   }, []);
 
   const handleSubmit = async () => {
-    setLoading(true);
-
     const payload = {
       email: email,
       code: value,
     };
     try {
-      const response = await axios.post("http://203.193.173.125:6969/verifyEmailFromMobile", payload);
+      const response = await HttpPost("verifyEmailFromMobile", payload);
       if (response) {
         Toast.success(response.data);
         setTimeout(() => {
@@ -54,7 +53,6 @@ const EmailVerification = ({ route, navigation }) => {
     } catch (error) {
       Toast.error(error.response.data);
     }
-    setLoading(false);
   };
 
   const resendPassword = async () => {
@@ -63,7 +61,7 @@ const EmailVerification = ({ route, navigation }) => {
     };
 
     try {
-      const response = await axios.post("http://203.193.173.125:6969/resendVerificationCode", payload);
+      const response = await HttpPost("resendVerificationCode", payload);
       if (response) {
         Toast.success(response.data);
         setCounter(59);
@@ -77,7 +75,7 @@ const EmailVerification = ({ route, navigation }) => {
 
   return (
     <View style={tw`flex-1 justify-center bg-[#291F4E]`}>
-     {loading ? (
+     {isLoading ? (
           <View
             style={{
               position: "absolute",
@@ -92,7 +90,7 @@ const EmailVerification = ({ route, navigation }) => {
           >
             <Image
               style={{ width: 100, height: 100 }}
-              source={require("../../../assets/Images/Spiral_logo_loader.gif")}
+              source={require("../../assets/images/Spiral_logo_loader.gif")}
             />
           </View>
         ) : (

@@ -1,29 +1,31 @@
 /** 
 Created: 23.01.2022
 Component: Track Details
-Description: Renders the Track details of a particular Show for sticky player
+Description: Renders the Track details of a particular Show for main player
 (c) Copyright (c) by Nyros. 
 **/
 
-import {
-  View,
-  Text,
-  StyleSheet,
+import {View, Text, StyleSheet, Pressable} from 'react-native';
+import TextTicker from 'react-native-text-ticker';
+import * as RootNavigation from '../../../navigation/RootNavigation.js';
 
-} from 'react-native';
-
-const TrackDetails = ({
-  title,
-  artist,
-  onAddPress,
-  onMorePress,
-  onTitlePress,
-  onArtistPress,
-}) => (
+const TrackDetails = ({title, artist, onTitlePress}) => (
   <View style={styles.container}>
     <View style={styles.detailsWrapper}>
-      <Text style={styles.title} onPress={onTitlePress}>{title}</Text>
-      <Text style={styles.artist} onPress={onArtistPress}>{artist}</Text>
+      <TextTicker
+        style={styles.title}
+        onPress={onTitlePress}
+        duration={3000}
+        marqueeDelay={3000}>
+        {title}
+      </TextTicker>
+
+      <Pressable
+        onPress={() =>
+          RootNavigation.navigate('AuthorStories', {publisher: artist})
+        }>
+        <Text style={styles.artist}>{artist}</Text>
+      </Pressable>
     </View>
   </View>
 );
@@ -70,5 +72,5 @@ const styles = StyleSheet.create({
   moreButtonIcon: {
     height: 17,
     width: 17,
-  }
+  },
 });

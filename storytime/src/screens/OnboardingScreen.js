@@ -38,7 +38,7 @@ const OnboardingScreen = ({navigation}) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image
           style={{width: 150, height: 150, marginBottom: 50,resizeMode: "contain"}}
-          source={require('../assets/images/misc/logo.png')}
+          source={require('../assets/images/logo.png')}
         />
       </View>
 
