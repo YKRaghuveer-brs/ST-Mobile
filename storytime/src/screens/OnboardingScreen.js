@@ -25,16 +25,16 @@ const OnboardingScreen = ({navigation}) => {
       }}>
       <View>
         <Text
+          className="font-thin text-6xl line-through"
           style={{
             fontSize: 30,
             fontWeight: 'bold',
-            color: '#20315',
+            color: 'purple',
             paddingTop: 30,
           }}>
           STORY TIME
         </Text>
       </View>
-
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image
           style={{width: 150, height: 150, marginBottom: 50,resizeMode: "contain"}}

@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
   const [totalLength, setTotalLength] = useState(0);
 
   const login = async (email, password) => {
-    console.log("email", email);
+
     const payload = {
       email,
       password,
@@ -81,10 +81,6 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         Toast.success("Logged in successfully !");
         setUserToken(response.data.token);
-        console.log('TOKEN EXP ' + response.data.usertokenExp);
-        console.log(
-          'SPOTIFY TOKEN EXP ' + response.data.spotifytoken.expires_in,
-        );
 
         // response is in seconds, we need to convert to milliseconds
         const expirationTime = new Date(
@@ -98,23 +94,21 @@ export const AuthProvider = ({ children }) => {
 
         logoutTimer = setTimeout(logout, remainingTime);
 
-        // const spotifyExpirationTime = new Date(
-        //   new Date().getTime() + response.data.spotifytoken.expires_in * 1000,
-        // );
-
         const spotifyExpirationTime = new Date(
-          new Date().getTime() + 180 * 1000,
+          new Date().getTime() + response.data.spotifytoken.expires_in * 1000,
         );
+
+      
 
         const remainingSpotifyTime = calculateRemainingExpirationTime(
           spotifyExpirationTime,
         );
-        console.log('Remaining Spotify Exp is : ' + remainingSpotifyTime);
-        // spotifyLogoutTimer = setInterval(
-        //   refreshTokenHandler,
-        //   remainingSpotifyTime,
-        // );
-        spotifyTimeOut = setTimeout(refreshTokenHandler, remainingSpotifyTime);
+   
+        spotifyLogoutTimer = setInterval(
+          refreshTokenHandler,
+          remainingSpotifyTime,
+        );
+       
 
         AsyncStorage.setItem("spotifyToken", response.data.spotifytoken.access_token);
         AsyncStorage.setItem("spotifytokenExp", spotifyExpirationTime.toISOString());
@@ -174,7 +168,7 @@ export const AuthProvider = ({ children }) => {
 
   // GET HTTP CALL
   const HttpPostHandler = async (path, params) => {
-    console.log("path", path);
+  
     setIsLoading(true);
     try {
       return await httpPost(path, params);
@@ -187,24 +181,13 @@ export const AuthProvider = ({ children }) => {
 
   // To Refresh the SPotify Token after 1-Hr
   const refreshTokenHandler = async () => {
-    clearTimeout(spotifyTimeOut);
-    clearInterval(spotifyLogoutTimer);
-    console.log('REFRESH TOKEN TRIGGER...');
     const response = await httpGet('refreshtoken');
-    console.log(response);
-    const newToken = response.spotifytoken.access_token;
-    const newExpTime = response.spotifytoken.expires_in;
+    const newToken = response.data.spotifytoken.access_token;
+    const newExpTime = response.data.spotifytoken.expires_in;
 
     const newSpotifyExpirationTime = new Date(
-      new Date().getTime() + 180 * 1000,
+      new Date().getTime() + newExpTime * 1000,
     );
-    // const newSpotifyExpirationTime = new Date(
-    //   new Date().getTime() + newExpTime * 1000,
-    // );
-    const remainingSpotifyTime = calculateRemainingExpirationTime(newExpTime);
-
-    spotifyLogoutTimer = setInterval(refreshTokenHandler, remainingSpotifyTime);
-
     await AsyncStorage.setItem('spotifyToken', newToken);
     await AsyncStorage.setItem(
       'spotifytokenExp',
@@ -237,43 +220,37 @@ export const AuthProvider = ({ children }) => {
 
   // To update the Exp time when App is closed and opened
   useEffect(() => {
-    console.log('USE EFFECT RAN...');
+  
     async function updateTokenExpirationTime() {
       if (userToken) {
         const newList = JSON.parse(JSON.stringify(languagesList));
         setAllowedLanguages(newList);
 
-        const storedExpirationDate = await AsyncStorage.getItem("userExpTime");
-        const remainingTime = calculateRemainingExpirationTime(storedExpirationDate);
+        const storedExpirationDate = await AsyncStorage.getItem('userExpTime');
+        const remainingTime =
+          calculateRemainingExpirationTime(storedExpirationDate);
 
         if (remainingTime <= 60000) {
           //less than or equal to 1 min (60000 seconds)
           logout();
         }
 
-        const storedSpotifyExpirationDate = await AsyncStorage.getItem("spotifytokenExp");
-        const remainingSpotifyTime = calculateRemainingExpirationTime(storedSpotifyExpirationDate);
-
-        console.log('REMAIN TIME IN UE : ' + remainingSpotifyTime);
-        console.log(remainingSpotifyTime <= 60000);
+        const storedSpotifyExpirationDate = await AsyncStorage.getItem(
+          'spotifytokenExp',
+        );
+        const remainingSpotifyTime = calculateRemainingExpirationTime(
+          storedSpotifyExpirationDate,
+        );
 
         if (remainingSpotifyTime <= 60000) {
-          console.log('refreshTokenHandler ran && less than 1 min IF BLOCK...');
           //less than or equal to 1 min (60000 seconds)
           await refreshTokenHandler();
-        } else {
-          console.log('SET TIMEOUT ELSE BLOCK....');
-          spotifyTimeOut = setTimeout(
-            refreshTokenHandler,
-            remainingSpotifyTime,
-          );
-          console.log(spotifyTimeOut);
         }
       }
     }
     updateTokenExpirationTime();
     return () => {
-      console.log('CLEAN UP RAN...');
+   
       clearInterval(spotifyLogoutTimer);
       clearTimeout(spotifyTimeOut);
     };

@@ -11,15 +11,20 @@ import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 import {truncateText} from '../../utils/common';
 
-
 const AuthorStories = ({route, navigation}) => {
   const {publisher} = route.params;
-  const {SpotifySearch, isLoading, SpotifyGet, setTracks, setStory, stickyPlayer, setStickyPlayer} =
-    useContext(AuthContext);
+  const {
+    SpotifySearch,
+    isLoading,
+    SpotifyGet,
+    setTracks,
+    setStory,
+    stickyPlayer,
+    setStickyPlayer,
+  } = useContext(AuthContext);
   const [authorStories, setAuthorStories] = useState([]);
   const [hasMoreItem, setHasMoreItems] = useState(true);
   const [offset, setOffset] = useState(0);
-  
 
   useEffect(() => {
     getAuthorStories();
@@ -121,33 +126,11 @@ const AuthorStories = ({route, navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white px-4`}>
-      {loading ? (
-        <View
-          style={{
-            position: 'absolute',
-            zIndex: 2,
-            left: 0,
-            right: 0,
-            top: 40,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Image
-            style={{width: 100, height: 100}}
-            source={require('../../assets/images/Spiral_logo_loader.gif')}
-          />
-        </View>
-      ) : (
-        ''
-      )}
-
       <View style={styles.navBar}>
         <View style={styles.leftContainer}>
           <Pressable onPress={() => navigation.navigate('Home')}>
             <Text
-              style={tw`text-left text-base py-1 text-white bg-[#FFFFFF3E] ml-2 rounded-xl px-4`}
-             >
+              style={tw`text-left text-base py-1 text-white bg-[#FFFFFF3E] ml-2 rounded-xl px-4`}>
               {'<'} Explore
             </Text>
           </Pressable>
@@ -168,28 +151,27 @@ const AuthorStories = ({route, navigation}) => {
           onEndReached={loadMoreStories}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
-            <View  style={tw`w-6/12 px-3`}>
-              <Pressable
-                onPress={() => getEpisodeList(item)}>
-            <View>
-              <Pressable onPress={() => getEpisodeList(item)}>
-                <Image
-                  source={{uri: item.images[1].url}}
-                  style={{
-                    width: "100%",
-                    height: 180,
-                    borderRadius: 10,
-                    marginRight: 8,
-                  }}
-                />
-                <Text style={{fontSize: 18, color: '#fff', marginBottom: 3}}>
-                  {truncateText(item.name, 20)}
-                </Text>
+            <View style={tw`w-6/12 px-3`}>
+              <View>
+                <Pressable onPress={() => getEpisodeList(item)}>
+                  <Image
+                    source={{uri: item.images[1].url}}
+                    style={{
+                      width: '100%',
+                      height: 180,
+                      borderRadius: 10,
+                      marginRight: 8,
+                    }}
+                  />
+                  <Text style={{fontSize: 18, color: '#fff', marginBottom: 3}}>
+                    {truncateText(item.name, 20)}
+                  </Text>
 
-                <Text style={{fontSize: 14, color: '#fff', marginBottom: 15}}>
-                  {truncateText(item.publisher, 16)}
-                </Text>
-              </Pressable>
+                  <Text style={{fontSize: 14, color: '#fff', marginBottom: 15}}>
+                    {truncateText(item.publisher, 16)}
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           )}
         />

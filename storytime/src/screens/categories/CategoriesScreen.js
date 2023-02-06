@@ -36,6 +36,7 @@ const CategoriesScreen = ({navigation}) => {
     const uddatedResponse = response.map((item, index) => {
       return {...item, background: categoriesBg[index]};
     });
+    console.log(response);
     setCategories(uddatedResponse);
   };
 
@@ -44,23 +45,28 @@ const CategoriesScreen = ({navigation}) => {
   }, []);
 
   return (
-    <View style={tw`flex-1 bg-[#291F4E] px-6`}>
+    <View style={tw`flex-1 bg-[#291F4E]`}>
       <Text
-        style={tw`text-lg text-white bg-5 mb-2`}
-        >
+        style={{
+          marginTop: 15,
+          marginLeft: 10,
+          fontSize: 18,
+          fontFamily: 'Roboto-Medium',
+          marginBottom: 10,
+        }}>
         Languages
       </Text>
       <View
         style={{
           flexDirection: 'row',
+          justifyContent: 'center',
         }}>
         {languages.map((language, index) => {
           return (
             <View key={language.id}>
               {language.isActive ? (
-                <View style={tw`mr-6 p-2`}>
+                <View style={{marginRight: 12, padding: 5}}>
                   <Button
-                    radius="10px"
                     color="green"
                     title={language.name}
                     onPress={() => {
@@ -73,11 +79,9 @@ const CategoriesScreen = ({navigation}) => {
                     }}></Button>
                 </View>
               ) : (
-                <View style={tw`mr-6 bg-[#f00] rounded-lg`}>
+                <View style={{marginRight: 12, padding: 5}}>
                   <Button
-                    style={tw`text-black rounded-lg`}
-                    color="white"
-                    radius="20px"
+                    color="grey"
                     title={language.name}
                     onPress={() =>
                       selectLanguages(prevState => {
@@ -97,25 +101,6 @@ const CategoriesScreen = ({navigation}) => {
           alignItems: 'center',
           marginTop: 25,
         }}>
-        {loading ? (
-          <View
-            style={{
-              position: 'absolute',
-              zIndex: 2,
-              left: 0,
-              right: 0,
-              top: 40,
-              bottom: 0,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              style={{width: 100, height: 100}}
-              source={require('../../assets/images/Spiral_logo_loader.gif')}
-            />
-          </View>
-        ) : (
-          <View style={tw`w-full`}>
       
           <View style={tw`ml-2`}>
             <Text
@@ -134,12 +119,11 @@ const CategoriesScreen = ({navigation}) => {
               renderItem={({item}) => (
                 <View
                   style={{
-                    width: "49%",
+                    width: 180,
                     height: 180,
                     backgroundColor: item.background,
                     marginBottom: 10,
                     marginRight: 10,
-                    borderRadius: 10
                   }}>
                   <ImageBackground
                     source={require('../../assets/images/spiral-edge.png')}
