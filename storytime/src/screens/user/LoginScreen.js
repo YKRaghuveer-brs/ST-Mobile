@@ -72,7 +72,7 @@ const LoginScreen1 = ({navigation}) => {
 
         <View style={tw`w-full`}>
           <Formik
-            validationSchema={loginValidationSchema}
+            // validationSchema={loginValidationSchema}
             initialValues={{
               email: '',
               password: '',
