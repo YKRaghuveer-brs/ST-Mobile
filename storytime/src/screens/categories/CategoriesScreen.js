@@ -18,26 +18,25 @@ import React, {useContext, useState, useEffect} from 'react';
 import tw from 'twrnc';
 import {AuthContext} from '../../context/AuthContext';
 
+
 const categoriesBg = ['green', 'red', 'blue', 'magenta', 'violet', 'coral'];
 
 const CategoriesScreen = ({navigation}) => {
   const {
-    HttpGet,
     languages,
     selectLanguages,
+    HttpGet,
+    isLoading
   } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
 
   // to get the category list
   const getCategories = async () => {
-    setLoading(true);
     const response = await HttpGet('categories');
     const uddatedResponse = response.map((item, index) => {
       return {...item, background: categoriesBg[index]};
     });
     setCategories(uddatedResponse);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -117,6 +116,8 @@ const CategoriesScreen = ({navigation}) => {
           </View>
         ) : (
           <View style={tw`w-full`}>
+      
+          <View style={tw`ml-2`}>
             <Text
               style={{
                 fontSize: 18,
@@ -130,7 +131,7 @@ const CategoriesScreen = ({navigation}) => {
               horizontal={false}
               numColumns={2}
               data={categories}
-              renderItem={({item, index}) => (
+              renderItem={({item}) => (
                 <View
                   style={{
                     width: "49%",
@@ -157,7 +158,7 @@ const CategoriesScreen = ({navigation}) => {
               )}
             />
           </View>
-        )}
+        
       </View>
     </View>
   );

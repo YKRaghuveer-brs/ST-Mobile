@@ -8,7 +8,7 @@ Description: If the User is logged in then this component is rendered. This comp
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 import PopularStoriesScreen from '../screens/home/PopularStoriesScreen';
-import PlayerScreen from '../screens/player//PlayerScreen';
+import Player from '../screens/player/customPlayer/Player';
 import CategoryStoriesScreen from '../screens/categories/CategoryStoriesScreen';
 import ProfileScreen from '../screens/user/ProfileScreen';
 import Search from '../screens/search/Search';
@@ -21,7 +21,7 @@ const AuthStack = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={TabNavigator} />
       <Stack.Screen name="Popular" component={PopularStoriesScreen} />
-      <Stack.Screen name="Player" component={PlayerScreen} />
+      <Stack.Screen name="Player" component={Player} />
       <Stack.Screen name="CategoryStories" component={CategoryStoriesScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Search" component={Search} />

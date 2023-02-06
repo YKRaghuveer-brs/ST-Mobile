@@ -11,12 +11,13 @@ import {AuthContext} from '../../context/AuthContext';
 import tw from 'twrnc';
 import {truncateText} from '../../utils/common';
 
+
 const Search = ({route, navigation}) => {
   const {
-    spotifySearch,
+    SpotifyGet,
+    isLoading,
+    SpotifySearch,
     selectedLanguages,
-    logout,
-    spotifyGet,
     setTracks,
     setStory,
     setStickyPlayer,
@@ -24,15 +25,9 @@ const Search = ({route, navigation}) => {
   
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(true);
-  const [popularShows, setPopularShows] = useState([]);
   const [storiesList, setStoriesList] = useState([]);
-  const [authorsList, setAuthorsList] = useState([]);
-  const [episodesList, setEpisodesList] = useState([]);
   const imagePerRow = 8;
-  const [nextShows, setNextShows] = useState(imagePerRow);
-  const [nextAuthors, setNextAuthors] = useState(imagePerRow);
-  const [nextEpisodes, setNextEpisodes] = useState(imagePerRow);
-  const [loading, setLoading] = useState(true);
+
 
   const [languageCodeArr, setLanguageCodeAr] = useState([]);
   const [languageNameArr, setLanguageNameArr] = useState([]);
@@ -62,7 +57,7 @@ const Search = ({route, navigation}) => {
   }, [route.params.searchTerm, offset, languageNameArr]);
 
   const getShowsByCategory = async () => {
-    setLoading(true);
+    
     const languages = await languageNameArr.toString().replaceAll(',', '%20');
     const queryParams = {
       type: 'show',
@@ -77,7 +72,7 @@ const Search = ({route, navigation}) => {
       keywords: route.params.searchTerm,
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
       let res = [];
@@ -104,8 +99,6 @@ const Search = ({route, navigation}) => {
     } else {
       setHasMoreItems(false);
     }
-
-    setLoading(false);
   };
 
   const filteredStories = list => {
@@ -117,10 +110,7 @@ const Search = ({route, navigation}) => {
 
   const loadMoreStories = () => {
     if (hasMoreItem) {
-      setLoading(true);
       setOffset(offset + 30);
-    } else {
-      setLoading(false);
     }
   };
 
@@ -132,10 +122,8 @@ const Search = ({route, navigation}) => {
 
   const getEpisodeList = async story => {
     setStory(story);
-    // setEpisodeList([]);
-    // setStickyPlayer(false);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -193,27 +181,6 @@ const Search = ({route, navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] pt-4`}>
-      {loading ? (
-        <View
-          style={{
-            position: 'absolute',
-            zIndex: 2,
-            left: 0,
-            right: 0,
-            top: 40,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Image
-            style={{width: 100, height: 100}}
-            source={require('./../../assets/images/Spiral_logo_loader.gif')}
-          />
-        </View>
-      ) : (
-        ''
-      )}
-
       <View>
         <View style={styles.navBar}>
           <View style={styles.leftContainer}>
@@ -260,7 +227,6 @@ const Search = ({route, navigation}) => {
             renderItem={({item}) => (
               <View>
                 <Pressable
-                  // onPress={() => navigation.navigate("Player", { story: item })}
                   onPress={() => getEpisodeList(item)}>
                   <Image
                     source={{uri: item.images[1].url}}

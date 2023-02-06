@@ -5,31 +5,26 @@ Description: Renders the Track details of a particular Show for main player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React from 'react';
-import {View, Text, StyleSheet,Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import TextTicker from 'react-native-text-ticker';
 import * as RootNavigation from '../../../navigation/RootNavigation.js';
 
-const TrackDetails = ({title, artist, onTitlePress, onArtistPress}) => (
+const TrackDetails = ({title, artist, onTitlePress}) => (
   <View style={styles.container}>
     <View style={styles.detailsWrapper}>
-     
+      <TextTicker
+        style={styles.title}
+        onPress={onTitlePress}
+        duration={3000}
+        marqueeDelay={3000}>
+        {title}
+      </TextTicker>
 
-       <TextTicker
-              style={styles.title} onPress={onTitlePress}
-          duration={3000}
-       
-          marqueeDelay={3000}
-        >
-         {title}
-        </TextTicker>
-
-      <Pressable onPress={() => RootNavigation.navigate("AuthorStories", {publisher: artist })}
-
-      >
-      <Text style={styles.artist}>
-        {artist}
-      </Text>
+      <Pressable
+        onPress={() =>
+          RootNavigation.navigate('AuthorStories', {publisher: artist})
+        }>
+        <Text style={styles.artist}>{artist}</Text>
       </Pressable>
     </View>
   </View>

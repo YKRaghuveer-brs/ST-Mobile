@@ -5,7 +5,6 @@ Description: Renders the Seek Bar of the sticky Player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Slider from '@react-native-community/slider';
 
@@ -31,6 +30,9 @@ const SeekBar = ({trackLength, currentPosition, onSeek, onSlidingStart}) => {
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#F2F2F2"
         step={1}
+         onSlidingStart={onSlidingStart}
+        onSlidingComplete={(time) => onSeek(time )}
+
       />
     </View>
   );

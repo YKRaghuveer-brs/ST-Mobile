@@ -5,9 +5,7 @@ Description: contains the controls needed for the main player.
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {Component} from 'react';
-
-import {View, StyleSheet, Image, Pressable} from 'react-native';
+import {View, StyleSheet, Image, Pressable,Text} from 'react-native';
 
 const Controls = ({
   paused,
@@ -46,12 +44,38 @@ const Controls = ({
       />
     </Pressable>
     <View style={{width: 40}} />
-    <Pressable activeOpacity={0.0} onPress={onPressRepeat}>
-      <Image
+     {
+       repeatOn === true ?
+       <Pressable activeOpacity={0.0} onPress={() => onPressRepeat(repeatOn)}>
+       <Image
+        style={[styles.secondaryControl]}
+        source={require('../../../assets/images/player/repeat_one.png')}
+      /></Pressable> : null
+     }
+
+     {
+       repeatOn === false ?
+       <Pressable activeOpacity={0.0} onPress={() => onPressRepeat(repeatOn)}>
+       <Image
         style={[styles.secondaryControl, repeatOn ? [] : styles.off]}
         source={require('../../../assets/images/player/ic_repeat_white.png')}
+      /></Pressable> : null
+     }
+     
+      {
+       repeatOn === "all" ?
+       <Pressable activeOpacity={0.0} onPress={() => onPressRepeat(repeatOn)}>
+       <Image
+        style={[styles.secondaryControl]}
+        source={require('../../../assets/images/player/ic_repeat_white.png')}
+      /></Pressable> : null
+     }
+
+      {/*<Image
+        style={[styles.secondaryControl, repeatOn ? [] : styles.off]}
+        source={require('../../../assets/images/player/repeat_one.png')}
       />
-    </Pressable>
+      <Text style={{width: 40}}>{repeatOn? "One" : "Off" } </Text>*/}
   </View>
 );
 

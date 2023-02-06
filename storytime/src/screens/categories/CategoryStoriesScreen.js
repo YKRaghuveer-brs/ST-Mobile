@@ -12,14 +12,13 @@ import {truncateText} from '../../utils/common';
 import tw from 'twrnc';
 
 const CategoryStoriesScreen = ({navigation, route}) => {
-  const {spotifySearch, selectedLanguages, setTracks, spotifyGet, setStory, stickyPlayer,
+  const {SpotifySearch, isLoading, SpotifyGet, selectedLanguages, setTracks, setStory, stickyPlayer,
     setStickyPlayer} =
     useContext(AuthContext);
 
   const [offset, setOffset] = useState(0);
   const [hasMoreItem, setHasMoreItems] = useState(false);
   const [shows, setShows] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [languageCodeArr, setLanguageCodeAr] = useState([]);
   const [languageNameArr, setLanguageNameArr] = useState([]);
 
@@ -34,7 +33,6 @@ const CategoryStoriesScreen = ({navigation, route}) => {
   };
 
   const getShowsByCategory = async () => {
-    setLoading(true);
     const languages = await languageNameArr.toString().replaceAll(',', '%20');
     const queryParams = {
       type: 'show',
@@ -49,7 +47,7 @@ const CategoryStoriesScreen = ({navigation, route}) => {
       keywords: route.params?.item.keywords,
     };
 
-    const response = await spotifySearch(search, queryParams);
+    const response = await SpotifySearch(search, queryParams);
 
     if (response.shows.items.length > 0 || response.shows.next) {
       setHasMoreItems(true);
@@ -77,7 +75,6 @@ const CategoryStoriesScreen = ({navigation, route}) => {
     } else {
       setHasMoreItems(false);
     }
-    setLoading(false);
   };
 
   const loadMoreStories = () => {
@@ -89,7 +86,7 @@ const CategoryStoriesScreen = ({navigation, route}) => {
   const getEpisodeList = async story => {
     setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -129,27 +126,6 @@ const CategoryStoriesScreen = ({navigation, route}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E]`}>
-      {loading ? (
-        <View
-          style={{
-            position: 'absolute',
-            zIndex: 2,
-            left: 0,
-            right: 0,
-            top: 40,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Image
-            style={{width: 100, height: 100}}
-            source={require('../../assets/images/Spiral_logo_loader.gif')}
-          />
-        </View>
-      ) : (
-        ''
-      )}
-
       <View>
         <View>
           <Pressable onPress={() => navigation.navigate('Home')}>

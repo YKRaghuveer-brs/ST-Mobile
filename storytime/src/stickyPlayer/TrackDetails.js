@@ -5,7 +5,6 @@ Description: Renders the Track details of a particular Show for sticky player
 (c) Copyright (c) by Nyros. 
 **/
 
-import React from 'react';
 import {
   View,
   Text,

@@ -5,20 +5,21 @@ Description: Renders forgot password logic
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { StyleSheet, TextInput, View, Text, SafeAreaView, Image, Pressable } from "react-native";
-import axios from "axios";
 import * as yup from "yup";
 import { Formik } from "formik";
 import ToastManager, { Toast } from "toastify-react-native";
 import tw from "twrnc";
+import { AuthContext } from "../../context/AuthContext";
+
+
 
 const ForgotPassword = ({ navigation }) => {
-  const [loading, setLoading] = useState(true);
-
+  const {HttpPost, isLoading} = useContext(AuthContext)
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      
     }, 3000);
   }, []);
 
@@ -28,7 +29,7 @@ const ForgotPassword = ({ navigation }) => {
 
   return (
     <View style={styles.mainBody}>
-      {loading ? (
+      {isLoading ? (
         <View
           style={{
              position: "absolute",
@@ -62,9 +63,8 @@ const ForgotPassword = ({ navigation }) => {
             validationSchema={loginValidationSchema}
             initialValues={{ email: "" }}
             onSubmit={async (values) => {
-              setLoading(true);
               try {
-                const response = await axios.post("http://203.193.173.125:6969/resetPasswordEmailMobile", values);
+                const response = await HttpPost("resetPasswordEmailMobile", values);
                 if (response) {
                   Toast.success(response.data);
                   setTimeout(() => {
@@ -75,7 +75,6 @@ const ForgotPassword = ({ navigation }) => {
                 Toast.error(error.response.data);
                 console.error(error);
               }
-              setLoading(false);
             }}
           >
             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid }) => (

@@ -5,39 +5,37 @@ Description: User saved shows are rendered in this component
 (c) Copyright (c) by Nyros. 
 **/
 
-import React, {useState, useEffect, useContext,useCallback} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
   Image,
   Pressable,
   Dimensions,
-  FlatList,RefreshControl,ScrollView
+  FlatList,
+  RefreshControl,
+  ScrollView,
 } from 'react-native';
 import tw from 'twrnc';
 import {AuthContext} from '../../context/AuthContext';
 
+
 const LibraryScreen = ({navigation}) => {
-  const {HttpGet, spotifyGet, setTracks, setStory, setStickyPlayer} =
-    useContext(AuthContext);
+  const {SpotifyGet,isLoading, HttpGet,setTracks, setStory, setStickyPlayer} = useContext(AuthContext);
   const [libraryList, setLibraryList] = useState([]);
   const [libraryIdList, setLibraryIdList] = useState([]);
   const [updatedLibraryList, setUpdatedLibraryList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState(13);
-    const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-      getLibrary()
+      getLibrary();
     }, 2000);
   }, []);
-
 
   // get Library (Saved Stories)
   const getLibrary = async () => {
@@ -45,17 +43,14 @@ const LibraryScreen = ({navigation}) => {
     if (res.saved_stories.length != 0) {
       const {saved_stories} = res;
       setLibraryIdList(saved_stories); //we get list of ID's from API
-    } else {
-      setLoading(false);
-    }
+    } 
   };
 
   // Get shows based on ID
   const getShowsByID = async Ids => {
     const queryParams = {market: 'IN', ids: Ids};
-    const response = await spotifyGet('shows', queryParams);
+    const response = await SpotifyGet('shows', queryParams);
     setLibraryList(response.shows);
-    setLoading(false);
   };
 
   // to apply pagination on scrolling
@@ -77,7 +72,7 @@ const LibraryScreen = ({navigation}) => {
   const getEpisodeList = async story => {
     setStory(story);
     const queryParams = {limit: 50, market: 'IN'};
-    const response = await spotifyGet(
+    const response = await SpotifyGet(
       `shows/${story.id}/episodes`,
       queryParams,
     );
@@ -152,17 +147,7 @@ const LibraryScreen = ({navigation}) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E] text-white`}>
-      {loading ? (
-        <View style={styles.loader}>
-          <Image
-            style={{width: 100, height: 100}}
-            source={require('../../assets/images/Spiral_logo_loader.gif')}
-          />
-        </View>
-      ) : (
-        ''
-      )}
-     <ScrollView
+      <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
@@ -178,7 +163,6 @@ const LibraryScreen = ({navigation}) => {
           <View style={styles.rightContainer}></View>
         </View>
 
-        {libraryIdList && libraryIdList.length > 0 && !loading && (
           <View
             style={{
               marginTop: 10,
@@ -193,26 +177,10 @@ const LibraryScreen = ({navigation}) => {
               estimatedItemSize={100}
             />
           </View>
-        )}
+        
 
-        {libraryIdList && libraryIdList.length > 0 && !loading && (
-          <View
-            style={{
-              marginTop: 10,
-              height: '100%',
-              marginTop: 10,
-              width: Dimensions.get('screen').width,
-            }}>
-            <FlatList
-              numColumns={2}
-              data={updatedLibraryList}
-              renderItem={item => renderItem(item)}
-              estimatedItemSize={100}
-            />
-          </View>
-        )}
 
-        {libraryIdList.length === 0 && !loading && (
+        {libraryIdList.length === 0 && !isLoading && (
           <View
             style={{
               marginTop: 250,
@@ -236,6 +204,11 @@ const LibraryScreen = ({navigation}) => {
                 Go To Popular Stories
               </Text>
             </Pressable>
+            <Text
+              style={{color: 'white', fontSize: 20, marginTop: 100}}
+              onPress={getLibrary}>
+              LOAD DATA
+            </Text>
           </View>
         )}
       </ScrollView>
