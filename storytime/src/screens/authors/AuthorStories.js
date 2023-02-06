@@ -135,7 +135,7 @@ const AuthorStories = ({route, navigation}) => {
   };
 
   return (
-    <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white`}>
+    <View style={tw`flex-1 bg-[#291F4E] pt-4 text-white px-4`}>
       {loading ? (
         <View
           style={{
@@ -161,16 +161,8 @@ const AuthorStories = ({route, navigation}) => {
         <View style={styles.leftContainer}>
           <Pressable onPress={() => navigation.navigate('Home')}>
             <Text
-              style={[
-                {
-                  textAlign: 'left',
-                  fontSize: 15,
-                  padding: 5,
-                  color: '#fff',
-                  backgroundColor: '#FFFFFF3E',
-                  marginLeft: 10,
-                },
-              ]}>
+              style={tw`text-left text-base py-1 text-white bg-[#FFFFFF3E] ml-2 rounded-xl px-4`}
+             >
               {'<'} Explore
             </Text>
           </Pressable>
@@ -181,7 +173,7 @@ const AuthorStories = ({route, navigation}) => {
         <View style={styles.rightContainer}></View>
       </View>
 
-      <View style={{marginBottom: 90, marginLeft: 15}}>
+      <View>
         <FlatList
           horizontal={false}
           numColumns={2}
@@ -191,19 +183,18 @@ const AuthorStories = ({route, navigation}) => {
           onEndReached={loadMoreStories}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
-            <View>
+            <View  style={tw`w-6/12 px-3`}>
               <Pressable
                 onPress={() => getEpisodeList(item)}>
                 <Image
                   source={{uri: item.images[1].url}}
                   style={{
-                    width: 175,
+                    width: "100%",
                     height: 180,
                     borderRadius: 10,
                     marginRight: 8,
                   }}
                 />
-
                 <Text style={{fontSize: 18, color: '#fff', marginBottom: 3}}>
                   {truncateText(item.name, 20)}
                 </Text>

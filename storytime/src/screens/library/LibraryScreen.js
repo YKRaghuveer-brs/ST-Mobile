@@ -117,16 +117,17 @@ const LibraryScreen = ({navigation}) => {
 
   const renderItem = ({item}) => {
     return (
-      <View style={{marginBottom: 15, paddingLeft: 13}}>
+      <View  style={tw`w-6/12 px-3 mb-6`}>
         <Pressable onPress={() => getEpisodeList(item)}>
           <Image
             source={{
               uri: item.images[1].url,
             }}
             style={{
-              width: 170,
-              height: 170,
-              borderRadius: 5,
+              width: "100%",
+              height: 180,
+              borderRadius: 10,
+              marginRight: 8,
             }}
           />
 

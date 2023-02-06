@@ -93,19 +93,15 @@ const AuthorsScreen = ({ navigation }) => {
       <View>
         <View>
           <Pressable onPress={() => navigation.navigate("Home")}>
-            <Text style={tw`text-xl text-white font-bold ml-4 mt-6`}>
+            <Text style={tw`text-xl text-white font-bold ml-4 mt-6 mb-4`}>
               Authors
             </Text>
           </Pressable>
         </View>
 
         <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 110,
-            marginTop: 25,
-          }}
+          style={tw`w-full`}
+          
         >
           <FlatList
             horizontal={false}
@@ -116,7 +112,7 @@ const AuthorsScreen = ({ navigation }) => {
             onEndReached={loadMoreStories}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View>
+              <View style={tw`w-6/12 px-3`}>
                 <Pressable
                   onPress={() =>
                     navigation.navigate("AuthorStories", {
@@ -127,7 +123,7 @@ const AuthorsScreen = ({ navigation }) => {
                   <Image
                     source={{ uri: item.images[1].url }}
                     style={{
-                      width: 175,
+                      width: "100%",
                       height: 180,
                       borderRadius: 10,
                       marginRight: 8,

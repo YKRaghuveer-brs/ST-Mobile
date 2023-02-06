@@ -45,28 +45,23 @@ const CategoriesScreen = ({navigation}) => {
   }, []);
 
   return (
-    <View style={tw`flex-1 bg-[#291F4E]`}>
+    <View style={tw`flex-1 bg-[#291F4E] px-6`}>
       <Text
-        style={{
-          marginTop: 15,
-          marginLeft: 10,
-          fontSize: 18,
-          fontFamily: 'Roboto-Medium',
-          marginBottom: 10,
-        }}>
+        style={tw`text-lg text-white bg-5 mb-2`}
+        >
         Languages
       </Text>
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'center',
         }}>
         {languages.map((language, index) => {
           return (
             <View key={language.id}>
               {language.isActive ? (
-                <View style={{marginRight: 12, padding: 5}}>
+                <View style={tw`mr-6 p-2`}>
                   <Button
+                    radius="10px"
                     color="green"
                     title={language.name}
                     onPress={() => {
@@ -79,9 +74,11 @@ const CategoriesScreen = ({navigation}) => {
                     }}></Button>
                 </View>
               ) : (
-                <View style={{marginRight: 12, padding: 5}}>
+                <View style={tw`mr-6 bg-[#f00] rounded-lg`}>
                   <Button
-                    color="grey"
+                    style={tw`text-black rounded-lg`}
+                    color="white"
+                    radius="20px"
                     title={language.name}
                     onPress={() =>
                       selectLanguages(prevState => {
@@ -119,7 +116,7 @@ const CategoriesScreen = ({navigation}) => {
             />
           </View>
         ) : (
-          <View style={tw`ml-2`}>
+          <View style={tw`w-full`}>
             <Text
               style={{
                 fontSize: 18,
@@ -136,11 +133,12 @@ const CategoriesScreen = ({navigation}) => {
               renderItem={({item, index}) => (
                 <View
                   style={{
-                    width: 180,
+                    width: "49%",
                     height: 180,
                     backgroundColor: item.background,
                     marginBottom: 10,
                     marginRight: 10,
+                    borderRadius: 10
                   }}>
                   <ImageBackground
                     source={require('../../assets/images/spiral-edge.png')}

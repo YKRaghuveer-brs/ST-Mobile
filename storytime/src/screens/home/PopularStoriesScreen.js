@@ -117,16 +117,8 @@ const PopularStoriesScreen = ({navigation}) => {
         <View style={styles.leftContainer}>
           <Pressable onPress={() => navigation.navigate('Home')}>
             <Text
-              style={[
-                {
-                  textAlign: 'left',
-                  fontSize: 15,
-                  padding: 5,
-                  color: '#fff',
-                  backgroundColor: '#FFFFFF3E',
-                  marginLeft: 10,
-                },
-              ]}>
+              style={tw`text-left text-base py-1 text-white bg-[#FFFFFF3E] ml-2 rounded-xl px-4`}
+              >
               {'<'} Explore
             </Text>
           </Pressable>
@@ -137,7 +129,7 @@ const PopularStoriesScreen = ({navigation}) => {
         <View style={styles.rightContainer}></View>
       </View>
 
-      <View style={{marginBottom: 90, marginLeft: 15}}>
+      <View>
         <FlatList
           horizontal={false}
           numColumns={2}
@@ -147,18 +139,15 @@ const PopularStoriesScreen = ({navigation}) => {
           onEndReached={loadMoreStories}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
-            <View>
+            <View style={tw`flex flex-1 mb-4 w-2/6 mx-3`}>
               <Pressable onPress={() => getEpisodeList(item)}>
                 <Image
                   source={{uri: item.images[1].url}}
-                  style={{
-                    width: 175,
-                    height: 180,
-                    borderRadius: 10,
-                    marginRight: 8,
-                  }}
+                  style={tw`w-full h-44 rounded-xl mr-3`}
                 />
-                <Text style={{fontSize: 18, color: '#fff', marginBottom: 3}}>
+                <Text 
+                  style={tw`text-lg text-white mb-1 mt-2 leading-tight`}
+                >
                   {truncateText(item.name, 20)}
                 </Text>
 
