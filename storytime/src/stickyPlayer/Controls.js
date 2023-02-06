@@ -20,11 +20,11 @@ const Controls = ({
   forwardDisabled,
 }) => (
   <View style={styles.container}>
-    <View style={{width: 40}} />
+    <View />
     <Pressable onPress={onBack}>
       <Image source={require('../assets/images/player/ic_skip_previous_white_36pt.png')} />
     </Pressable>
-    <View style={{width: 20}} />
+    <View />
     {!paused ? (
       <Pressable onPress={onPressPause}>
         <View style={styles.playButton}>
@@ -38,7 +38,7 @@ const Controls = ({
         </View>
       </Pressable>
     )}
-    <View style={{width: 20}} />
+    <View />
     <Pressable onPress={onForward} disabled={forwardDisabled}>
       <Image
         style={[forwardDisabled && {opacity: 0.3}]}
@@ -53,8 +53,7 @@ export default Controls;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-
-    paddingTop: 16,
+    marginLeft: 10,
   },
   playButton: {
     height: 45,
@@ -64,6 +63,8 @@ const styles = StyleSheet.create({
     borderRadius: 45 / 2,
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: 5,
+    marginRight: 5,
   },
   secondaryControl: {
     height: 18,

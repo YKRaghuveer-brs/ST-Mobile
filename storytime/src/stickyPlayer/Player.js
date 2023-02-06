@@ -4,8 +4,8 @@ Component: Player
 Description: Renders the Sticky Player
 (c) Copyright (c) by Nyros. 
 **/
-
-import {useContext, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useContext, useState, useRef, useEffect} from 'react';
 import {View, Text, Pressable} from 'react-native';
 import AlbumArt from './AlbumArt';
 import SeekBar from './SeekBar';
@@ -16,15 +16,29 @@ import {truncateText} from '../utils/common';
 import TextTicker from 'react-native-text-ticker';
 import * as RootNavigation from '../navigation/RootNavigation.js';
 
-const Player = ({tracks, story}) => {
-  const [paused, setPaused] = useState(true);
-  const [totalLength, setTotalLength] = useState(1);
-  const [currentPosition, setCurrentPosition] = useState(0);
-  const [selectedTrack, setSelectedTrack] = useState(0);
-  const [repeatOn, setRepeatOn] = useState(false);
+const Player = () => {
   const [shuffleOn, setShuffleOn] = useState(false);
   const [isChanging, setIsChanging] = useState(false);
-  const {setStickyPlayer} = useContext(AuthContext);
+  const {
+    story,
+    setStory,
+    tracks,
+    setTracks,
+    paused,
+    setPaused,
+    currentPosition,
+    setCurrentPosition,
+    selectedTrack,
+    setSelectedTrack,
+    totalLength,
+    setTotalLength,
+    repeatOn,
+    setRepeatOn,
+    stickyPlayer,
+    setStickyPlayer,
+  } = useContext(AuthContext);
+
+  const audioElement = useRef(null);
 
   const setDuration = data => {
     setTotalLength(Math.floor(data.duration));
@@ -36,9 +50,19 @@ const Player = ({tracks, story}) => {
 
   const seek = time => {
     time = Math.round(time);
+    audioElement && audioElement.current.seek(time);
     setCurrentPosition(time);
     setPaused(false);
   };
+
+  useEffect(() => {
+    AsyncStorage.setItem('stickyPlayer', JSON.stringify(true));
+    AsyncStorage.setItem('story', JSON.stringify(story));
+    AsyncStorage.setItem('tracks', JSON.stringify(tracks));
+    AsyncStorage.setItem('selectedTrack', JSON.stringify(selectedTrack));
+  }, []);
+
+  const loadStart = () => {};
 
   const onBack = () => {
     if (currentPosition < 10 && selectedTrack > 0) {
@@ -72,10 +96,11 @@ const Player = ({tracks, story}) => {
   const video = isChanging ? null : (
     <Video
       source={{uri: track.audioUrl}} // Can be a URL or a local file.
+      ref={audioElement}
       paused={paused} // Pauses playback entirely.
       resizeMode="cover" // Fill the whole screen at aspect ratio.
       repeat={true} // Repeat forever.
-      onLoadStart={this.loadStart} // Callback when video starts to load
+      onLoadStart={loadStart} // Callback when video starts to load
       onLoad={data => setDuration(data)} // Callback when video loads
       onProgress={data => setTime(data)} // Callback every ~250ms with currentTime
       onEnd={this.onEnd} // Callback when playback finishes
@@ -86,16 +111,22 @@ const Player = ({tracks, story}) => {
 
   const openPlayer = () => {
     setStickyPlayer(false);
-    RootNavigation.navigate('Player', {story: story});
+    RootNavigation.navigate('Player');
+  };
+
+  const closePlayer = () => {
+    setStickyPlayer(false);
+    AsyncStorage.setItem('stickyPlayer', JSON.stringify(false));
   };
 
   return (
-    <View style={styles.container}>
+    <View style={tw`w-full bg-[#5E48A8] flex flex-auto fixed rounded-lg px-5`}>
       <View>
-        <Pressable onPress={() => setStickyPlayer(false)}>
+        <Pressable onPress={() => closePlayer()}>
           <Text style={{textAlign: 'right'}}>Close</Text>
         </Pressable>
       </View>
+
       <View style={{flexDirection: 'row'}}>
         <AlbumArt url={track.albumArtUrl} />
         <Pressable onPress={() => openPlayer()}>
@@ -103,8 +134,7 @@ const Player = ({tracks, story}) => {
             <Text style={{color: '#fff', fontSize: 14}}>
               {truncateText(story.name, 14)}
             </Text>
-
-           {/* <TextTicker
+            {/* <TextTicker
               style={{fontSize: 12, color: '#fff', width: 100}}
               duration={3000}
               loop
@@ -114,13 +144,30 @@ const Player = ({tracks, story}) => {
               {track.title}
             </TextTicker>*/}
             <TextTicker
+              style={{
+                fontSize: 12,
+                color: '#fff',
+                width: 100,
+                marginBottom: 10,
+              }}
+              duration={3000}
+              marqueeDelay={3000}>
+              {track.title}
+            </TextTicker>
+          </View>
+          <View>
+            <SeekBar
+              onSeek={() => seek(tme)}
+              trackLength={totalLength}
+              onSlidingStart={() => setPaused(false)}
+              currentPosition={currentPosition}
+            />
+            <TextTicker
               style={{fontSize: 12, color: '#fff', width: 100}}
-          duration={3000}
-       
-          marqueeDelay={3000}
-        >
-         {track.title}
-        </TextTicker>
+              duration={3000}
+              marqueeDelay={3000}>
+              {track.title}
+            </TextTicker>
           </View>
         </Pressable>
 
@@ -141,7 +188,7 @@ const Player = ({tracks, story}) => {
 
       <View>
         <SeekBar
-          onSeek={() => seek(tme)}
+          onSeek={time => seek(time)}
           trackLength={totalLength}
           onSlidingStart={() => setPaused(false)}
           currentPosition={currentPosition}

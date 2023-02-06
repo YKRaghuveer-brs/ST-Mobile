@@ -36,6 +36,7 @@ const CategoriesScreen = ({navigation}) => {
     const uddatedResponse = response.map((item, index) => {
       return {...item, background: categoriesBg[index]};
     });
+    console.log(response);
     setCategories(uddatedResponse);
   };
 
@@ -100,24 +101,7 @@ const CategoriesScreen = ({navigation}) => {
           alignItems: 'center',
           marginTop: 25,
         }}>
-        {isLoading ? (
-          <View
-            style={{
-              position: 'absolute',
-              zIndex: 2,
-              left: 0,
-              right: 0,
-              top: 40,
-              bottom: 0,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              style={{width: 100, height: 100}}
-              source={require('../../assets/images/Spiral_logo_loader.gif')}
-            />
-          </View>
-        ) : (
+      
           <View style={tw`ml-2`}>
             <Text
               style={{
@@ -158,7 +142,7 @@ const CategoriesScreen = ({navigation}) => {
               )}
             />
           </View>
-        )}
+        
       </View>
     </View>
   );

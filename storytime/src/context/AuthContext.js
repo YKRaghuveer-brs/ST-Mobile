@@ -5,53 +5,55 @@ Description: It provides the app context and HTTP methods
 (c) Copyright (c) by Nyros. 
 **/
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {createContext, useState, useEffect, useCallback} from 'react';
-import {Toast} from 'toastify-react-native';
-import {httpGet, httpPost, spotifyGet, spotifySearch} from './httpHelpers';
-import {calculateRemainingExpirationTime} from '../utils/common';
-import {Text, Image, View} from 'react-native';
-import LoadingSpinner from '../utils/LoadingSpinner';
+import React, { createContext, useState, useEffect, useCallback } from "react";
+import { Toast } from "toastify-react-native";
+// import { HttpGet, HttpPost, refreshTokenHandler } from "./httpHelpers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { httpGet, httpPost, spotifyGet, spotifySearch } from "./httpHelpers";
+import { calculateRemainingExpirationTime } from "../utils/common";
+import { Text, Image, View } from "react-native";
+import LoadingSpinner from "../utils/LoadingSpinner";
 
 let logoutTimer;
 let spotifyLogoutTimer;
+let spotifyTimeOut;
 
 // List of allowed languages
 const languagesList = [
   {
-    id: 'l1',
-    name: 'Hindi',
-    languageCode: 'hi',
+    id: "l1",
+    name: "Hindi",
+    languageCode: "hi",
     isActive: false,
-    bg: 'bg-purple',
+    bg: "bg-purple",
   },
   {
-    id: 'l2',
-    name: 'Tamil',
-    languageCode: 'ta',
+    id: "l2",
+    name: "Tamil",
+    languageCode: "ta",
     isActive: false,
-    bg: 'bg-lime-400',
+    bg: "bg-lime-400",
   },
   {
-    id: 'l3',
-    name: 'Telugu',
-    languageCode: 'te',
+    id: "l3",
+    name: "Telugu",
+    languageCode: "te",
     isActive: false,
-    bg: 'bg-darkBlue',
+    bg: "bg-darkBlue",
   },
   {
-    id: 'l4',
-    name: 'English',
-    languageCode: 'en en-US en-AU en-GB',
+    id: "l4",
+    name: "English",
+    languageCode: "en en-US en-AU en-GB",
     isActive: false,
-    bg: 'bg-purple',
+    bg: "bg-purple",
   },
 ];
 
 export const AuthContext = createContext();
 
 // context provider
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [selectedLang, setSelectedLang] = useState([]);
@@ -61,28 +63,29 @@ export const AuthProvider = ({children}) => {
   const [tracks, setTracks] = useState([]);
   const [stickyPlayer, setStickyPlayer] = useState(false);
   const [story, setStory] = useState({});
+  const [paused, setPaused] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState(0);
+  const [selectedTrack, setSelectedTrack] = useState(0);
+  const [repeatOn, setRepeatOn] = useState(false);
+  const [totalLength, setTotalLength] = useState(0);
 
   const login = async (email, password) => {
+
     const payload = {
-      email: 'gopinath.krm@nyros.com',
-      password: '123456',
+      email,
+      password,
     };
 
     try {
-      const response = await httpPost('login', payload);
+      const response = await httpPost("login", payload);
       if (response.status === 200) {
-        Toast.success('Logged in successfully !');
+        Toast.success("Logged in successfully !");
         setUserToken(response.data.token);
-       
+
         // response is in seconds, we need to convert to milliseconds
         const expirationTime = new Date(
           new Date().getTime() + response.data.usertokenExp * 1000,
         );
-        const spotifyExpirationTime = new Date(
-          new Date().getTime() + response.data.spotifytoken.expires_in * 1000,
-        );
-
-        
 
         AsyncStorage.setItem('userToken', response.data.token);
         AsyncStorage.setItem('userExpTime', expirationTime.toISOString());
@@ -91,24 +94,26 @@ export const AuthProvider = ({children}) => {
 
         logoutTimer = setTimeout(logout, remainingTime);
 
+        const spotifyExpirationTime = new Date(
+          new Date().getTime() + response.data.spotifytoken.expires_in * 1000,
+        );
+
+      
+
         const remainingSpotifyTime = calculateRemainingExpirationTime(
           spotifyExpirationTime,
         );
+   
         spotifyLogoutTimer = setInterval(
           refreshTokenHandler,
           remainingSpotifyTime,
         );
+       
 
-        AsyncStorage.setItem(
-          'spotifyToken',
-          response.data.spotifytoken.access_token,
-        );
-        AsyncStorage.setItem(
-          'spotifytokenExp',
-          spotifyExpirationTime.toISOString(),
-        );
+        AsyncStorage.setItem("spotifyToken", response.data.spotifytoken.access_token);
+        AsyncStorage.setItem("spotifytokenExp", spotifyExpirationTime.toISOString());
 
-        AsyncStorage.setItem('userInfo', JSON.stringify(response.data));
+        AsyncStorage.setItem("userInfo", JSON.stringify(response.data));
       }
     } catch (error) {
       Toast.error(error.response.data);
@@ -120,13 +125,33 @@ export const AuthProvider = ({children}) => {
     setSelectedLang([]);
     setIsLoading(true);
     setUserToken(null);
-    AsyncStorage.removeItem('userInfo');
-    AsyncStorage.removeItem('userToken');
-    AsyncStorage.removeItem('userExpTime');
+
+    AsyncStorage.removeItem("userInfo");
+    AsyncStorage.removeItem("userToken");
+    AsyncStorage.removeItem("userExpTime");
     clearInterval(spotifyLogoutTimer);
     setIsLoading(false);
     setAllowedLanguages([]);
   };
+
+  // To update the Exp time when App is closed and opened
+  useEffect(() => {
+    async function playerDataUpdate() {
+      const savedStory = await AsyncStorage.getItem("story");
+      const savedTracks = await AsyncStorage.getItem("tracks");
+      const savedSelectedTrack = await AsyncStorage.getItem("selectedTrack");
+      const stickyPlayerStatus = await AsyncStorage.getItem("stickyPlayer");
+
+      if(JSON.parse(stickyPlayerStatus)){
+        setStory(JSON.parse(savedStory));
+        setTracks(JSON.parse(savedTracks));
+        setSelectedTrack(JSON.parse(savedSelectedTrack));
+        setStickyPlayer(true);
+        setPaused(true);
+      }
+    }
+    playerDataUpdate();
+  }, []);
 
   // BACKEND HTTP METHODS
   // GET HTTP CALL
@@ -143,6 +168,7 @@ export const AuthProvider = ({children}) => {
 
   // GET HTTP CALL
   const HttpPostHandler = async (path, params) => {
+  
     setIsLoading(true);
     try {
       return await httpPost(path, params);
@@ -155,12 +181,10 @@ export const AuthProvider = ({children}) => {
 
   // To Refresh the SPotify Token after 1-Hr
   const refreshTokenHandler = async () => {
-    
     const response = await httpGet('refreshtoken');
-   
-    const newToken = response.spotifytoken.access_token;
-    const newExpTime = response.spotifytoken.expires_in;
-  
+    const newToken = response.data.spotifytoken.access_token;
+    const newExpTime = response.data.spotifytoken.expires_in;
+
     const newSpotifyExpirationTime = new Date(
       new Date().getTime() + newExpTime * 1000,
     );
@@ -196,7 +220,7 @@ export const AuthProvider = ({children}) => {
 
   // To update the Exp time when App is closed and opened
   useEffect(() => {
-    
+  
     async function updateTokenExpirationTime() {
       if (userToken) {
         const newList = JSON.parse(JSON.stringify(languagesList));
@@ -218,19 +242,17 @@ export const AuthProvider = ({children}) => {
           storedSpotifyExpirationDate,
         );
 
-        
-       
         if (remainingSpotifyTime <= 60000) {
-          
           //less than or equal to 1 min (60000 seconds)
           await refreshTokenHandler();
-        } 
+        }
       }
     }
     updateTokenExpirationTime();
     return () => {
-      
+   
       clearInterval(spotifyLogoutTimer);
+      clearTimeout(spotifyTimeOut);
     };
   }, [userToken]);
 
@@ -238,8 +260,8 @@ export const AuthProvider = ({children}) => {
   const isLoggedIn = async () => {
     try {
       setIsLoading(true);
-      let userInfo = await AsyncStorage.getItem('userInfo');
-      let userToken = await AsyncStorage.getItem('userToken');
+      let userInfo = await AsyncStorage.getItem("userInfo");
+      let userToken = await AsyncStorage.getItem("userToken");
 
       userInfo = JSON.parse(userInfo);
       if (userInfo) {
@@ -254,7 +276,7 @@ export const AuthProvider = ({children}) => {
   }, []);
 
   const getUserDetails = useCallback(async () => {
-    const user = await httpGet('userDetails');
+    const user = await httpGet("userDetails");
     setUser(user);
   });
 
@@ -277,16 +299,26 @@ export const AuthProvider = ({children}) => {
     isLoading,
     userToken,
     user,
-    minPlayerTracks: tracks,
-    setTracks,
-    minPlayerStory: story,
-    setStory,
     stickyPlayer,
     setStickyPlayer,
+    story,
+    setStory,
+    tracks,
+    setTracks,
+    paused,
+    setPaused,
+    currentPosition,
+    setCurrentPosition,
+    totalLength,
+    setTotalLength,
+    selectedTrack,
+    setSelectedTrack,
+    repeatOn,
+    setRepeatOn,
   };
   return (
     <AuthContext.Provider value={contextValue}>
-      { isLoading ?  <LoadingSpinner /> : ""  }
+      {isLoading ? <LoadingSpinner /> : ''}
       {children}
     </AuthContext.Provider>
   );

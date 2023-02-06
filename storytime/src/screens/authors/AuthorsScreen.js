@@ -60,43 +60,18 @@ const AuthorsScreen = ({ navigation }) => {
 
   return (
     <View style={tw`flex-1 bg-[#291F4E]`}>
-      {isLoading ? (
-        <View
-          style={{
-            position: "absolute",
-            zIndex: 2,
-            left: 0,
-            right: 0,
-            top: 40,
-            bottom: 0,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            style={{ width: 100, height: 100 }}
-            source={require("../../assets/images/Spiral_logo_loader.gif")}
-          />
-        </View>
-      ) : (
-        ""
-      )}
       <View>
         <View>
           <Pressable onPress={() => navigation.navigate("Home")}>
-            <Text style={tw`text-xl text-white font-bold ml-4 mt-6`}>
+            <Text style={tw`text-xl text-white font-bold ml-4 mt-6 mb-4`}>
               Authors
             </Text>
           </Pressable>
         </View>
 
         <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 110,
-            marginTop: 25,
-          }}
+          style={tw`w-full`}
+          
         >
           <FlatList
             horizontal={false}
@@ -107,7 +82,7 @@ const AuthorsScreen = ({ navigation }) => {
             onEndReached={loadMoreStories}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View>
+              <View style={tw`w-6/12 px-3`}>
                 <Pressable
                   onPress={() =>
                     navigation.navigate("AuthorStories", {
@@ -118,7 +93,7 @@ const AuthorsScreen = ({ navigation }) => {
                   <Image
                     source={{ uri: item.images[1].url }}
                     style={{
-                      width: 175,
+                      width: "100%",
                       height: 180,
                       borderRadius: 10,
                       marginRight: 8,

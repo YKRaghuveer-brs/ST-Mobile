@@ -13,13 +13,31 @@ import {
 } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
 import Player from "./customPlayer/Player";
+import { spotifyGet } from "../../context/httpHelpers";
 const { width, height } = Dimensions.get("window");
 
 const PlayerScreen = ({ route, navigation }) => {
   const {SpotifyGet} = useContext(AuthContext);
   const scrollX = useRef(new Animated.Value(0).current);
   const [episodeList, setEpisodeList] = useState([]);
-  const { story } = route.params;
+
+
+   const {
+   story,
+        setStory,
+        tracks,
+        setTracks,
+        paused,
+        setPaused,
+        currentPosition,
+        setCurrentPosition,
+        selectedTrack,
+        setSelectedTrack,
+        repeatOn,
+        setRepeatOn,
+        stickyPlayer,
+        setStickyPlayer,
+  } = useContext(AuthContext);
 
   useEffect(() => {
     getEpisodeList();
@@ -49,7 +67,7 @@ const PlayerScreen = ({ route, navigation }) => {
 
   return (
     <>
-      {episodeList && episodeList.length ? <Player tracks={episodeList} story={story.id} author={story.publisher}/> : null}
+      {episodeList && episodeList.length ? <Player tracks={tracks} story={story} author={story.publisher}/> : null}
     </>
   );
 };
