@@ -1,7 +1,7 @@
 /** 
 Created: 23.01.2023
 Component: Categories screen
-Description: Renders the list of categories and the languages filter
+Description: Renders the list of categories and the languages filters
 (c) Copyright (c) by Nyros. 
 **/
 
