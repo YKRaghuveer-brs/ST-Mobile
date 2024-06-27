@@ -7,8 +7,8 @@ APP INSTALLATION STEPS
 ### Android Studio
 ### Java/JDK (min version 17)
 
-After the installation process setup the ANDROID_HOME and JAVA_HOME in the system variables. Refer the below link for setup (React Native CLI Quickstart tab)
-[text](https://reactnative.dev/docs/0.73/environment-setup?guide=native)
+After the installation process setup the ANDROID_HOME and JAVA_HOME in the system variables. Refer this link for setup 
+[React Native CLI Quickstart tab](https://reactnative.dev/docs/0.73/environment-setup?guide=native)
 
 After the above process 
 
