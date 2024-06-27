@@ -2,13 +2,22 @@
 
 APP INSTALLATION STEPS 
 
+## Softwares to be installed 
+### Node JS
+### Android Studio
+### Java/JDK (min version 17)
+
+After the installation process setup the ANDROID_HOME and JAVA_HOME in the system variables. Refer the below link for setup (React Native CLI Quickstart tab)
+[text](https://reactnative.dev/docs/0.73/environment-setup?guide=native)
+
+After the above process 
+
 step 1 - Git clone 
 
 step 2 - npm install 
 
-step 3 - Inside the node_modules folder - in react-native package we need to replace the index.js file to fix the deprecated issues. 
+step 4 - npm run android
 
-step 4 - npm start -- --reset-cache
 
-step 5 - npx react-native run-android
+
 
