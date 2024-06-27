@@ -16,7 +16,7 @@ step 1 - Git clone
 
 step 2 - npm install 
 
-step 4 - npm run android
+step 3 - npm run android
 
 
 
