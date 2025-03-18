@@ -1,10 +1,9 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../screens/HomeScreen';
-import AuthorsScreen from '../../screens/AuthorsScreen';
 import CategoriesScreen from '../../screens/CategoriesScreen';
 import LibraryScreen from '../../screens/LibraryScreen';
 import { Image } from "react-native";
-
+import AuthorsScreen from '../../screens/AuthorsPage';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
