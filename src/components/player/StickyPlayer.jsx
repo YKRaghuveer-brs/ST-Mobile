@@ -1,6 +1,6 @@
 import {View, Text, Pressable, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {closeStickyPlayer} from '../../store/user/authSlice';
+import { closeStickyPlayer, addToLibrary, removeFromLibrary } from '../../store/user/authSlice';
 import tw from 'twrnc';
 import AlbumArt from './AlbumArt';
 import Controls from './Controls';
@@ -13,7 +13,9 @@ import Video from 'react-native-video';
 import LoadingSpinner from '../LoadingSpinner';
 
 const StickyPlayer = () => {
-  const {storyInfo} = useSelector(state => state.auth);
+  const { storyInfo, libraryList } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const isStoryInLibrary = libraryList.some(story => story.id === storyInfo.id);
 
   const audioElement = useRef(null);
   const [tracks, setTracks] = useState([]);
@@ -27,8 +29,6 @@ const StickyPlayer = () => {
   const [isChanging, setIsChanging] = useState(false);
 
   const {data, isLoading} = useGetEpisodesByShowIdQuery(storyInfo.id);
-
-  const dispatch = useDispatch();
 
   const playerHandler = () => {
     dispatch(closeStickyPlayer());
@@ -92,6 +92,18 @@ const StickyPlayer = () => {
       console.log(list[selectedTrack]);
     }
   }, [storyInfo, data]);
+  const handleAddOrRemoveFromLibrary = () => {
+    if (isStoryInLibrary) {
+      dispatch(removeFromLibrary(storyInfo.id));
+    } else {
+      dispatch(addToLibrary({
+        id: storyInfo.id,
+        name: storyInfo.name,
+        url: currentTrack.images[0].url,
+        publisher: 'Unknown' // You can replace this with the actual publisher if available
+      }));
+    }
+  };
 
   const video = isChanging ? null : (
     <Video
@@ -169,6 +181,11 @@ const StickyPlayer = () => {
               onForward={onForward}
               paused={paused}
             />
+              <Pressable onPress={handleAddOrRemoveFromLibrary} style={tw`ml-4`}>
+              <Text style={tw`text-white`}>
+                {isStoryInLibrary ? 'Del' : 'Add'}
+              </Text>
+            </Pressable>
             {video}
           </View>
 
