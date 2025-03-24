@@ -214,7 +214,7 @@ const AuthorsPage = () => {
       if (userProfileData.profileData?.isSuspended) {
         dispatch(logout());
         Toast.show({
-          type: 'error',
+          // type: 'error',
           text1: 'Your Account has been Suspended!',
         });
         navigation.navigate('Login'); // Redirect to login page
@@ -248,7 +248,7 @@ const AuthorsPage = () => {
       try {
         setAuthorsList(authorsInfo.shows.items);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         setAuthorsList([]);
       }
     }

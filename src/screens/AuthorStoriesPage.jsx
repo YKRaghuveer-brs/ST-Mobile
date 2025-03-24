@@ -38,7 +38,7 @@ const AuthorStoriesPage = () => {
         );
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setFeatured([]);
     }
   }, [featuredLoading, publisher, featuredList]);

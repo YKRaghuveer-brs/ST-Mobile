@@ -168,7 +168,7 @@ const AuthorStoriesList = ({ stories }) => {
   const dispatch = useDispatch();
 
   const showSidebar = (s_id, s_name) => {
-    console.log(s_id, s_name);
+    // console.log(s_id, s_name);
     dispatch(setStoryInfo({ s_id, s_name }));
     dispatch(toggleSidebar());
     dispatch(openStickyPlayer()); // Open the sticky player

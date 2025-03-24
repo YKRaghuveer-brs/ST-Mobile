@@ -132,7 +132,7 @@ const CategoriesScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log('userData:', userData);
+    // console.log('userData:', userData);
   }, [userData]);
 
   useEffect(() => {
@@ -140,12 +140,12 @@ const CategoriesScreen = () => {
       console.log('✅ User data fetched:', userProfile);
       dispatch(setUserProfile({ profileData: userProfile })); // Ensure payload is correct
     } else if (userProfileError) {
-      console.error('❌ Error fetching user profile:', userProfileError);
+      // console.error('❌ Error fetching user profile:', userProfileError);
     }
   }, [isUserLoading, userProfile, userProfileError, dispatch]);
   
   useEffect(() => {
-    console.log('userData:', userData); // Log userData whenever it changes
+    // console.log('userData:', userData); // Log userData whenever it changes
   }, [userData]);
 
   useEffect(() => {
@@ -203,7 +203,7 @@ const CategoriesScreen = () => {
     <ScrollView style={styles.container}>
       <View style={styles.sectionContainer}>
         {/* Languages Section */}
-        <Text style={styles.heading}>Languages</Text>
+        {/* <Text style={styles.heading}>Languages</Text>
         {isLanguagesLoading ? (
           <ActivityIndicator size="large" color="#443280" />
         ) : languagesError ? (
@@ -226,7 +226,7 @@ const CategoriesScreen = () => {
           </View>
         ) : (
           <Text>No languages available.</Text>
-        )}
+        )} */}
 
         {/* Categories Section */}
         <Text style={styles.heading}>Categories</Text>
